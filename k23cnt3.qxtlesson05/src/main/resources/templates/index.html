@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no,
+          initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Giới thiệu Thymeleaf</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+
+<body>
+
+<header class="container d-flex align-items-center mt-3">
+    <img src="https://devmaster.edu.vn/images/logo.png"
+         alt="Devmaster Academy"
+         style="width: 120px; height: auto; margin-right: 20px;">
+
+    <div>
+        <h1 th:text="${@environment.getProperty('app.name')}">
+            Ứng dụng Spring Boot Demo
+        </h1>
+
+        <p th:text="${@environment.getProperty('app.welcome.message')}">
+            Chào mừng bạn đến với trang giới thiệu!
+        </p>
+    </div>
+</header>
+
+<section class="container mt-4">
+    <a th:href="@{/profile}" class="btn btn-success">
+        Devmaster Profile
+    </a>
+</section>
+
+<!-- JavaScript -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
