@@ -1,0 +1,9 @@
+package k23cnt3.qxtlesson07.repository;
+
+import k23cnt3.qxtlesson07.entity.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BookRepository extends JpaRepository<Book, Long> {
+}
