@@ -13,14 +13,14 @@ public class QxtAuthorService {
             public  List<qxtAuthor> getAllQxtAuthor(){
                 return qxtAuthorRepository.findAll();
             }
-            public qxtAuthor getQxtAuthorById(long qxtId) {
-                return qxtAuthorRepository.findById((int) qxtId).orElse(null);
+            public qxtAuthor getQxtAuthorById(Long qxtId) {
+                return qxtAuthorRepository.findById(qxtId).orElse(null);
             }
             public qxtAuthor saveQxtAuthor(qxtAuthor qxtAuthor) {
                 return qxtAuthorRepository.save(qxtAuthor);
             }
 
-            public void deleteQxtAuthorById(long qxtId) {
+            public void deleteQxtAuthorById(Long qxtId) {
                 qxtAuthorRepository.deleteById(qxtId);
             }
 

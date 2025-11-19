@@ -3,101 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          content="width=device-width, initial-scale=1.0">
     <title>Book Form</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 <body style="background: #ccc">
-<section class="container">
+<section class="container my-3">
     <form th:action="@{/qxtbooks/new}" th:object="${qxtBook}" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="qxtid" th:if="${qxtBook.getQxtid() != null}" th:value="${qxtBook.qxtid}">
+        <input type="hidden" name="qxtId" th:if="${qxtBook.qxtId != null}" th:value="${qxtBook.qxtId}">
         <div class="card">
             <div class="card-header">
-                <h1 th:text="${qxtBook.qxtid !=null ? 'Edit Book':'Create Book'}"></h1>
+                <h1 th:text="${qxtBook.qxtId != null ? 'Edit Book':'Create Book'}"></h1>
             </div>
             <div class="card-body">
                 <div class="row mb-3">
                     <label for="qxtCode" class="col-sm-2 col-form-label">Code</label>
                     <div class="col-sm-10">
-                        <input type="text"
-                               th:field="*{qxtcode}" placeholder="Book Code"
-                               class="form-control"
-                               id="qxtCode" >
+                        <input type="text" th:field="*{qxtCode}" placeholder="Book Code" class="form-control" id="qxtCode">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="qxtname" class="col-sm-2 col-form-label">Name</label>
+                    <label for="qxtName" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text"
-                               th:field="*{qxtname}" placeholder="Book Name"
-                               class="form-control"
-                               id="qxtname" >
+                        <input type="text" th:field="*{qxtName}" placeholder="Book Name" class="form-control" id="qxtName">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="qxtDescription" class="col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-10">
-                        <input type="text"
-                               th:field="*{qxtdescription}" placeholder="Book Description"
-                               class="form-control"
-                               id="qxtDescription" >
+                        <input type="text" th:field="*{qxtDescription}" placeholder="Book Description" class="form-control" id="qxtDescription">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="qxtImgUrl" class="col-sm-2 col-form-label">ImgUrl</label>
+                    <label for="qxtImgUrl" class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
                         <input type="file" name="imageBook" id="imageBook"/>
-                        <input type="hidden"
-                               th:field="*{qxtimgUrl}" placeholder="Book ImgUrl"
-                               class="form-control"
-                               id="qxtImgUrl" >
+                        <input type="hidden" th:field="*{qxtImgUrl}" class="form-control" id="qxtImgUrl">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="qxtQuantity" class="col-sm-2 col-form-label">Quantity</label>
                     <div class="col-sm-10">
-                        <input type="number"
-                               th:field="*{qxtquantity}" placeholder="Book Description"
-                               class="form-control"
-                               id="qxtQuantity" >
+                        <input type="number" th:field="*{qxtQuantity}" class="form-control" id="qxtQuantity">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="qxtPrice" class="col-sm-2 col-form-label">Price</label>
                     <div class="col-sm-10">
-                        <input type="number"
-                               th:field="*{qxtprice}" placeholder="Book Price"
-                               class="form-control"
-                               id="qxtPrice" >
+                        <input type="number" th:field="*{qxtPrice}" class="form-control" id="qxtPrice">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="authors" class="col-sm-2 col-form-label">Authors</label>
                     <div class="col-sm-10">
-                        <div th:each="author:${qxtAuthors}" class="mx-2 px-2">
+                        <div th:each="author : ${qxtAuthors}" class="mx-2 px-2">
                             <input type="checkbox" name="qxtAuthorIds"
-                                   th:attr="id='chkAuth_'+${author.getQxtid()}"
-                                   th:value="${author.getQxtid()}"
+                                   th:attr="id='chkAuth_'+${author.qxtId}"
+                                   th:value="${author.qxtId}"
                                    th:checked="${qxtBook.authors.contains(author)}"/>
-                            <label th:attr="for='chkAuth_'+${author.getQxtid()}" th:text="${author.getQxtname()}"></label>
+                            <label th:attr="for='chkAuth_'+${author.qxtId}" th:text="${author.qxtName}"></label>
                         </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="qxtActive" class="col-sm-2 col-form-label">Active</label>
                     <div class="col-sm-10">
-                        <input type="checkbox"
-                               th:field="*{qxtisActive}"
-                               id="qxtisActive" >
+                        <input type="checkbox" th:field="*{qxtActive}" id="qxtActive">
                     </div>
                 </div>
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-success"
-                        th:text="${qxtBook.getQxtid() != null ? 'Update' :'Create'}">Save</button>
+                        th:text="${qxtBook.qxtId != null ? 'Update' :'Create'}">Save</button>
                 <a th:href="@{/qxtbooks}" class="btn btn-secondary">Back to list</a>
             </div>
         </div>
