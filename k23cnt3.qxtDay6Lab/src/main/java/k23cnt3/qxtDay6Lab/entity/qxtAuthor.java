@@ -2,8 +2,6 @@ package k23cnt3.qxtDay6Lab.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,22 +10,24 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter
+@Setter
 public class qxtAuthor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long qxtId;
+    private Long id;
 
-    String qxtCode;
-    String qxtName;
-    String qxtDescription;
-    String qxtImgUrl;
-    String qxtEmail;
-    String qxtPhone;
-    String qxtAddress;
-    boolean qxtActive;
+    private String code;
+    private String name;
+    private String description;
+    private String imgUrl;
+    private String email;
+    private String phone;
+    private String address;
+    private boolean isActive;
 
-    @ManyToMany(mappedBy = "authors")   // phải trùng với QxtBook.authors
-    List<qxtBook> books = new ArrayList<>();
+    // Tạo mối quan hệ với bảng book
+    @ManyToMany(mappedBy = "qxtAuthors")
+    private List<qxtBook> books = new ArrayList<>();
 }

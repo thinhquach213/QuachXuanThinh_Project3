@@ -1,12 +1,10 @@
 package k23cnt3.qxtDay6Lab.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 @Entity
 @Data
 @Builder
@@ -14,25 +12,26 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class qxtBook {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long qxtId;
-    private String qxtCode;
-    private String qxtName;
-    private String qxtDescription;
-    private String qxtImgUrl;
-    private Integer qxtQuantity;
-    private Double qxtPrice;
-    private Boolean qxtActive;
+    private Long id;
+
+    private String code;
+    private String name;
+    private String description;
+    private String imgUrl;
+    private Integer quantity;
+    private Double price;
+    private Boolean isActive;
+
     // Tạo mối quan hệ với bảng author
     @ManyToMany
     @JoinTable(
-            name = "qxt_Book_author",
+            name = "qxt_book_author",
             joinColumns = @JoinColumn(name = "qxtBookId"),
-            inverseJoinColumns = @JoinColumn(name =
-                    "qxtAuthorId")
+            inverseJoinColumns = @JoinColumn(name = "qxtAuthorId")
     )
-    private List<qxtAuthor> authors = new ArrayList<>();
+    private List<qxtAuthor> qxtAuthors = new ArrayList<>();
 }
