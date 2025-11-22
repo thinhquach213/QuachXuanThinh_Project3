@@ -33,7 +33,7 @@
             <td th:text="${book.quantity}">Quantity</td>
             <td th:text="${book.price}">Price</td>
             <td>
-<span th:each="author : ${book.vtdAuthors}"
+<span th:each="author : ${book.qxtAuthors}"
       class="mx-1 badge rounded-pill bg-warning text-dark"
       th:text="${author.getName()}">
 </span>

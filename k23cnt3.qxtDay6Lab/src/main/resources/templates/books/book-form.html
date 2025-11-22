@@ -58,7 +58,7 @@
                             <input type="checkbox" name="authorIds"
                                    th:attr="id='chkAuth_'+${author.id}"
                                    th:value="${author.id}"
-                                   th:checked="${book.vtdAuthors.contains(author)}"/>
+                                   th:checked="${book.qxtAuthors.contains(author)}"/>
                             <label th:attr="for='chkAuth_'+${author.id}" th:text="${author.name}">Author Name</label>
                         </div>
                     </div>

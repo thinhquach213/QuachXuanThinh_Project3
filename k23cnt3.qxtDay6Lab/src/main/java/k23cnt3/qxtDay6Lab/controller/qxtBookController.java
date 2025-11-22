@@ -51,25 +51,29 @@ public class qxtBookController {
     public String saveBook(@ModelAttribute qxtBook book,
                            @RequestParam List<Long> authorIds,
                            @RequestParam("imageBook") MultipartFile imageFile) {
+
         if (!imageFile.isEmpty()) {
             try {
-                // Tạo thư mục nếu chưa tồn tại
+                // Tạo thư mục upload nếu chưa có
                 Path uploadPath = Paths.get(UPLOAD_DIR + UPLOAD_PathFile);
                 if (!Files.exists(uploadPath)) {
                     Files.createDirectories(uploadPath);
                 }
 
-                // Lấy phần mở rộng của file ảnh
+                // Xử lý tên file
                 String originalFilename = StringUtils.cleanPath(imageFile.getOriginalFilename());
                 String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
 
-                // Tạo tên file mới + phần mở rộng gốc
+                // Đặt tên file mới theo code của book
                 String newFileName = book.getCode() + fileExtension;
                 Path filePath = uploadPath.resolve(newFileName);
+
+                // Copy file lên server
                 Files.copy(imageFile.getInputStream(), filePath);
 
-                // Lưu đường dẫn ảnh vào thuộc tính imgUrl của Book
+                // Lưu đường dẫn ảnh
                 book.setImgUrl("/" + UPLOAD_PathFile + newFileName);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -77,8 +81,8 @@ public class qxtBookController {
 
         List<qxtAuthor> authors = new ArrayList<>(authorService.findAllById(authorIds));
         book.setQxtAuthors(authors);
-        bookService.saveBook(book);
 
+        bookService.saveBook(book);
         return "redirect:/books";
     }
 
@@ -91,6 +95,7 @@ public class qxtBookController {
         return "books/book-form";
     }
 
+    // Xóa sách
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
