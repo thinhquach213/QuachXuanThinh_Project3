@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINH LONGBOOK - Truyện Tranh Màu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        /* Header */
+        .site-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .tagline {
+            font-size: 14px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .main-nav {
+            background-color: var(--light-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            color: var(--dark-color);
+            padding: 15px 20px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--secondary-color);
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: transparent;
+            padding: 15px 0;
+            margin-bottom: 0;
+        }
+
+        .breadcrumb-item a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--light-color);
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .filter-item {
+            margin-bottom: 15px;
+        }
+
+        .filter-item label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .filter-item input {
+            margin-right: 10px;
+        }
+
+        /* Product Card */
+        .product-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .product-img {
+            height: 220px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 10px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product-price {
+            margin-bottom: 10px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .sale-price {
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        .discount-badge {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Category Header */
+        .category-header {
+            background-color: var(--light-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .category-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        /* Sorting */
+        .sorting-options {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .sort-btn {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .sort-btn.active, .sort-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sorting-options {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .product-img {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header class="site-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <a href="#" class="logo">MINH <span>LONGBOOK</span></a>
+                <div class="tagline">Ươm mầm tri thức</div>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="d-inline-block me-4">
+                    <i class="fas fa-user me-1"></i>
+                    <span>Tài khoản</span>
+                </div>
+                <div class="d-inline-block">
+                    <i class="fas fa-shopping-cart me-1"></i>
+                    <span>Giỏ hàng (0)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Navigation -->
+<nav class="main-nav">
+    <div class="container">
+        <div class="d-flex flex-wrap">
+            <a href="#" class="nav-link active">TRANG CHỦ</a>
+            <a href="#" class="nav-link">SÁCH MẦM NON</a>
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                    SÁCH THIẾU NHI
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#"><i class="fas fa-book me-2"></i>Truyện Tranh Màu</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-font me-2"></i>Truyện Chữ</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-flask me-2"></i>Kiến Thức Khoa Học</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-heart me-2"></i>Kỹ Năng Sống Cho Học Sinh</a>
+                </div>
+            </div>
+            <a href="#" class="nav-link">SÁCH KĨ NĂNG</a>
+            <a href="#" class="nav-link">SÁCH KINH DOANNH</a>
+            <a href="#" class="nav-link">SÁCH MẸ VÀ BÉ</a>
+            <a href="#" class="nav-link">SÁCH VĂN HỌC</a>
+            <a href="#" class="nav-link">SÁCH THAM KHẢO</a>
+            <a href="#" class="nav-link">ĐỒ CHƠI TRẺ EM - VPP</a>
+            <a href="#" class="nav-link">NOTEBOOK</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Breadcrumb -->
+<div class="container mt-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home me-1"></i>Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="#">Danh mục</a></li>
+            <li class="breadcrumb-item active" aria-current="page">TRUYỆN TRANH MÀU</li>
+        </ol>
+    </nav>
+</div>
+
+<!-- Main Content -->
+<div class="container my-4">
+    <div class="row">
+        <!-- Sidebar Filters -->
+        <div class="col-lg-3 mb-4">
+            <div class="sidebar">
+                <h3 class="sidebar-title">LỌC SẢN PHẨM</h3>
+
+                <div class="mb-4">
+                    <h5 class="fw-bold mb-3">NHÀ XUẤT BẢN</h5>
+                    <div class="filter-item">
+                        <label>
+                            <input type="checkbox" checked>
+                            <span>Mỹ Thuật</span>
+                        </label>
+                    </div>
+                    <div class="filter-item">
+                        <label>
+                            <input type="checkbox">
+                            <span>NXB Mỹ Thuật</span>
+                        </label>
+                    </div>
+                    <div class="filter-item">
+                        <label>
+                            <input type="checkbox">
+                            <span>Kim Đồng</span>
+                        </label>
+                    </div>
+                    <div class="filter-item">
+                        <label>
+                            <input type="checkbox">
+                            <span>NXB Trẻ</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h5 class="fw-bold mb-3">GIÁ</h5>
+                    <div class="filter-item">
+                        <label>
+                            <input type="radio" name="price" checked>
+                            <span>Dưới 50.000₫</span>
+                        </label>
+                    </div>
+                    <div class="filter-item">
+                        <label>
+                            <input type="radio" name="price">
+                            <span>50.000₫ - 100.000₫</span>
+                        </label>
+                    </div>
+                    <div class="filter-item">
+                        <label>
+                            <input type="radio" name="price">
+                            <span>100.000₫ - 200.000₫</span>
+                        </label>
+                    </div>
+                    <div class="filter-item">
+                        <label>
+                            <input type="radio" name="price">
+                            <span>Trên 200.000₫</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn btn-danger w-100">ÁP DỤNG BỘ LỌC</button>
+            </div>
+
+            <div class="sidebar mt-3">
+                <h3 class="sidebar-title">SẢN PHẨM ĐÃ XEM</h3>
+                <div class="text-center py-4">
+                    <i class="fas fa-history fa-2x mb-3 text-muted"></i>
+                    <p class="text-muted">Chưa có sản phẩm nào</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Listing -->
+        <div class="col-lg-9">
+            <!-- Category Header -->
+            <div class="category-header">
+                <h1 class="category-title">TRUYỆN TRANH MÀU</h1>
+                <p class="text-muted mb-0">Mới / Nổi bật / Bán chạy nhất</p>
+            </div>
+
+            <!-- Sorting Options -->
+            <div class="sorting-options">
+                <div class="sort-btn active">Mới nhất</div>
+                <div class="sort-btn">Bán chạy</div>
+                <div class="sort-btn">Giá thấp đến cao</div>
+                <div class="sort-btn">Giá cao đến thấp</div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="row">
+                <!-- Product 1 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="product-card">
+                        <div class="product-img">
+                            <span>Ảnh sách: Tuyển Tập Truyện Cổ Tích Việt Nam</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Sách: Tuyển Tập Truyện Cổ Tích Việt Nam...</div>
+                            <div class="product-price">
+                                <span class="original-price">125.000₫</span>
+                                <span class="sale-price">100.000₫</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="discount-badge">-20%</span>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-cart-plus me-1"></i> Thêm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="product-card">
+                        <div class="product-img">
+                            <span>Ảnh sách: Ba Chú Lợn Con</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Sách: Ba Chú Lợn Con (Tái bản)</div>
+                            <div class="product-price">
+                                <span class="original-price">20.000₫</span>
+                                <span class="sale-price">16.000₫</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="discount-badge">-20%</span>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-cart-plus me-1"></i> Thêm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="product-card">
+                        <div class="product-img">
+                            <span>Ảnh sách: Combo Truyện Cổ Tích Việt Nam</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Sách: Combo Truyện Cổ Tích Việt Nam D...</div>
+                            <div class="product-price">
+                                <span class="original-price">120.000₫</span>
+                                <span class="sale-price">90.000₫</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="discount-badge">-25%</span>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-cart-plus me-1"></i> Thêm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="product-card">
+                        <div class="product-img">
+                            <span>Ảnh sách: Combo Tuyển Tập Truyện Cổ Tích</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Sách: Combo Tuyển Tập Truyện Cổ Tích ...</div>
+                            <div class="product-price">
+                                <span class="original-price">250.000₫</span>
+                                <span class="sale-price">187.500₫</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="discount-badge">-25%</span>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-cart-plus me-1"></i> Thêm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="product-card">
+                        <div class="product-img">
+                            <span>Ảnh sách: Cây Tre Trăm Đốt</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Sách: Cây Tre Trăm Đốt (Truyện Cổ Tích)</div>
+                            <div class="product-price">
+                                <span class="original-price">45.000₫</span>
+                                <span class="sale-price">36.000₫</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="discount-badge">-20%</span>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-cart-plus me-1"></i> Thêm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <div class="product-card">
+                        <div class="product-img">
+                            <span>Ảnh sách: Tấm Cám (Truyện Tranh)</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">Sách: Tấm Cám (Truyện Tranh Màu)</div>
+                            <div class="product-price">
+                                <span class="original-price">55.000₫</span>
+                                <span class="sale-price">44.000₫</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="discount-badge">-20%</span>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-cart-plus me-1"></i> Thêm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h4 class="mb-3">MINH LONGBOOK</h4>
+                <p>Ươm mầm tri thức Việt</p>
+                <p>Chuyên cung cấp sách thiếu nhi, sách giáo dục và đồ chơi trẻ em chất lượng.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h4 class="mb-3">LIÊN HỆ</h4>
+                <p><i class="fas fa-map-marker-alt me-2"></i> 123 Đường Sách, Quận 1, TP.HCM</p>
+                <p><i class="fas fa-phone me-2"></i> (028) 1234 5678</p>
+                <p><i class="fas fa-envelope me-2"></i> info@minhlongbook.vn</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h4 class="mb-3">KẾT NỐI VỚI CHÚNG TÔI</h4>
+                <div class="social-icons">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-youtube fa-lg"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-tiktok fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center pt-3 border-top border-secondary">
+            <p>&copy; 2023 MINH LONGBOOK. Tất cả các quyền được bảo lưu.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Toggle sort buttons active state
+    document.querySelectorAll('.sort-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            this.classList.add('active');
+        });
+    });
+
+    // Add to cart functionality
+    document.querySelectorAll('.btn-outline-danger').forEach(button => {
+        button.addEventListener('click', function() {
+            const productTitle = this.closest('.product-card').querySelector('.product-title').textContent;
+            alert(`Đã thêm "${productTitle}" vào giỏ hàng!`);
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+        <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="admin/admin-layout :: content">
+<body>
+<div>
+    <h1>Dashboard</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <h5>Total Users</h5>
+                <p th:text="${userCount}">0</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <h5>Total Books</h5>
+                <p th:text="${bookCount}">0</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 mb-3">
+                <h5>Total Orders</h5>
+                <p th:text="${orderCount}">0</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
