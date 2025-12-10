@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Tin tức | ToyLand</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .news-card { border-radius: 12px; overflow: hidden; background: #fff; transition: transform .3s, box-shadow .3s; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,.15); }
+        .news-card img { width: 100%; height: 180px; object-fit: cover; }
+        .news-card .card-body { padding: 15px; }
+        .news-card .card-title { font-weight: 700; color: #2a7f62; }
+        .news-card .card-text { margin-top: 8px; color: #555; }
+        .news-card .btn-detail { border: 1px solid #2a7f62; color: #2a7f62; border-radius: 8px; transition: 0.2s; }
+        .news-card .btn-detail:hover { background-color: #2a7f62; color: #fff; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container d-flex align-items-center">
+
+        <!-- CHỈ LOGO -->
+        <a class="navbar-brand" th:href="@{/}">
+            <img src="/images/logo.jpg" alt="ToyLand Logo" style="height:60px; width:auto;">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- ==================== MENU ==================== -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" th:href="@{/}">Trang chủ</a></li>
+                <li class="nav-item"><a class="nav-link active" th:href="@{/products}">Sản phẩm</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/promotions}">Khuyến mãi</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/products/new}">Hàng mới</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/news}">Tin tức</a></li>
+            </ul>
+
+            <!-- ==================== SEARCH ==================== -->
+            <form class="d-flex mx-lg-3" th:action="@{/products/search}" method="get">
+                <div class="input-group">
+                    <input type="search" class="form-control form-control-sm search-input"
+                           name="keyword" placeholder="Tìm kiếm sản phẩm..." required>
+                    <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+
+            <!-- ==================== CART & USER ==================== -->
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cart}">
+                        <i class="fa-solid fa-shopping-cart"></i> Giỏ hàng
+                        <span class="badge bg-danger ms-1" th:text="${cartItemCount}">0</span>
+                    </a>
+                </li>
+
+                <div class="d-flex align-items-center">
+
+                    <!-- Logged in -->
+                    <span th:if="${#authentication.principal != 'anonymousUser'}"
+                          class="me-3 fw-bold text-primary">
+                    Xin chào, <span th:text="${#authentication.principal.username}"></span>
+                </span>
+
+                    <form th:if="${#authentication.principal != 'anonymousUser'}"
+                          th:action="@{/logout}" method="post">
+                        <button class="btn btn-danger btn-sm">Đăng xuất</button>
+                    </form>
+
+                    <!-- Not logged in -->
+                    <a th:if="${#authentication.principal == 'anonymousUser'}"
+                       href="/login" class="btn btn-primary btn-sm">
+                        Đăng nhập
+                    </a>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container py-5">
+    <h2 class="text-center mb-4"><i class="fa-solid fa-newspaper"></i> Tin tức mới nhất</h2>
+    <div class="row g-4">
+        <div class="col-lg-4 col-md-6 col-sm-12" th:each="n : ${newsList}">
+            <div class="news-card shadow-sm">
+                <img th:src="${n.imageUrl != null ? n.imageUrl : '/images/demo-news.jpg'}" alt="Ảnh tin tức">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${n.title}"></h5>
+                    <p class="text-muted" th:text="${#temporals.format(n.createdDate, 'dd/MM/yyyy')}"></p>
+                    <p class="card-text" th:text="${n.summary}"></p>
+                    <a th:href="@{/news/{id}(id=${n.id})}" class="btn btn-detail w-100 mt-2">
+                        <i class="fa-solid fa-eye"></i> Xem chi tiết
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

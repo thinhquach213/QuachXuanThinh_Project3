@@ -1,38 +1,52 @@
 package k23cnt3.qxtWebbansach.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Data;
 
+@Data
 @Entity
-@Table(name = "orders")
+@Table(name = "qxt_orders")   // Đổi tên bảng
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "qxt_id")   // Đổi tên cột id
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "qxt_user_id")  // Đổi tên cột khóa ngoại
     private User user;
 
+    @Column(name = "qxt_order_date")
     private LocalDateTime orderDate;
+
+    @Column(name = "qxt_total_price")
     private Double totalPrice;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "qxt_status")
     private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    // --- Thông tin người nhận ---
+    @Column(name = "qxt_full_name")
     private String fullName;
+
+    @Column(name = "qxt_phone")
     private String phone;
+
+    @Column(name = "qxt_address")
     private String address;
+
+    @Column(name = "qxt_payment_method")
     private String paymentMethod;
 
-    public Order() {}
-
+    // Getter – Setter (nếu bạn muốn giữ nguyên)
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

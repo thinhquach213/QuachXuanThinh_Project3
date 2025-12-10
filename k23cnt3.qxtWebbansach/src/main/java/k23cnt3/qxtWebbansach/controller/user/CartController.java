@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import k23cnt3.qxtWebbansach.entity.User;
 import k23cnt3.qxtWebbansach.service.CartService;
 import k23cnt3.qxtWebbansach.service.UserService;
@@ -24,8 +23,7 @@ public class CartController {
         User user = userService.getCurrentUser();
         model.addAttribute("items", cartService.getItems(user));
         model.addAttribute("total", cartService.getTotal(user));
-
-        return "user/cart";  // Trỏ đến: templates/user/cart.html
+        return "user/cart";
     }
 
     @PostMapping("/add")
@@ -33,7 +31,6 @@ public class CartController {
                              @RequestParam Integer quantity) {
         User user = userService.getCurrentUser();
         cartService.addProduct(user, productId, quantity);
-
         return "redirect:/cart";
     }
 

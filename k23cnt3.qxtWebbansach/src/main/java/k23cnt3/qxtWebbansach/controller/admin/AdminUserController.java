@@ -13,14 +13,11 @@ import k23cnt3.qxtWebbansach.repository.UserRepository;
 import k23cnt3.qxtWebbansach.repository.CartRepository;
 
 @Controller
-@RequestMapping("/admin/user")   // ★ DÙNG ĐÚNG ĐƯỜNG DẪN BẠN MUỐN
+@RequestMapping("/admin/user")
 public class AdminUserController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private CartRepository cartRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -40,20 +37,33 @@ public class AdminUserController {
         return "admin/user/form";
     }
 
-    // ⭐ LƯU USER MỚI
+    // ⭐ SAVE (ADD + EDIT)
     @PostMapping("/save")
     public String save(@ModelAttribute User user) {
 
-        // Mã hóa mật khẩu
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getId() == null) {
+            // ✅ USER MỚI → mã hóa password + tạo cart 1 lần
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            Cart cart = new Cart();
+            user.setCart(cart);
+
+        } else {
+            // ✅ EDIT USER
+            User oldUser = userRepository.findById(user.getId()).orElseThrow();
+
+            // giữ cart cũ
+            user.setCart(oldUser.getCart());
+
+            // nếu không nhập password → giữ password cũ
+            if (user.getPassword() == null || user.getPassword().isBlank()) {
+                user.setPassword(oldUser.getPassword());
+            } else {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+        }
 
         userRepository.save(user);
-
-        // Tự tạo giỏ hàng cho user (nếu chưa có)
-        Cart cart = new Cart();
-        cart.setUser(user);
-        cartRepository.save(cart);
-
         return "redirect:/admin/user";
     }
 
@@ -66,7 +76,7 @@ public class AdminUserController {
         return "admin/user/form";
     }
 
-    // ⭐ XÓA
+    // ⭐ DELETE
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         userRepository.deleteById(id);

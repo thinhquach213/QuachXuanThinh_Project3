@@ -10,8 +10,14 @@ import k23cnt3.qxtWebbansach.repository.OrderRepository;
 import k23cnt3.qxtWebbansach.repository.UserRepository;
 import k23cnt3.qxtWebbansach.repository.ReviewRepository;
 
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 @Controller
-@RequestMapping("/admin") // URL admin
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
@@ -23,29 +29,37 @@ public class AdminController {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    // Trang dashboard chính
     @GetMapping({"", "/", "/index"})
     public String adminHome(Model model) {
-        // 1. Doanh thu thực tế
+
+        // ===== DASHBOARD =====
         Double totalRevenue = orderRepository.getTotalRevenue();
         if (totalRevenue == null) totalRevenue = 0.0;
 
-        // 2. Số lượng user
         long userCount = userRepository.count();
-
-        // 3. Lượt mua (tổng số đơn hàng)
         long purchaseCount = orderRepository.count();
 
-        // 4. Đánh giá trung bình
         Double averageRating = reviewRepository.getAverageRating();
         if (averageRating == null) averageRating = 0.0;
 
-        // Thêm dữ liệu vào model
         model.addAttribute("totalRevenue", totalRevenue);
         model.addAttribute("userCount", userCount);
         model.addAttribute("purchaseCount", purchaseCount);
         model.addAttribute("averageRating", String.format("%.1f/5", averageRating));
 
-        return "admin/index";  // Trả về template admin/index.html
+        // ===== BIỂU ĐỒ DOANH THU =====
+        List<String> months = new ArrayList<>();
+        List<Double> revenues = new ArrayList<>();
+
+        for (int i = 1; i <= 12; i++) {
+            months.add(Month.of(i).getDisplayName(TextStyle.SHORT, Locale.ENGLISH));
+            Double revenue = orderRepository.getRevenueByMonth(i);
+            revenues.add(revenue == null ? 0.0 : revenue);
+        }
+
+        model.addAttribute("months", months);
+        model.addAttribute("revenues", revenues);
+
+        return "admin/index";
     }
 }

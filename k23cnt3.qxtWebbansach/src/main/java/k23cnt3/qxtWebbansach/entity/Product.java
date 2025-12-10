@@ -2,35 +2,49 @@ package k23cnt3.qxtWebbansach.entity;
 
 import jakarta.persistence.*;
 import lombok.ToString;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "products")
+@Table(name = "qxt_products") // đổi tên bảng
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "qxt_id") // thêm tiền tố qxt_
     private Long id;
 
+    @Column(name = "qxt_name")
     private String name;
-    @Column(columnDefinition = "TEXT")
+
+    @Column(name = "qxt_description")
     private String description;
+
+    @Column(name = "qxt_price")
     private Double price;
+
+    @Column(name = "qxt_quantity")
     private Integer quantity;
 
-    @Column(name = "image_url")
+    @Column(name = "qxt_image_url")
     private String imageUrl;
 
-    private boolean featured;
-    private boolean isNew;
+    @Column(name = "qxt_featured", nullable = false)
+    private boolean featured = false;
 
+    @Column(name = "qxt_is_new", nullable = false)
+    private boolean newProduct = false;
+
+    @Column(name = "qxt_discount")
     private Double discount;
+
+    @Column(name = "qxt_sale_price")
     private Double salePrice;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "qxt_category_id") // đổi tên cột
     @ToString.Exclude
     private Category category;
 
@@ -38,19 +52,10 @@ public class Product {
     @ToString.Exclude
     private List<CartItem> cartItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private List<OrderItem> orderItems = new ArrayList<>();
-
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private List<Review> reviews = new ArrayList<>();
-
+    @Column(name = "qxt_created_date")
     private LocalDateTime createdDate = LocalDateTime.now();
 
-    public Product() {}
-
-    // Getters & Setters
+    // --- Getter & Setter ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -72,8 +77,8 @@ public class Product {
     public boolean isFeatured() { return featured; }
     public void setFeatured(boolean featured) { this.featured = featured; }
 
-    public boolean isNew() { return isNew; }
-    public void setNew(boolean isNew) { this.isNew = isNew; }
+    public boolean isNewProduct() { return newProduct; }
+    public void setNewProduct(boolean newProduct) { this.newProduct = newProduct; }
 
     public Double getDiscount() { return discount; }
     public void setDiscount(Double discount) { this.discount = discount; }
@@ -86,12 +91,6 @@ public class Product {
 
     public List<CartItem> getCartItems() { return cartItems; }
     public void setCartItems(List<CartItem> cartItems) { this.cartItems = cartItems; }
-
-    public List<OrderItem> getOrderItems() { return orderItems; }
-    public void setOrderItems(List<OrderItem> orderItems) { this.orderItems = orderItems; }
-
-    public List<Review> getReviews() { return reviews; }
-    public void setReviews(List<Review> reviews) { this.reviews = reviews; }
 
     public LocalDateTime getCreatedDate() { return createdDate; }
     public void setCreatedDate(LocalDateTime createdDate) { this.createdDate = createdDate; }

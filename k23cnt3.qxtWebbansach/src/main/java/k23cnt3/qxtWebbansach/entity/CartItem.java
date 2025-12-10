@@ -3,21 +3,23 @@ package k23cnt3.qxtWebbansach.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "cart_items")
+@Table(name = "qxt_cart_items")   // Đổi tên bảng với tiền tố qxt_
 public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "qxt_id")       // Đổi tên cột
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
+    @JoinColumn(name = "qxt_cart_id")   // FK thêm tiền tố qxt_
     private Cart cart;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "qxt_product_id") // FK thêm tiền tố qxt_
     private Product product;
 
+    @Column(name = "qxt_quantity")      // Cột số lượng thêm tiền tố
     private Integer quantity;
 
     public CartItem() {}
@@ -28,6 +30,7 @@ public class CartItem {
         this.quantity = quantity;
     }
 
+    // GETTER – SETTER
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

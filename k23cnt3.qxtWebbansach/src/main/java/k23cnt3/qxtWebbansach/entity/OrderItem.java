@@ -1,28 +1,33 @@
 package k23cnt3.qxtWebbansach.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
-@Table(name = "order_items")
+@Table(name = "qxt_order_items")   // Đổi tên bảng
 public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "qxt_id")      // Đổi tên cột id
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "qxt_order_id")   // Khóa ngoại → bảng qxt_orders
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "qxt_product_id") // Khóa ngoại → bảng qxt_products (nếu bạn đổi tên Product)
     private Product product;
 
+    @Column(name = "qxt_quantity")
     private Integer quantity;
+
+    @Column(name = "qxt_price")
     private Double price;
 
-    public OrderItem() {}
-
+    // Getter – Setter thủ công giữ nguyên
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

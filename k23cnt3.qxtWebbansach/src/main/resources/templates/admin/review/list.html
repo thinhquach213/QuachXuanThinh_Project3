@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Review</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style>
+        body { background:#f5f7fb; font-family:"Inter",sans-serif; margin:0; }
+        .page-container { width:100%; padding:25px 40px; }
+        .card-custom { border-radius:18px; padding:25px; background:#fff; box-shadow:0 6px 20px rgba(0,0,0,0.08); border:none; width:100%; }
+        .table-wrapper { border-radius:16px; overflow:hidden; border:2px solid #000; margin-top:20px; }
+        .table { width:100%; border-collapse:collapse; table-layout:fixed; }
+        .table thead th { background:#ebeff7; text-transform:uppercase; color:#003566; font-weight:700; text-align:center; border-bottom:2px solid #003566; padding:12px 8px; }
+        .table tbody td { padding:10px 8px; text-align:center; word-wrap:break-word; }
+        .action-btn { padding:6px 10px; border-radius:10px; border:1px solid #cfd3da; background:white; cursor:pointer; transition: all 0.2s; }
+        .action-btn:hover { background:#eef4ff; transform:translateY(-2px); }
+        .btn-add { background:#0d6efd; border:none; padding:10px 20px; border-radius:12px; color:#fff; font-weight:600; margin-bottom:15px; cursor:pointer; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="card-custom">
+        <h2>Danh sách Review</h2>
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Người dùng</th>
+                    <th>Sản phẩm</th>
+                    <th>Nội dung</th>
+                    <th>Rating</th>
+                    <th>Ngày tạo</th>
+                    <th>Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="review : ${reviews}">
+                    <td th:text="${review.id}"></td>
+                    <td th:text="${review.user.username}"></td>
+                    <td th:text="${review.product.name}"></td>
+                    <td th:text="${review.content}"></td>
+                    <td th:text="${review.rating}"></td>
+                    <td th:text="${#dates.format(review.createdAt,'dd/MM/yyyy HH:mm')}"></td>
+                    <td>
+                        <a th:href="@{'/admin/reviews/detail?id=' + ${review.id}}" class="action-btn">Xem</a>
+                        <a th:href="@{'/admin/reviews/delete?id=' + ${review.id}}" class="action-btn">Xóa</a>
+                    </td>
+                </tr>
+                <tr th:if="${reviews.size() == 0}">
+                    <td colspan="7">Chưa có review nào.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

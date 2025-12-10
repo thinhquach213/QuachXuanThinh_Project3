@@ -3,7 +3,6 @@ package k23cnt3.qxtWebbansach.controller.user;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import k23cnt3.qxtWebbansach.entity.News;
 import k23cnt3.qxtWebbansach.service.NewsService;
 
@@ -26,8 +25,9 @@ public class NewsController {
     @GetMapping("/{id}")
     public String newsDetail(@PathVariable Long id, Model model) {
         News news = newsService.getNewsById(id);
-        if (news == null) return "redirect:/news";
-
+        if (news == null) {
+            return "redirect:/news";
+        }
         model.addAttribute("news", news);
         return "user/news/detail";
     }
