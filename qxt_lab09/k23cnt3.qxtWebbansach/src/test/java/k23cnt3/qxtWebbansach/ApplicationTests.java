@@ -1,4 +1,4 @@
-package K23cnt3.QxtWebBanSach;
+package k23cnt3.Qxtwebbansach;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BookLand - Cửa hàng sách giáo khoa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c5aa0;
+            --primary-light: #4a7bc2;
+            --secondary-color: #1a202c;
+            --accent-color: #e74c3c;
+            --light-bg: #f8f9fa;
+            --border-color: #e1e5eb;
+            --text-light: #6c757d;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', 'Inter', sans-serif;
+            color: var(--secondary-color);
+        }
+
+        /* NAVBAR */
+        .navbar {
+            padding: 15px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light)) !important;
+        }
+        .navbar-brand {
+            font-size: 1.9rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: white !important;
+        }
+        .nav-link {
+            font-weight: 500;
+            padding: 12px;
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+        .nav-link:hover { color: white !important; }
+
+        /* SEARCH */
+        .search-input { width: 230px; }
+
+        /* BANNER */
+        .banner-img {
+            height: 480px;
+            object-fit: cover;
+            filter: brightness(80%);
+        }
+        .banner-text h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-shadow: 3px 3px 12px rgba(0,0,0,0.9);
+        }
+        .banner-text p {
+            font-size: 1.4rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+        }
+
+        /* BOOK CARD */
+        .book-card {
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s ease;
+            background: white;
+            border: 1px solid var(--border-color);
+        }
+        .book-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .book-card img {
+            height: 280px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        /* SALE BADGE */
+        .sale-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--accent-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        /* FLASH SALE */
+        .flashsale-section {
+            padding: 40px 30px;
+            border-radius: 14px;
+            background: linear-gradient(to right, #4a7bc2, #2c5aa0);
+            border: 1px solid var(--primary-light);
+            color: white;
+        }
+
+        /* NEWS */
+        .news-card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .news-card img {
+            height: 220px;
+            object-fit: cover;
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 50px 0;
+        }
+        footer .fab { transition: 0.2s; }
+        footer .fab:hover { transform: scale(1.15); }
+
+        /* Book info */
+        .book-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            height: 3.2em;
+            overflow: hidden;
+        }
+
+        .book-author {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+
+        .book-grade {
+            display: inline-block;
+            background: rgba(44, 90, 160, 0.1);
+            color: var(--primary-color);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 992px) {
+            .banner-img { height: 300px; }
+            .banner-text h1 { font-size: 2rem; }
+            .book-card img { height: 220px; }
+        }
+
+        /* Category badges */
+        .category-badge {
+            display: inline-block;
+            background: #e9ecef;
+            color: var(--secondary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+    <div class="container d-flex align-items-center">
+
+        <!-- LOGO -->
+        <a class="navbar-brand" th:href="@{/}">
+            <i class="fas fa-book me-2"></i>BookLand
+            <span class="small d-block" style="font-size: 0.8rem; font-weight: 400;">Tri thức cho tương lai</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- ==================== MENU ==================== -->
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" th:href="@{/}">Trang chủ</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/books}">Tất cả sách</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/books/category/1}">Sách giáo khoa</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/books/category/2}">Sách tham khảo</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/news}">Tin giáo dục</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/about}">Giới thiệu</a></li>
+            </ul>
+
+            <!-- ==================== SEARCH ==================== -->
+            <form class="d-flex mx-lg-3" th:action="@{/books/search}" method="get">
+                <div class="input-group">
+                    <input type="search" class="form-control form-control-sm search-input"
+                           name="keyword" placeholder="Tìm kiếm sách..." required>
+                    <button class="btn btn-light btn-sm" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+
+            <!-- ==================== CART & USER ==================== -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cart}">
+                        <i class="fa-solid fa-shopping-cart"></i> Giỏ hàng
+                        <span class="badge bg-danger ms-1" th:text="${cartItemCount}">0</span>
+                    </a>
+                </li>
+
+                <div class="d-flex align-items-center ms-3">
+                    <!-- Logged in -->
+                    <span th:if="${#authentication.principal != 'anonymousUser'}"
+                          class="me-3 fw-bold text-white">
+                        <i class="fas fa-user me-1"></i>
+                        <span th:text="${#authentication.principal.username}"></span>
+                    </span>
+
+                    <form th:if="${#authentication.principal != 'anonymousUser'}"
+                          th:action="@{/logout}" method="post">
+                        <button class="btn btn-light btn-sm">Đăng xuất</button>
+                    </form>
+
+                    <!-- Not logged in -->
+                    <a th:if="${#authentication.principal == 'anonymousUser'}"
+                       href="/login" class="btn btn-light btn-sm">
+                        <i class="fas fa-sign-in-alt me-1"></i>Đăng nhập
+                    </a>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ==================== BANNER ==================== -->
+<div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/images/banner-books-1.jpg" class="d-block w-100 banner-img" alt="Sách giáo khoa">
+            <div class="carousel-caption banner-text">
+                <h1>Thế giới sách giáo khoa</h1>
+                <p>Đầy đủ bộ sách từ lớp 1 đến lớp 12</p>
+                <a th:href="@{/books/category/1}" class="btn btn-light btn-lg">Mua ngay</a>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="/images/banner-books-2.jpg" class="d-block w-100 banner-img" alt="Sách tham khảo">
+            <div class="carousel-caption banner-text">
+                <h1>Sách tham khảo chất lượng</h1>
+                <p>Nâng cao kiến thức - Phát triển tư duy</p>
+                <a th:href="@{/books/category/2}" class="btn btn-warning btn-lg">Khám phá</a>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="/images/banner-books-3.jpg" class="d-block w-100 banner-img" alt="Khuyến mãi">
+            <div class="carousel-caption banner-text">
+                <h1>GIẢM GIÁ ĐẾN 30%</h1>
+                <p>Mua sách đầu năm - Nhận ưu đãi hấp dẫn</p>
+                <a th:href="@{/books/sale}" class="btn btn-danger btn-lg">Săn sale</a>
+            </div>
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<!-- ==================== SALE SECTION ==================== -->
+<div class="container my-5">
+    <h2 class="text-center mb-4 fw-bold text-danger">
+        <i class="fa-solid fa-tags"></i> SÁCH GIẢM GIÁ
+    </h2>
+
+    <div class="row g-4">
+        <!-- BOOK 1 -->
+        <div class="col-lg-3 col-md-6">
+            <div class="book-card shadow-sm position-relative">
+                <span class="sale-badge">-15%</span>
+                <img src="/images/book-sale-1.jpg" class="card-img-top" alt="Toán nâng cao lớp 9">
+                <div class="card-body d-flex flex-column">
+                    <div class="book-grade">Lớp 9</div>
+                    <h5 class="book-title">Toán nâng cao lớp 9</h5>
+                    <p class="book-author">Tác giả: Nguyễn Văn A</p>
+                    <div class="mt-auto">
+                        <span class="text-decoration-line-through text-muted">120.000₫</span>
+                        <span class="fw-bold text-danger ms-2">102.000₫</span>
+                    </div>
+                    <form th:action="@{/cart/add}" method="post" class="mt-3">
+                        <input type="hidden" name="productId" value="8">
+                        <input type="hidden" name="quantity" value="1">
+                        <button class="btn btn-danger w-100">Mua ngay</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOK 2 -->
+        <div class="col-lg-3 col-md-6">
+            <div class="book-card shadow-sm position-relative">
+                <span class="sale-badge">-20%</span>
+                <img src="/images/book-sale-2.jpg" class="card-img-top" alt="Tiếng Anh 10">
+                <div class="card-body d-flex flex-column">
+                    <div class="book-grade">Lớp 10</div>
+                    <h5 class="book-title">Tiếng Anh 10 - Sách bài tập</h5>
+                    <p class="book-author">Bộ Giáo dục & Đào tạo</p>
+                    <div class="mt-auto">
+                        <span class="text-decoration-line-through text-muted">95.000₫</span>
+                        <span class="fw-bold text-danger ms-2">76.000₫</span>
+                    </div>
+                    <form th:action="@{/cart/add}" method="post" class="mt-3">
+                        <input type="hidden" name="productId" th:value="17">
+                        <input type="hidden" name="quantity" value="1">
+                        <button class="btn btn-danger w-100">Mua ngay</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOK 3 -->
+        <div class="col-lg-3 col-md-6">
+            <div class="book-card shadow-sm position-relative">
+                <span class="sale-badge">-10%</span>
+                <img src="/images/book-sale-3.jpg" class="card-img-top" alt="Vật lý 11">
+                <div class="card-body d-flex flex-column">
+                    <div class="book-grade">Lớp 11</div>
+                    <h5 class="book-title">Vật lý 11 - Chuyên đề nâng cao</h5>
+                    <p class="book-author">TS. Trần Văn B</p>
+                    <div class="mt-auto">
+                        <span class="text-decoration-line-through text-muted">85.000₫</span>
+                        <span class="fw-bold text-danger ms-2">76.500₫</span>
+                    </div>
+                    <form th:action="@{/cart/add}" method="post" class="mt-3">
+                        <input type="hidden" name="productId" value="1">
+                        <input type="hidden" name="quantity" value="1">
+                        <button class="btn btn-danger w-100">Mua ngay</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOK 4 -->
+        <div class="col-lg-3 col-md-6">
+            <div class="book-card shadow-sm position-relative">
+                <span class="sale-badge">-25%</span>
+                <img src="/images/book-sale-4.jpg" class="card-img-top" alt="Hóa học 12">
+                <div class="card-body d-flex flex-column">
+                    <div class="book-grade">Lớp 12</div>
+                    <h5 class="book-title">Hóa học 12 - Ôn thi THPT Quốc gia</h5>
+                    <p class="book-author">PGS. Nguyễn Thị C</p>
+                    <div class="mt-auto">
+                        <span class="text-decoration-line-through text-muted">150.000₫</span>
+                        <span class="fw-bold text-danger ms-2">112.500₫</span>
+                    </div>
+                    <form th:action="@{/cart/add}" method="post" class="mt-3">
+                        <input type="hidden" name="productId" value="10">
+                        <input type="hidden" name="quantity" value="1">
+                        <button class="btn btn-danger w-100">Mua ngay</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== FEATURED BOOKS ==================== -->
+<div class="container my-5">
+    <h2 class="text-center mb-4 fw-bold" style="color: var(--primary-color);">
+        SÁCH NỔI BẬT
+    </h2>
+
+    <div class="row g-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="book-card shadow-sm">
+                <img src="/images/book-featured-1.jpg" class="card-img-top" alt="Ngữ văn 10">
+                <div class="card-body d-flex flex-column">
+                    <div class="book-grade">Lớp 10</div>
+                    <h5 class="book-title">Ngữ văn 10 - Tập 1</h5>
+                    <p class="book-author">Bộ Giáo dục & Đào tạo</p>
+                    <p class="fw-bold text-danger mt-auto">45.000₫</p>
+                    <form th:action="@{/cart/add}" method="post" class="mt-2">
+                        <input type="hidden" name="productId" value="12">
+                        <input type="hidden" name="quantity" value="1">
+                        <button class="btn btn-primary w-100">Thêm vào giỏ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="book-card shadow-sm">
+                <img src="/images/book-featured-2.jpg" class="card-img-top" alt="Lịch sử 11">
+                <div class="card-body d-flex flex-column">
+                    <div class="book-grade">Lớp 11</div>
+                    <h5 class="book-title">Lịch sử 11 - Cơ bản và nâng cao</h5>
+                    <p class="book-author">TS. Phạm Văn D</p>
+                    <p class="fw-bold text-danger mt-auto">75.000₫</p>
+                    <button class="btn btn-primary w-100">Thêm vào giỏ</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="book-card shadow-sm">
+                <img src="/images/book-featured-3.jpg" class="card-img-top" alt="Địa lý 12">
+                <div class="card-body d-flex flex-column">
+                    <div class="book-grade">Lớp 12</div>
+                    <h5 class="book-title">Địa lý 12 - Ôn thi tốt nghiệp</h5>
+                    <p class="book-author">ThS. Lê Thị E</p>
+                    <p class="fw-bold text-danger mt-auto">68.000₫</p>
+                    <form th:action="@{/cart/add}" method="post" class="mt-2">
+                        <input type="hidden" name="productId" value="7">
+                        <input type="hidden" name="quantity" value="1">
+                        <button class="btn btn-primary w-100">Thêm vào giỏ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="book-card shadow-sm">
+                <img src="/images/book-featured-4.jpg" class="card-img-top" alt="Sinh học 9">
+                <div class="card-body d-flex flex-column">
+                    <div class="book-grade">Lớp 9</div>
+                    <h5 class="book-title">Sinh học 9 - Bài tập trắc nghiệm</h5>
+                    <p class="book-author">GS. Trần Văn F</p>
+                    <p class="fw-bold text-danger mt-auto">55.000₫</p>
+                    <form th:action="@{/cart/add}" method="post" class="mt-2">
+                        <input type="hidden" name="productId" value="5">
+                        <input type="hidden" name="quantity" value="1">
+                        <button class="btn btn-primary w-100">Thêm vào giỏ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== FLASH SALE ==================== -->
+<div class="container my-5">
+    <div class="flashsale-section shadow-sm text-center">
+        <h2 class="fw-bold mb-2">
+            <i class="fa-solid fa-bolt"></i> KHUYẾN MÃI ĐẶC BIỆT
+        </h2>
+        <p class="fw-bold">Chương trình áp dụng đến hết: <span class="text-warning">31/12/2025</span></p>
+
+        <div class="position-relative overflow-hidden rounded mb-4 mx-auto" style="max-width: 850px;">
+            <img src="/images/banner-sale-books.jpg" class="w-100 rounded" style="height:270px; object-fit:cover;">
+            <div class="position-absolute top-50 start-50 translate-middle text-white fw-bold p-3"
+                 style="background:rgba(0,0,0,0.6); border-radius:10px;">
+                <h3 class="mb-1">MUA 5 TẶNG 1</h3>
+                <p>Áp dụng cho tất cả sách giáo khoa</p>
+                <a th:href="@{/books/sale}" class="btn btn-light fw-bold btn-sm">Xem chi tiết</a>
+            </div>
+        </div>
+
+        <a th:href="@{/books/sale}" class="btn btn-lg btn-light fw-bold" style="background: white; color: var(--primary-color);">
+            <i class="fa-solid fa-book-open"></i> XEM TOÀN BỘ SÁCH KHUYẾN MÃI
+        </a>
+    </div>
+</div>
+
+<!-- ==================== NEWS ==================== -->
+<div class="container my-5">
+    <h2 class="text-center mb-4 fw-bold" style="color: var(--primary-color);">
+        TIN GIÁO DỤC
+    </h2>
+
+    <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+            <div class="news-card shadow-sm">
+                <img src="/images/news-education-1.jpg" class="card-img-top" alt="Phương pháp học">
+                <div class="card-body">
+                    <h5 class="fw-bold" style="color: var(--primary-color);">5 phương pháp học tập hiệu quả cho học sinh</h5>
+                    <p class="text-muted small"><i class="fas fa-calendar me-1"></i>15/11/2025</p>
+                    <p>Khám phá những phương pháp học tập khoa học giúp học sinh nâng cao hiệu quả tiếp thu kiến thức...</p>
+                    <a href="/news" class="btn btn-outline-primary btn-sm">Đọc thêm</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="news-card shadow-sm">
+                <img src="/images/news-education-2.jpg" class="card-img-top" alt="Chọn sách tham khảo">
+                <div class="card-body">
+                    <h5 class="fw-bold" style="color: var(--primary-color);">Hướng dẫn chọn sách tham khảo phù hợp</h5>
+                    <p class="text-muted small"><i class="fas fa-calendar me-1"></i>01/11/2025</p>
+                    <p>Làm thế nào để chọn sách tham khảo phù hợp với trình độ và nhu cầu của con em bạn...</p>
+                    <a href="/news" class="btn btn-outline-primary btn-sm">Đọc thêm</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+            <div class="news-card shadow-sm">
+                <img src="/images/news-education-3.jpg" class="card-img-top" alt="Ôn thi hiệu quả">
+                <div class="card-body">
+                    <h5 class="fw-bold" style="color: var(--primary-color);">Bí quyết ôn thi THPT Quốc gia hiệu quả</h5>
+                    <p class="text-muted small"><i class="fas fa-calendar me-1"></i>20/10/2025</p>
+                    <p>Chia sẻ kinh nghiệm và lộ trình ôn thi hiệu quả cho kỳ thi THPT Quốc gia...</p>
+                    <a href="/news" class="btn btn-outline-primary btn-sm">Đọc thêm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h4 class="fw-bold">
+                    <i class="fas fa-book me-2"></i>BookLand
+                </h4>
+                <p><i class="fa-solid fa-map-marker-alt me-2"></i>123 Nguyễn Trãi, Thanh Xuân, Hà Nội</p>
+                <p><i class="fa-solid fa-phone me-2"></i>0901 234 567</p>
+                <p><i class="fa-solid fa-envelope me-2"></i>contact@bookland.vn</p>
+                <p><i class="fa-solid fa-clock me-2"></i>Mở cửa: 8:00 - 20:00 (T2 - CN)</p>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <h4 class="fw-bold">Danh mục sách</h4>
+                <ul class="list-unstyled">
+                    <li><a class="text-white text-decoration-none" th:href="@{/books/category/1}">Sách giáo khoa</a></li>
+                    <li><a class="text-white text-decoration-none" th:href="@{/books/category/2}">Sách tham khảo</a></li>
+                    <li><a class="text-white text-decoration-none" th:href="@{/books/category/3}">Sách ngoại ngữ</a></li>
+                    <li><a class="text-white text-decoration-none" th:href="@{/books/category/4}">Sách kỹ năng</a></li>
+                    <li><a class="text-white text-decoration-none" th:href="@{/books/sale}">Sách khuyến mãi</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <h4 class="fw-bold">Kết nối với chúng tôi</h4>
+                <a class="me-3 text-white" href="#"><i class="fab fa-facebook fa-2x"></i></a>
+                <a class="me-3 text-white" href="#"><i class="fab fa-instagram fa-2x"></i></a>
+                <a class="text-white" href="#"><i class="fab fa-youtube fa-2x"></i></a>
+
+                <p class="mt-3">Đăng ký nhận bản tin:</p>
+                <div class="input-group">
+                    <input class="form-control" type="email" placeholder="Email của bạn">
+                    <button class="btn btn-primary">Đăng ký</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4 pt-3 border-top border-secondary">
+            <p>© 2025 BookLand - Cửa hàng sách giáo khoa trực tuyến. Mọi quyền được bảo lưu.</p>
+            <p class="small">Giấy phép kinh doanh số: 0123456789 do Sở KHĐT Hà Nội cấp ngày 01/01/2025</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

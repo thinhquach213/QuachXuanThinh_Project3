@@ -8,10 +8,10 @@
 		<version>4.0.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>K23cnt3.QxtWebBanSach</groupId>
-	<artifactId>K23cnt3.QxtWebBanSach</artifactId>
+	<groupId>k23cnt3.Qxtwebbansach</groupId>
+	<artifactId>k23cnt3.Qxtwebbansach</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>K23cnt3.QxtWebBanSach</name>
+	<name>k23cnt3.Qxtwebbansach</name>
 	<description>Quach Xuan Thinh-k23cnt3-2310900100</description>
 	<url/>
 	<licenses>

@@ -1,10 +1,10 @@
-package K23cnt3.QxtWebBanSach;
+package NhtK23cnt2.prj3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApplicationTests {
+class Project3ApplicationTests {
 
 	@Test
 	void contextLoads() {

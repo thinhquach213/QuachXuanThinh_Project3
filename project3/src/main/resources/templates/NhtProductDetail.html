@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${product.name}">Chi tiết sản phẩm</title>
+    <link rel="stylesheet" th:href="@{/css/nht-style.css}">
+</head>
+<body class="product-detail-page">
+
+<!-- HEADER -->
+<th:block th:replace="layout/NhtHeader :: nht_header"></th:block>
+
+<!-- BREADCRUMB -->
+<div class="nht-breadcrumb">
+    <a th:href="@{/}">Trang chủ</a>
+    <span>/</span>
+    <span th:text="${product.name}"></span>
+</div>
+
+<section class="nht-detail-wrap">
+
+    <!-- ẢNH SẢN PHẨM -->
+    <div class="nht-detail-img-wrap">
+        <img class="detail-img" th:src="@{|/images/${product.image}|}">
+    </div>
+
+    <!-- THÔNG TIN -->
+    <div class="detail-info">
+        <h2 th:text="${product.name}"></h2>
+
+        <p class="price"
+           th:text="${#numbers.formatInteger(product.price,0,'POINT')} + ' đ'"></p>
+
+        <p class="nht-detail-desc" th:text="${product.description}"></p>
+
+        <div class="nht-benefit-wrap">
+            <ul class="nht-benefit-list">
+                <li>100% bông trắng cao cấp</li>
+                <li>Miễn phí gói quà</li>
+                <li>Bảo hành đường chỉ</li>
+            </ul>
+            <ul class="nht-benefit-list">
+                <li>Ảnh chụp thật</li>
+                <li>Miễn phí thiệp</li>
+            </ul>
+        </div>
+
+        <form th:action="@{'/cart/add/' + ${product.id}}" method="post">
+            <button class="btn-primary">Thêm vào giỏ hàng</button>
+        </form>
+    </div>
+</section>
+
+
+<!-- EXTRA INFO -->
+<section class="nht-detail-extra">
+
+    <div class="nht-product-extra">
+        <h3>Thông tin sản phẩm</h3>
+        <p th:text="${product.description}"></p>
+    </div>
+
+    <div class="nht-review-section">
+        <h3>Đánh giá khách hàng</h3>
+
+        <div class="nht-review-card">
+            <div class="nht-review-header">
+                <span>Hà Linh</span>
+                <span class="nht-review-stars">★★★★★</span>
+            </div>
+            <p>Gấu xinh, giao hàng nhanh.</p>
+        </div>
+
+        <form class="review-form">
+            <textarea placeholder="Viết đánh giá..."></textarea>
+            <button type="submit">Gửi đánh giá</button>
+        </form>
+
+    </div>
+</section>
+
+<th:block th:replace="layout/NhtFooter :: nht_footer"></th:block>
+
+</body>
+
+</html>
