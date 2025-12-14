@@ -28,8 +28,10 @@ public class QxtAdminProductController {
     private final QxtProductRepository productRepository;
     private final QxtCategoryRepository categoryRepository;
 
-    private final String uploadDir = "uploads/product-images";
+    /** Thư mục lưu ảnh **/
+    private final String uploadDir = "D:/prj3/project3/uploads/product-images";
 
+    /** Check user trong session có phải ADMIN không */
     private boolean isAdmin(HttpSession session) {
         QxtUser currentUser = (QxtUser) session.getAttribute("currentUser");
         return currentUser != null && currentUser.getRole() == QxtUserRole.ADMIN;
