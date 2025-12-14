@@ -6,18 +6,44 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/product")
 public class NhtProductClientController {
 
     private final NhtProductService productService;
 
-    @GetMapping("/{id}")
-    public String detail(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("product", productService.getById(id));
-        return "NhtProductDetail"; // resources/templates/NhtProductDetail.html
+    @GetMapping("/product/{id}")
+    public String getDetail(@PathVariable Long id, Model model) {
+
+        var product = productService.getById(id);
+
+        if (product == null) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("product", product);
+        return "product/NhtProductDetail";
+    }
+
+
+    @GetMapping("/tag/{tag}")
+    public String getByTag(@PathVariable String tag, Model model) {
+
+        // Map tag -> tên hiển thị đẹp
+        Map<String, String> tagDisplay = Map.of(
+                "tangbanhai", "Tặng bạn gái",
+                "bigsize", "Gấu size lớn",
+                "intenn", "Gấu bông in tên"
+        );
+
+        String displayName = tagDisplay.getOrDefault(tag, tag);
+
+        model.addAttribute("displayName", displayName);
+        model.addAttribute("products", productService.findByTag(tag));
+
+        return "product/NhtTagProducts";
     }
 }

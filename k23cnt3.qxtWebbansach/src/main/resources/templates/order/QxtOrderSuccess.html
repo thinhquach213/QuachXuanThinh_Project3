@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt hàng thành công</title>
+    <link rel="stylesheet" th:href="@{/css/qxt-style.css}">
+</head>
+<body>
+
+<!-- HEADER -->
+<th:block th:replace="layout/QxtHeader :: qxt_header"></th:block>
+
+<div class="qxt-page-wrapper">
+
+    <h2 class="qxt-page-title">Đặt hàng thành công</h2>
+
+    <p style="text-align: center; margin-bottom: 16px;">
+        Cảm ơn <strong th:text="${order.customerName}">bạn</strong> đã tin tưởng shop Gấu bông ❤️<br>
+        Đơn hàng của bạn đã được ghi nhận, chúng mình sẽ liên hệ xác nhận sớm nhất.
+    </p>
+
+    <!-- Thông tin đơn hàng + khách -->
+    <div class="qxt-cart-bottom" style="align-items: flex-start; margin-top: 10px;">
+        <div>
+            <p><strong>Mã đơn hàng:</strong> <span th:text="${order.id}">1</span></p>
+            <p>
+                <strong>Ngày đặt:</strong>
+                <span th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}">01/12/2025 12:00</span>
+            </p>
+            <p>
+                <strong>Trạng thái:</strong>
+                <span class="qxt-order-status-badge"
+                      th:text="${order.status}">Đang chờ xác nhận</span>
+            </p>
+        </div>
+
+        <div>
+            <p><strong>Khách hàng:</strong> <span th:text="${order.customerName}">Tên khách</span></p>
+            <p><strong>Số điện thoại:</strong> <span th:text="${order.phone}">0123456789</span></p>
+            <p><strong>Địa chỉ giao hàng:</strong> <span th:text="${order.address}">Địa chỉ</span></p>
+            <p th:if="${order.note != null and !#strings.isEmpty(order.note)}">
+                <strong>Ghi chú:</strong> <span th:text="${order.note}"></span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Bảng chi tiết sản phẩm -->
+    <h3 class="qxt-section-title" style="margin-top: 24px;">Chi tiết sản phẩm</h3>
+
+    <table class="qxt-cart-table">
+        <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th style="width: 80px;">SL</th>
+            <th>Thành tiền</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${order.items}">
+            <td>
+                <span class="qxt-cart-product-name"
+                      th:text="${item.productName}">Gấu Teddy</span>
+            </td>
+            <td th:text="${#numbers.formatInteger(item.productPrice, 0, 'POINT')} + ' đ'">199.000 đ</td>
+            <td th:text="${item.quantity}">1</td>
+            <td th:text="${#numbers.formatInteger(item.productPrice * item.quantity, 0, 'POINT')} + ' đ'">199.000 đ</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Tổng tiền + nút -->
+    <div class="qxt-cart-bottom">
+        <div class="qxt-cart-total">
+            Tổng thanh toán:
+            <span th:text="${#numbers.formatInteger(order.totalAmount, 0, 'POINT')} + ' đ'">199.000 đ</span>
+        </div>
+
+        <div class="qxt-cart-actions">
+            <a th:href="@{/}" class="qxt-btn-outline">Tiếp tục mua sắm</a>
+        </div>
+    </div>
+
+    <p style="margin-top: 16px; font-size: 14px; color: #666; text-align: center;">
+        Shop sẽ gọi điện / nhắn tin xác nhận đơn.
+        Vui lòng chú ý điện thoại giúp tụi mình nhé 🥰
+    </p>
+
+</div>
+
+<!-- FOOTER -->
+<th:block th:replace="layout/QxtFooter :: qxt_footer"></th:block>
+
+</body>
+</html>

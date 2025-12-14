@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tra cứu đơn hàng</title>
+    <link rel="stylesheet" th:href="@{/css/nht-style.css}">
+</head>
+
+<body class="order-track-page">
+
+<!-- HEADER -->
+<th:block th:replace="layout/NhtHeader :: nht_header"></th:block>
+
+<div class="nht-page-wrapper">
+
+    <h2 class="nht-page-title">Tra cứu đơn hàng</h2>
+
+    <!-- FORM TRA CỨU -->
+    <form th:action="@{/order/track}" th:object="${trackForm}" method="post" class="nht-track-form">
+
+        <!-- Lỗi chung -->
+        <div th:if="${#fields.hasAnyErrors()}" class="nht-form-error-group">
+            <p th:each="err : ${#fields.allErrors()}" th:text="${err}"></p>
+        </div>
+
+        <!-- Mã đơn -->
+        <div class="nht-form-group">
+            <label class="nht-form-label">Mã đơn hàng *</label>
+            <div class="nht-form-control">
+                <input type="number" th:field="*{orderId}">
+                <div class="nht-field-error" th:if="${#fields.hasErrors('orderId')}" th:errors="*{orderId}"></div>
+            </div>
+        </div>
+
+        <!-- Số điện thoại -->
+        <div class="nht-form-group">
+            <label class="nht-form-label">Số điện thoại *</label>
+            <div class="nht-form-control">
+                <input type="text" th:field="*{phone}">
+                <div class="nht-field-error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="nht-track-submit">
+            <button type="submit" class="nht-btn-primary">Tra cứu</button>
+        </div>
+
+    </form>
+
+    <!-- Không tìm thấy -->
+    <div th:if="${notFound}" class="nht-track-not-found">
+        Không tìm thấy đơn hàng phù hợp. Kiểm tra lại thông tin giúp mình nhé 💗
+    </div>
+
+    <!-- KẾT QUẢ ĐƠN HÀNG -->
+    <div th:if="${order != null}" class="nht-track-result">
+
+        <h3 class="nht-result-title">Thông tin đơn hàng</h3>
+
+        <div class="nht-order-info">
+            <p><b>Mã đơn:</b> <span th:text="${order.id}"></span></p>
+            <p><b>Khách hàng:</b> <span th:text="${order.customerName}"></span></p>
+            <p><b>Số điện thoại:</b> <span th:text="${order.phone}"></span></p>
+            <p><b>Địa chỉ:</b> <span th:text="${order.address}"></span></p>
+            <p><b>Ghi chú:</b> <span th:text="${order.note} ?: 'Không có'"></span></p>
+
+            <!-- Trạng thái -->
+            <p>
+                <b>Trạng thái:</b>
+
+                <span class="nht-order-status-badge"
+                      th:classappend="' status-' + ${order.status.toString().toLowerCase()}"
+                      th:switch="${order.status}">
+
+        <span th:case="${T(NhtK23cnt2.prj3.entity.order.NhtOrderStatus).WAIT_CONFIRM}">
+            Đang chờ xác nhận
+        </span>
+
+        <span th:case="${T(NhtK23cnt2.prj3.entity.order.NhtOrderStatus).PREPARING}">
+            Đang chuẩn bị hàng
+        </span>
+
+        <span th:case="${T(NhtK23cnt2.prj3.entity.order.NhtOrderStatus).SHIPPING}">
+            Đang giao hàng
+        </span>
+
+        <span th:case="${T(NhtK23cnt2.prj3.entity.order.NhtOrderStatus).COMPLETED}">
+            Hoàn tất
+        </span>
+
+        <span th:case="${T(NhtK23cnt2.prj3.entity.order.NhtOrderStatus).CANCELLED}">
+            Đã hủy
+        </span>
+
+        <span th:case="*">Không xác định</span>
+    </span>
+            </p>
+
+
+            <p>
+                <b>Ngày tạo:</b>
+                <span th:text="${#temporals.format(order.createdAt,'dd/MM/yyyy HH:mm')}"></span>
+            </p>
+        </div>
+
+        <!-- SẢN PHẨM -->
+        <table class="nht-cart-table">
+            <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="item : ${order.items}">
+                <td th:text="${item.productName}"></td>
+                <td th:text="${#numbers.formatInteger(item.productPrice,0,'POINT')} + ' đ'"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${#numbers.formatInteger(item.productPrice * item.quantity,0,'POINT')} + ' đ'"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Tổng tiền -->
+        <div class="nht-order-total-row">
+            <div class="nht-cart-total">
+                Tổng tiền:
+                <span th:text="${#numbers.formatInteger(order.totalAmount,0,'POINT')} + ' đ'"></span>
+            </div>
+
+            <a th:href="@{/}" class="nht-btn-outline">Về trang chủ</a>
+        </div>
+
+    </div>
+
+</div>
+<th:block th:replace="layout/NhtFooter :: nht_footer"></th:block>
+
+</body>
+</html>
