@@ -8,7 +8,7 @@
 <body>
 
 <!-- HEADER -->
-<th:block th:replace="~{layout/QxtHeader :: qxt_header}"></th:block>
+<th:block th:replace="~{layout/qxtHeader :: qxt_header}"></th:block>
 
 <div class="qxt-page-wrapper">
 
@@ -34,7 +34,7 @@
         </tbody>
     </table>
 
-    <div class="qxt-cart-bottom" style="margin-top:16px;">
+    <div class="qxt-cart-bottom">
         <div class="qxt-cart-total">
             Tổng cộng:
             <span th:text="${#numbers.formatInteger(total,0,'POINT')} + ' đ'"></span>
@@ -42,80 +42,58 @@
     </div>
 
     <!-- FORM THANH TOÁN -->
-    <form th:action="@{/checkout}" th:object="${checkoutForm}" method="post" style="margin-top:24px;">
+    <form th:action="@{/checkout}" th:object="${checkoutForm}" method="post">
 
-        <!-- ERRORS -->
         <div th:if="${#fields.hasGlobalErrors()}" class="qxt-error">
             <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
         </div>
 
-        <!-- HỌ TÊN -->
         <div class="qxt-form-group">
-            <label class="qxt-form-label">Họ tên *</label>
-            <div class="qxt-form-control">
-                <input type="text" th:field="*{customerName}">
-                <div class="qxt-field-error" th:errors="*{customerName}"></div>
-            </div>
+            <label>Họ tên *</label>
+            <input type="text" th:field="*{customerName}" placeholder="Vui lòng nhập họ tên">
+            <div class="qxt-field-error" th:errors="*{customerName}"></div>
         </div>
 
-        <!-- PHONE -->
         <div class="qxt-form-group">
-            <label class="qxt-form-label">Số điện thoại *</label>
-            <div class="qxt-form-control">
-                <input type="text" th:field="*{phone}">
-                <div class="qxt-field-error" th:errors="*{phone}"></div>
-            </div>
+            <label>Số điện thoại *</label>
+            <input type="text" th:field="*{phone}" placeholder="Vui lòng nhập số điện thoại">
+            <div class="qxt-field-error" th:errors="*{phone}"></div>
         </div>
 
-        <!-- ĐỊA CHỈ -->
         <div class="qxt-form-group">
-            <label class="qxt-form-label">Địa chỉ nhận hàng *</label>
-            <div class="qxt-form-control">
-                <textarea rows="2" th:field="*{address}"></textarea>
-                <div class="qxt-field-error" th:errors="*{address}"></div>
-            </div>
+            <label>Địa chỉ nhận hàng *</label>
+            <textarea rows="2" th:field="*{address}" placeholder="Vui lòng nhập địa chỉ"></textarea>
+            <div class="qxt-field-error" th:errors="*{address}"></div>
         </div>
 
-        <!-- PHƯƠNG THỨC THANH TOÁN -->
         <div class="qxt-payment-box">
-            <label class="title">Phương thức thanh toán *</label>
+            <label>Phương thức thanh toán *</label>
+            <label class="option">
+                <input type="radio" th:field="*{paymentMethod}" value="COD">
+                Thanh toán khi nhận hàng (COD)
+            </label>
+            <label class="option">
+                <input type="radio" th:field="*{paymentMethod}" value="BANK">
+                Chuyển khoản ngân hàng
+            </label>
 
-            <div class="payment-options">
-
-                <label class="option">
-                    <input type="radio" th:field="*{paymentMethod}" value="COD">
-                    Thanh toán khi nhận hàng (COD)
-                </label>
-
-                <label class="option">
-                    <input type="radio" th:field="*{paymentMethod}" value="BANK">
-                    Chuyển khoản ngân hàng
-                </label>
-
-            </div>
-
-            <!-- QR BANK -->
-            <div id="qrBox" class="qr-box" style="display:none;">
+            <div id="qrBox" class="qr-box">
                 <p>Quét mã QR để thanh toán:</p>
                 <img src="/images/qr-bank.jpg" alt="QR Banking" class="qr-image">
                 <p class="bank-info">
-                    Ngân hàng: MB Bank <br>
-                    Chủ tài khoản: Nguyễn Huy Thông <br>
+                    Ngân hàng: Vietin Bank<br>
+                    Chủ tài khoản: Phạm Tuấn Anh<br>
                     Nội dung: <b>Thanh toán đơn hàng</b>
                 </p>
             </div>
         </div>
 
-        <!-- NOTE -->
         <div class="qxt-form-group">
-            <label class="qxt-form-label">Ghi chú cho shop</label>
-            <div class="qxt-form-control">
-                <textarea rows="2" th:field="*{note}"></textarea>
-            </div>
+            <label>Ghi chú cho shop</label>
+            <textarea rows="2" th:field="*{note}" placeholder="Bạn muốn ghi gì cho shop?"></textarea>
         </div>
 
-        <!-- SUBMIT -->
-        <div class="qxt-cart-actions" style="margin-top:18px;">
+        <div class="qxt-cart-actions">
             <a th:href="@{/cart}" class="qxt-btn-outline">Quay lại giỏ hàng</a>
             <button type="submit" class="qxt-btn-primary">Đặt hàng</button>
         </div>
@@ -123,21 +101,19 @@
     </form>
 </div>
 
-<!-- SCRIPT HIỂN THỊ QR -->
 <script>
     function updateQR() {
         const bank = document.querySelector('input[value="BANK"]');
         const qr = document.getElementById("qrBox");
-        if (bank.checked) qr.style.display = "block";
-        else qr.style.display = "none";
+        qr.style.display = bank.checked ? "block" : "none";
     }
-
     document.querySelectorAll('input[name="paymentMethod"]').forEach(r => {
         r.addEventListener("change", updateQR);
     });
     updateQR();
 </script>
-<th:block th:replace="layout/QxtFooter :: qxt_footer"></th:block>
+
+<th:block th:replace="layout/qxtFooter :: qxt_footer"></th:block>
 
 </body>
 </html>

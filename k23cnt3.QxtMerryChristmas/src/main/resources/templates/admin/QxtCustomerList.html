@@ -41,8 +41,7 @@
                 <td th:text="${u.email}"></td>
                 <td th:text="${u.phone}"></td>
                 <td style="text-align:center;">
-                    <a th:href="@{|/admin/users/edit/${u.id}|}"
-                       class="qxt-admin-btn qxt-admin-btn-sm">Sửa</a>
+                    <a th:href="@{|/admin/users/edit/${u.id}|}" class="qxt-admin-btn qxt-admin-btn-sm">Sửa</a>
                     <a th:href="@{|/admin/users/delete/${u.id}|}"
                        class="qxt-admin-btn qxt-admin-btn-sm qxt-admin-btn-danger"
                        onclick="return confirm('Xóa khách hàng này?');">
@@ -52,6 +51,7 @@
             </tr>
             </tbody>
         </table>
+
 
     </div>
 </div>

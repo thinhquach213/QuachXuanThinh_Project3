@@ -8,11 +8,13 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -76,21 +78,4 @@ public class QxtProductClientController {
         return "redirect:/product/" + id;
     }
 
-    /* ========== TAG ========== */
-    @GetMapping("/tag/{tag}")
-    public String getByTag(@PathVariable String tag, Model model) {
-
-        Map<String, String> tagDisplay = Map.of(
-                "tangbanhai", "Tặng bạn gái",
-                "bigsize", "Gấu size lớn",
-                "intenn", "Gấu bông in tên"
-        );
-
-        String displayName = tagDisplay.getOrDefault(tag, tag);
-
-        model.addAttribute("displayName", displayName);
-        model.addAttribute("products", productService.findByTag(tag));
-
-        return "product/QxtTagProducts";
-    }
 }

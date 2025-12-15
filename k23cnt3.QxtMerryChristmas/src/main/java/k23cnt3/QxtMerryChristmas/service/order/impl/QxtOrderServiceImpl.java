@@ -22,9 +22,7 @@ public class QxtOrderServiceImpl implements QxtOrderService {
     private final QxtOrderRepository orderRepository;
 
     @Override
-    public QxtOrder createOrderFromCart(QxtCheckoutForm form,
-                                        List<QxtCartItem> cartItems,
-                                        QxtUser user) {
+    public QxtOrder createOrderFromCart(QxtCheckoutForm form, List<QxtCartItem> cartItems, QxtUser user) {
 
         QxtOrder order = new QxtOrder();
         order.setCustomerName(form.getCustomerName());

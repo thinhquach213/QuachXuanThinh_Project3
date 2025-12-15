@@ -10,6 +10,9 @@ public class WebStaticConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:D:/prj3/project3/uploads/");
+                .addResourceLocations(
+                        "file:C:/project3/PhamTuanAnh-K23CNT3-Project3/project3/uploads/"
+                );
+
     }
 }

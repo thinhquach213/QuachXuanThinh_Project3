@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<th:block th:replace="layout/QxtHeader :: qxt_header"></th:block>
+<th:block th:replace="layout/qxtHeader :: qxt_header"></th:block>
 
 <div class="qxt-breadcrumb">
     <a th:href="@{/}">Trang chủ</a>
@@ -23,11 +23,10 @@
         <span>Trạng thái: </span>
         <span class="qxt-order-status-badge"
               th:switch="${order.status}">
-            <span th:case="'WAIT_CONFIRM'">Chờ xác nhận</span>
+            <span th:case="'WAITING'">Đang chờ xác nhận</span>
+            <span th:case="'CONFIRMED'">Đã đặt thành công</span>
             <span th:case="'PREPARING'">Đang chuẩn bị</span>
             <span th:case="'SHIPPING'">Đang giao hàng</span>
-            <span th:case="'COMPLETED'">Hoàn tất</span>
-            <span th:case="'CANCELLED'">Đã huỷ</span>
             <span th:case="*">Không xác định</span>
         </span>
     </div>
@@ -69,9 +68,16 @@
 
             <tbody>
             <tr th:each="item : ${order.items}">
+                <!-- Tên -->
                 <td th:text="${item.productName}"></td>
+
+                <!-- Giá -->
                 <td th:text="${#numbers.formatInteger(item.productPrice, 0, 'POINT')} + ' đ'"></td>
+
+                <!-- Số lượng -->
                 <td th:text="${item.quantity}"></td>
+
+                <!-- Thành tiền -->
                 <td th:text="${#numbers.formatInteger(item.productPrice * item.quantity, 0, 'POINT')} + ' đ'"></td>
             </tr>
             </tbody>
@@ -84,8 +90,7 @@
     </div>
 
 </section>
-
-<th:block th:replace="layout/QxtFooter :: qxt_footer"></th:block>
+<th:block th:replace="layout/qxtFooter :: qxt_footer"></th:block>
 
 </body>
 </html>

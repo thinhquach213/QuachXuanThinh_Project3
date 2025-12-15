@@ -7,35 +7,17 @@
 </head>
 <body>
 
+
 <!-- ===== HEADER (DÙNG TEMPLATE CHUNG) ===== -->
-<th:block th:replace="~{layout/QxtHeader :: qxt_header}"></th:block>
+<th:block th:replace="~{layout/qxtHeader :: qxt_header}"></th:block>
 
-<!-- CATEGORY NAV -->
-<section class="qxt-category-bar">
-    <div class="qxt-category-list">
 
-        <!-- Trang chủ -->
-        <a th:href="@{/}"
-           th:class="'qxt-category-link' + (${activeCategoryId} == 0 ? ' qxt-category-active' : '')">
-            Trang chủ
-        </a>
 
-        <!-- Category từ DB -->
-        <a th:each="c : ${categories}"
-           th:href="@{'/category/' + ${c.id}}"
-           th:text="${c.name}"
-           th:class="'qxt-category-link' + (${activeCategoryId} == c.id ? ' qxt-category-active' : '')">
-        </a>
-
-    </div>
-</section>
-
-<!-- BREADCRUMB -->
+<!-- BREADCRUMB CHUẨN -->
 <div class="qxt-breadcrumb">
     <a href="/" class="crumb">Trang chủ</a>
     <span>/</span>
-    <a th:href="@{'/category/' + ${currentCategory.id}}"
-       class="crumb"
+    <a th:href="@{'/category/' + ${currentCategory.id}}" class="crumb"
        th:text="${currentCategory.name}"></a>
 </div>
 
@@ -52,7 +34,7 @@
             <a th:href="@{'/product/' + ${p.id}}">
 
                 <!-- Ảnh -->
-                <img th:src="@{|/images/${p.image}|}" alt="" class="qxt-product-img">
+                <img th:src="@{'/uploads/product-images/' + ${p.image}}" alt="" class="qxt-product-img">
 
                 <!-- Tên -->
                 <h4 th:text="${p.name}"></h4>
@@ -67,7 +49,8 @@
     </div>
 </section>
 
-<th:block th:replace="layout/QxtFooter :: qxt_footer"></th:block>
+<th:block th:replace="layout/qxtFooter :: qxt_footer"></th:block>
+
 
 </body>
 </html>

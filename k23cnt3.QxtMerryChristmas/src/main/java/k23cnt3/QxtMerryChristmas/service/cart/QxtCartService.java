@@ -7,7 +7,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +34,7 @@ public class QxtCartService {
 
     /* ================== API CHÍNH ================== */
 
-    /** Lấy danh sách item trong giỏ */
+    /** Lấy danh sách item trong giỏ (dùng trong controller giỏ hàng) */
     public List<QxtCartItem> getItems(HttpSession session) {
         return new ArrayList<>(getCartMap(session).values());
     }
@@ -77,7 +80,7 @@ public class QxtCartService {
         cart.remove(productId);
     }
 
-    /** Tính tổng tiền */
+    /** Tính tổng tiền hiện tại trong giỏ */
     public double getTotal(HttpSession session) {
         return getCartMap(session).values().stream()
                 .mapToDouble(i -> i.getPrice() * i.getQuantity())
@@ -89,18 +92,20 @@ public class QxtCartService {
         session.removeAttribute(CART_SESSION_KEY);
     }
 
-    /* ========= giữ lại tên cũ (nếu view / code khác đang dùng) ========= */
 
+    /** Tên cũ: getCart(session) → trả ra List cho tiện */
     public List<QxtCartItem> getCart(HttpSession session) {
         return getItems(session);
     }
 
+    /** Tên cũ: calculateTotal(items) */
     public double calculateTotal(List<QxtCartItem> items) {
         return items.stream()
                 .mapToDouble(i -> i.getPrice() * i.getQuantity())
                 .sum();
     }
 
+    /** Tên cũ: clearCart(session) */
     public void clearCart(HttpSession session) {
         clear(session);
     }

@@ -7,26 +7,27 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "order_items")
+@Table(name = "qxt_order_items")
 public class QxtOrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "qxt_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
+    @JoinColumn(name = "qxt_order_id", nullable = false)
     private QxtOrder order;
 
-    @Column(name = "product_id", nullable = false)
+    @Column(name = "qxt_product_id", nullable = false)
     private Long productId;
 
-    @Column(name = "product_name", nullable = false, length = 255)
+    @Column(name = "qxt_product_name", nullable = false, length = 255)
     private String productName;
 
-    @Column(name = "product_price", nullable = false)
+    @Column(name = "qxt_product_price", nullable = false)
     private Double productPrice;
 
-    @Column(nullable = false)
+    @Column(name = "qxt_quantity", nullable = false)
     private Integer quantity;
 }

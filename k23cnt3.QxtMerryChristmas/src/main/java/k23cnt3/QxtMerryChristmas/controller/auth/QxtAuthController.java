@@ -21,22 +21,19 @@ public class QxtAuthController {
 
     // Hiển thị form login (GET /login)
     @GetMapping("/login")
-    public String showLoginForm(
-            @RequestParam(value = "redirect", required = false) String redirect,
-            Model model) {
-
+    public String showLoginForm(@RequestParam(value = "redirect", required = false) String redirect,
+                                Model model) {
         model.addAttribute("redirect", redirect);
         return "auth/QxtLogin";
     }
 
     // Xử lý submit form login (POST /login)
     @PostMapping("/login")
-    public String doLogin(
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam(value = "redirect", required = false) String redirect,
-            HttpSession session,
-            Model model) {
+    public String doLogin(@RequestParam String email,
+                          @RequestParam String password,
+                          @RequestParam(value = "redirect", required = false) String redirect,
+                          HttpSession session,
+                          Model model) {
 
         QxtUser user = userService.login(email, password);
         if (user == null) {
@@ -74,12 +71,11 @@ public class QxtAuthController {
     }
 
     @PostMapping("/register")
-    public String doRegister(
-            @RequestParam String fullName,
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String phone,
-            Model model) {
+    public String doRegister(@RequestParam String fullName,
+                             @RequestParam String email,
+                             @RequestParam String password,
+                             @RequestParam String phone,
+                             Model model) {
 
         QxtUser user = userService.registerCustomer(fullName, email, password, phone);
         if (user == null) {

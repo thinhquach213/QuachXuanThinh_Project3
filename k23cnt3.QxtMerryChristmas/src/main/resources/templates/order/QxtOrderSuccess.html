@@ -8,14 +8,14 @@
 <body>
 
 <!-- HEADER -->
-<th:block th:replace="layout/QxtHeader :: qxt_header"></th:block>
+<th:block th:replace="layout/qxtHeader :: qxt_header"></th:block>
 
 <div class="qxt-page-wrapper">
 
     <h2 class="qxt-page-title">Đặt hàng thành công</h2>
 
     <p style="text-align: center; margin-bottom: 16px;">
-        Cảm ơn <strong th:text="${order.customerName}">bạn</strong> đã tin tưởng shop Gấu bông ❤️<br>
+        Cảm ơn <strong th:text="${order.customerName}">bạn</strong> đã tin tưởng Helios Shop<br>
         Đơn hàng của bạn đã được ghi nhận, chúng mình sẽ liên hệ xác nhận sớm nhất.
     </p>
 
@@ -60,7 +60,7 @@
         <tr th:each="item : ${order.items}">
             <td>
                 <span class="qxt-cart-product-name"
-                      th:text="${item.productName}">Gấu Teddy</span>
+                      th:text="${item.productName}">Phụ Kiện</span>
             </td>
             <td th:text="${#numbers.formatInteger(item.productPrice, 0, 'POINT')} + ' đ'">199.000 đ</td>
             <td th:text="${item.quantity}">1</td>
@@ -87,11 +87,11 @@
 
     <p style="margin-top: 16px; font-size: 14px; color: #666; text-align: center;">
         Shop sẽ gọi điện / nhắn tin xác nhận đơn.
-        Vui lòng chú ý điện thoại giúp tụi mình nhé 🥰
+        Vui lòng chú ý điện thoại giúp tụi mình nhé
     </p>
 
 </div>
-<th:block th:replace="layout/QxtFooter :: qxt_footer"></th:block>
+<th:block th:replace="layout/qxtFooter :: qxt_footer"></th:block>
 
 </body>
 </html>

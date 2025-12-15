@@ -1,70 +1,125 @@
-/* ====== NỀN CHUNG ====== */
+/* ====================================================================
+   ADMIN THEME: MATTE DARK CRIMSON EXTENDED & OPTIMIZED
+   Tông màu Đỏ Cà Phê Nhám trên nền Xám Đá Sâu, giao diện phức tạp, bo góc đẹp.
+   - Đảm bảo hơn 700 dòng code.
+   - Fix lỗi khoảng cách và căn chỉnh nút (Gapping & Alignment Fix).
+==================================================================== */
+
+/* --- 01. THIẾT LẬP BIẾN GỐC (ROOT VARIABLES) ------------------------ */
+
+:root {
+    /* MÀU CHỦ ĐẠO (Đỏ Cà Phê/Crimson Nhám) */
+    --color-primary: #8B0000;       /* Dark Crimson (Đỏ Sậm Mờ) */
+    --color-accent: #690000;        /* Maroon Sậm */
+    --color-light-red: #C53030;     /* Đỏ Vừa cho điểm nhấn và viền */
+    --color-danger: #D32F2F;        /* Màu đỏ cảnh báo */
+    --color-success: #388E3C;       /* Màu xanh lá thành công */
+
+    /* MÀU NỀN & CHỮ */
+    --color-text-light: #F0F0F0;    /* Text trắng xám */
+    --color-text-secondary: #B0B0B0;/* Text phụ xám bạc */
+    --color-bg-deep: #0A0A0A;       /* Nền đen sâu nhất */
+    --color-bg-dark: #121212;       /* Nền đen chính (Matte Black) */
+    --color-bg-medium: #1F1F1F;     /* Nền trung gian (Xám đá) */
+    --color-panel-border: rgba(139, 0, 0, 0.3); /* Viền Đỏ rõ hơn */
+    --color-border-dark: #333333;   /* Viền xám tối */
+
+    /* THÔNG SỐ CHUNG */
+    --radius-large: 24px;
+    --radius-medium: 16px;
+    --radius-small: 10px;
+    --transition-speed: 0.3s;
+    --gap-base: 12px;
+}
+
+/* --- 02. HÀM VÀ GRADIENT --------------------------------------------- */
+
+/* Hàm tạo Gradient Đỏ Nhám */
+.rainbow-gradient {
+    background: linear-gradient(135deg, var(--color-light-red), var(--color-primary));
+}
+.rainbow-gradient-shadow {
+    /* Bóng nhám, sâu */
+    box-shadow: 0 10px 25px rgba(139, 0, 0, 0.5);
+}
+
+/* --- 03. NỀN CHUNG VÀ CƠ BẢN ----------------------------------------- */
+
 body {
     margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: radial-gradient(circle at top, #1b2439 0, #050815 55%, #02030a 100%);
-    color: #e5ecff;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Nền sâu Xám Đá */
+    background: radial-gradient(circle at top, #1E1E1E 0, #171717 55%, var(--color-bg-dark) 100%);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    min-height: 100vh;
 }
 
 a {
     text-decoration: none;
-    color: inherit;
+    color: var(--color-light-red);
+    transition: color var(--transition-speed) ease;
+}
+a:hover {
+    color: var(--color-text-light);
 }
 
 .adm-page {
     min-height: 100vh;
-    padding: 24px 40px;
+    padding: 30px 50px;
     box-sizing: border-box;
 }
 
-/* ====== TOP BAR ====== */
+/* --- 04. THANH ĐIỀU HƯỚNG TRÊN (TOP BAR) - CĂN CHỈNH NÚT 1 --------- */
 
 .adm-topbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 20px;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(20, 26, 46, 0.95), rgba(19, 31, 64, 0.95));
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
-    margin: 0 auto 24px auto;
-    max-width: 1180px;
+    padding: 16px 25px;
+    border-radius: var(--radius-medium);
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(40, 40, 40, 0.95));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.75);
+    margin: 0 auto 30px auto;
+    max-width: 1200px;
+    border: 1px solid var(--color-panel-border);
 }
 
 .adm-topbar-left,
 .adm-topbar-right {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--gap-base); /* Khoảng cách giữa các nút/icon */
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu khung quá hẹp */
 }
 
 .adm-topbar-center {
     flex: 1;
     text-align: center;
-    font-size: 14px;
-    color: #c7d2ff;
+    font-size: 15px;
+    color: var(--color-text-secondary);
 }
 
 .adm-topbar-icon {
-    font-size: 20px;
+    font-size: 22px;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: var(--radius-small);
+    transition: background var(--transition-speed);
+}
+.adm-topbar-icon:hover {
+    background: rgba(139, 0, 0, 0.2);
+    color: var(--color-light-red);
 }
 
-.adm-topbar-title {
-    font-weight: 700;
-    font-size: 16px;
-}
-
-.adm-shop-name {
-    font-weight: 500;
-}
-
-/* ====== BUTTON ====== */
+/* --- 05. NÚT CHỨC NĂNG (BUTTONS) ------------------------------------- */
 
 .adm-btn-primary,
 .adm-btn-outline {
-    padding: 8px 18px;
-    border-radius: 999px;
-    font-size: 13px;
+    padding: 10px 24px;
+    border-radius: var(--radius-small);
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     border: 0;
@@ -72,184 +127,265 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
+    transition: all var(--transition-speed) ease;
+    text-transform: uppercase;
+    flex-shrink: 0; /* Ngăn nút bị co lại */
 }
 
 .adm-btn-primary {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    color: #f9fafb;
-    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+    background: linear-gradient(135deg, var(--color-light-red), var(--color-primary));
+    color: var(--color-text-light);
+    box-shadow: 0 5px 15px rgba(139, 0, 0, 0.6);
 }
 
 .adm-btn-primary:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(139, 0, 0, 0.8);
+}
+.adm-btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(139, 0, 0, 0.6);
 }
 
+
 .adm-btn-outline {
-    border: 1px solid rgba(148, 163, 254, 0.8);
-    color: #e5e7eb;
-    background: rgba(15, 23, 42, 0.7);
+    border: 2px solid var(--color-light-red);
+    color: var(--color-text-light);
+    background: rgba(30, 30, 30, 0.8);
 }
 
 .adm-btn-outline:hover {
-    background: rgba(30, 64, 175, 0.7);
+    background: rgba(139, 0, 0, 0.6);
+    border-color: var(--color-light-red);
+}
+.adm-btn-outline:active {
+    transform: scale(0.98);
 }
 
-/* ====== LAYOUT ====== */
+/* --- 06. KHUNG CHÍNH (LAYOUT) ---------------------------------------- */
 
 .adm-layout {
-    max-width: 1180px;
+    max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 260px minmax(0, 1fr);
-    gap: 22px;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 30px;
     align-items: flex-start;
 }
 
-/* ====== SIDEBAR ====== */
+/* --- 07. THANH ĐIỀU HƯỚNG BÊN (SIDEBAR) ------------------------------ */
 
 .adm-sidebar {
-    background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(17, 24, 39, 0.95));
-    border-radius: 20px;
-    padding: 16px 14px;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+    background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(25, 25, 25, 0.98));
+    border-radius: var(--radius-large);
+    padding: 20px 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--color-panel-border);
 }
 
 .adm-sidebar-header {
-    padding: 10px 14px 14px;
-    font-weight: 600;
-    font-size: 15px;
-    border-bottom: 1px solid rgba(75, 85, 99, 0.6);
-    color: #f9fafb;
+    padding: 12px 16px 16px;
+    font-weight: 700;
+    font-size: 16px;
+    border-bottom: 2px solid rgba(139, 0, 0, 0.4);
+    margin-bottom: 15px;
 }
 
 .adm-menu {
-    margin-top: 10px;
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 8px; /* Đảm bảo khoảng cách giữa các menu item */
 }
 
 .adm-menu-item {
-    padding: 11px 14px;
-    border-radius: 14px;
-    font-size: 14px;
-    color: #cbd5f5;
+    padding: 12px 16px;
+    border-radius: var(--radius-medium);
+    font-size: 15px;
+    color: var(--color-text-secondary);
     background: transparent;
     border: 1px solid transparent;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
+    transition: all var(--transition-speed) ease;
 }
 
 .adm-menu-item:hover {
-    background: rgba(31, 41, 84, 0.9);
-    border-color: rgba(79, 70, 229, 0.6);
+    background: rgba(139, 0, 0, 0.15);
+    color: var(--color-light-red);
+    border-color: var(--color-primary);
+    padding-left: 20px;
 }
 
 .adm-menu-item--active {
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.95), rgba(129, 140, 248, 0.9));
-    color: #f9fafb;
+    background: linear-gradient(135deg, rgba(139, 0, 0, 0.95), rgba(105, 0, 0, 0.9));
+    color: var(--color-text-light);
     border-color: transparent;
+    box-shadow: 0 3px 10px rgba(139, 0, 0, 0.5);
+    font-weight: 700;
 }
 
-/* ====== MAIN CONTENT ====== */
+/* --- 08. KHU VỰC NỘI DUNG CHÍNH (MAIN CONTENT) ----------------------- */
 
 .adm-main {
-    background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.28), rgba(15, 23, 42, 0.98));
-    border-radius: 24px;
-    padding: 22px 24px 28px;
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    background: radial-gradient(circle at top left, rgba(139, 0, 0, 0.08), var(--color-bg-dark));
+    border-radius: var(--radius-large);
+    padding: 30px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
+    border: 1px solid var(--color-panel-border);
 }
 
 .adm-page-title {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 800;
-    margin: 0;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--color-border-dark);
+    padding-bottom: 10px;
 }
 
 .adm-page-subtitle {
-    margin: 8px 0 18px;
-    font-size: 14px;
-    color: #cbd5f5;
+    margin: 10px 0 25px;
+    font-size: 15px;
+    color: var(--color-text-secondary);
 }
 
-/* ====== CARDS ====== */
+/* --- 09. THẺ CHỨC NĂNG (CARDS) --------------------------------------- */
 
 .adm-card-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px;
+    gap: 20px;
 }
 
 .adm-card {
-    background: rgba(15, 23, 42, 0.9);
-    border-radius: 20px;
-    padding: 16px 15px;
+    background: rgba(30, 30, 30, 0.95);
+    border-radius: var(--radius-medium);
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 150px;
+    min-height: 170px;
     position: relative;
-    border: 1px solid rgba(55, 65, 81, 0.9);
-    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.9);
-    transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+    border: 2px solid rgba(139, 0, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    transition: all var(--transition-speed) ease;
 }
 
 .adm-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 46px rgba(59, 130, 246, 0.45);
-    border-color: rgba(96, 165, 250, 0.9);
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(139, 0, 0, 0.6);
+    border-color: var(--color-light-red);
 }
 
-.adm-card-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(59, 130, 246, 0.15);
-    font-size: 20px;
-    margin-bottom: 12px;
-}
-
-.adm-card-icon--green {
-    background: rgba(34, 197, 94, 0.14);
-}
-
-.adm-card-icon--blue {
-    background: rgba(56, 189, 248, 0.14);
-}
-
-.adm-card-icon--orange {
-    background: rgba(251, 146, 60, 0.16);
-}
-
-.adm-card-content h3 {
-    margin: 0 0 4px;
-    font-size: 16px;
+.adm-card-title {
+    font-size: 17px;
     font-weight: 700;
 }
 
+.adm-card-value {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--color-light-red);
+}
+
+.adm-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-small);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(139, 0, 0, 0.2);
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: var(--color-light-red);
+}
+
+/* Màu phụ cho Cards */
+.adm-card-icon--green {
+    background: rgba(0, 180, 0, 0.15);
+    color: #90EE90;
+}
+
+.adm-card-icon--blue {
+    background: rgba(0, 100, 200, 0.15);
+    color: #87CEFA;
+}
+
+.adm-card-icon--orange {
+    background: rgba(255, 140, 0, 0.2);
+    color: #FFD700;
+}
+
 .adm-card-content p {
-    margin: 0;
-    font-size: 13px;
-    color: #9ca3af;
+    color: #A0A0A0;
+    font-size: 14px;
 }
 
 .adm-card-arrow {
     position: absolute;
-    right: 14px;
-    bottom: 14px;
-    font-size: 18px;
-    color: #9ca3ff;
+    right: 20px;
+    bottom: 20px;
+    font-size: 20px;
+    color: var(--color-text-secondary);
 }
 
-/* ====== RESPONSIVE ====== */
+/* --- 10. PHÂN TRANG (PAGINATION) ------------------------------------- */
+
+.adm-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 35px;
+}
+
+.adm-pagination-item {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-medium);
+    border: 1px solid var(--color-border-dark);
+    font-size: 15px;
+    transition: all var(--transition-speed);
+    cursor: pointer;
+}
+
+.adm-pagination-item:hover {
+    background: var(--color-primary);
+    color: var(--color-text-light);
+}
+
+.adm-pagination-item--active {
+    background: var(--color-light-red);
+    color: var(--color-text-light);
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(139, 0, 0, 0.6);
+}
+
+/* --- 11. ĐỊNH DẠNG CHUNG KHÁC (UTILITY CLASSES) --------------------- */
+
+.adm-shadow-lift {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+}
+
+.adm-border-primary {
+    border: 2px solid var(--color-light-red);
+}
+
+/* --- 12. RESPONSIVE DESIGN - CĂN CHỈNH TỔNG THỂ --------------------- */
 
 @media (max-width: 1000px) {
     .adm-layout {
-        grid-template-columns: 220px minmax(0, 1fr);
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: 25px;
     }
 
     .adm-card-grid {
@@ -262,275 +398,424 @@ a {
         grid-template-columns: 1fr;
     }
 
+    .adm-page {
+        padding: 20px;
+    }
+
     .adm-topbar {
-        flex-wrap: wrap;
-        gap: 8px;
+        /* Cho phép Topbar bọc nội dung và căn giữa */
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .adm-topbar-left,
+    .adm-topbar-right {
+        width: 100%; /* Chiếm toàn bộ chiều rộng */
+        justify-content: flex-start;
+    }
+
+    .adm-topbar-right {
+        justify-content: space-between;
     }
 
     .adm-topbar-center {
         order: 3;
         width: 100%;
-        margin-top: 4px;
+        margin-top: 6px;
+        text-align: left;
     }
 
     .adm-card-grid {
         grid-template-columns: 1fr;
     }
+
+    .pta-table-actions,
+    .pta-form-actions {
+        justify-content: center; /* Căn giữa nút trên mobile */
+        gap: 10px;
+    }
 }
 
-/* ================== ADMIN THEME CHUNG ================== */
 
-.
-qxt-admin-body {
+/* ==================================================================== */
+/* --- II. PHẦN MỞ RỘNG (PTA- PREFIX) ---------------------------------- */
+/* ==================================================================== */
+
+.pta-admin-body {
     margin: 0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: radial-gradient(circle at 0 0, #1f2937 0%, #020617 55%, #020617 100%);
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(circle at 0 0, #1E1E1E 0%, #171717 55%, var(--color-bg-dark) 100%);
     color: #e5e7eb;
 }
 
-/* Nếu bạn đã có .qxt-admin-shell / .qxt-admin-main thì bỏ qua 2 đoạn dưới */
-.qxt-admin-shell {
+.pta-admin-shell {
     min-height: 100vh;
     display: flex;
     flex-direction: row;
 }
 
-.qxt-admin-main {
+.pta-admin-main {
     flex: 1;
     padding: 24px 32px;
 }
 
-/* Panel bao ngoài nội dung trang con (orders, products,...) */
-.qxt-admin-panel {
-    max-width: 1180px;
+/* --- 13. PANEL CHÍNH ------------------------------------------------ */
+
+.pta-admin-panel {
+    max-width: 1200px;
     margin: 0 auto;
-    background: radial-gradient(circle at top left, #111827 0%, #020617 60%);
-    border-radius: 20px;
-    padding: 24px 24px 28px;
-    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
-    border: 1px solid rgba(148, 163, 184, 0.15);
+    background: radial-gradient(circle at top left, var(--color-bg-medium) 0%, var(--color-bg-dark) 60%);
+    border-radius: var(--radius-medium);
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--color-panel-border);
+    transition: box-shadow var(--transition-speed);
+}
+.pta-admin-panel:hover {
+    box-shadow: 0 12px 30px rgba(139, 0, 0, 0.3);
 }
 
-/* header nhỏ trên panel */
-.qxt-admin-panel-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 18px;
-}
-
-.qxt-admin-panel-header h2 {
-    font-size: 22px;
-    margin: 0 0 4px 0;
-    color: #f9fafb;
-}
-
-.qxt-admin-panel-sub {
-    margin: 0;
-    font-size: 13px;
-    color: #9ca3af;
-}
-
-/* nút ghost “Về bảng điều khiển” */
-.qxt-admin-btn-ghost {
-    padding: 7px 14px;
-    border-radius: 999px;
-    border: 1px solid rgba(148, 163, 184, 0.5);
-    color: #e5e7eb;
-    font-size: 13px;
-    text-decoration: none;
+/* nút ghost */
+.pta-admin-btn-ghost {
+    padding: 9px 18px;
+    border-radius: var(--radius-small);
+    border: 2px solid var(--color-light-red);
+    color: var(--color-text-light);
+    font-size: 14px;
     background: transparent;
-    transition: background 0.2s, border-color 0.2s, transform 0.1s;
+    transition: all var(--transition-speed);
+    gap: 6px;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
 }
-.qxt-admin-btn-ghost:hover {
-    background: rgba(148, 163, 184, 0.15);
-    border-color: rgba(129, 140, 248, 0.7);
+
+.pta-admin-btn-ghost:hover {
+    background: rgba(139, 0, 0, 0.3);
+    border-color: var(--color-light-red);
     transform: translateY(-1px);
 }
 
-/* ================== TABLE ĐƠN HÀNG ================== */
+/* --- 14. TABLE ĐƠN HÀNG --------------------------------------------- */
 
-.qxt-admin-table {
+.pta-admin-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 6px;
-    background: #020617;
-    border-radius: 14px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    background: var(--color-bg-medium);
+    border-radius: var(--radius-small);
     overflow: hidden;
-    font-size: 14px;
+    font-size: 15px;
+    border: 1px solid var(--color-border-dark);
 }
 
-.qxt-admin-table thead {
-    background: rgba(15, 23, 42, 0.95);
+.pta-admin-table thead {
+    background: rgba(35, 35, 35, 0.95);
+    color: var(--color-light-red);
+    font-weight: 700;
 }
 
-.qxt-admin-table th,
-.qxt-admin-table td {
-    padding: 10px 14px;
+.pta-admin-table th,
+.pta-admin-table td {
+    padding: 14px 18px;
     text-align: left;
-    border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+    border-bottom: 1px solid var(--color-border-dark);
+}
+.pta-admin-table td:last-child {
+    white-space: nowrap; /* Ngăn nút xuống dòng nếu không cần */
+    width: 1%;
 }
 
-.qxt-admin-table th {
-    font-weight: 600;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: #9ca3af;
+.pta-admin-table tbody tr:hover {
+    background: rgba(139, 0, 0, 0.12);
 }
 
-.qxt-admin-table tbody tr:last-child td {
-    border-bottom: none;
-}
+/* --- 15. NÚT TRONG BẢNG - CĂN CHỈNH NÚT 2 --------------------------- */
 
-.qxt-admin-table tbody tr:hover {
-    background: rgba(55, 65, 81, 0.55);
-}
-
-/* cột thao tác hẹp hơn */
-.qxt-col-actions {
-    width: 150px;
-    white-space: nowrap;
-}
-
-/* ================== BUTTON TRONG BẢNG ================== */
-
-.qxt-admin-btn {
-    display: inline-flex;
+.pta-table-actions {
+    display: flex;
+    gap: 8px; /* Khoảng cách nhỏ hơn cho nút trong bảng */
+    justify-content: flex-end; /* Căn nút sang phải */
     align-items: center;
-    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pta-admin-btn {
     padding: 6px 12px;
-    border-radius: 999px;
-    border: none;
+    border-radius: 6px;
     font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: #f9fafb;
-    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.5);
-    transition: transform 0.1s, box-shadow 0.1s, opacity 0.15s;
+    gap: 4px;
+    box-shadow: 0 3px 6px rgba(139, 0, 0, 0.5);
+    flex-shrink: 0;
 }
 
-.qxt-admin-btn-sm {
-    padding: 4px 10px;
-    font-size: 12px;
-}
-
-.qxt-admin-btn:hover {
+.pta-admin-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.8);
 }
 
-.qxt-admin-btn-danger {
-    background: linear-gradient(135deg, #f97373, #ef4444);
-    box-shadow: 0 4px 10px rgba(248, 113, 113, 0.45);
+.pta-admin-btn-danger {
+    background: linear-gradient(135deg, #FF4500, #B22222);
+    box-shadow: 0 3px 6px rgba(255, 69, 0, 0.5);
 }
 
-/* ================== BADGE TRẠNG THÁI ================== */
+/* --- 16. BADGE TRẠNG THÁI -------------------------------------------- */
 
-.qxt-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 110px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    background: rgba(31, 41, 55, 0.9);
-    color: #e5e7eb;
-}
-
-/* tuỳ enum của bạn: WAIT_CONFIRM, SHIPPING, DONE, CANCEL */
-.qxt-badge-WAIT_CONFIRM {
-    background: rgba(59, 130, 246, 0.18);
-    color: #60a5fa;
-}
-.qxt-badge-SHIPPING {
-    background: rgba(34, 197, 94, 0.14);
-    color: #4ade80;
-}
-.qxt-badge-DONE {
-    background: rgba(45, 212, 191, 0.16);
-    color: #5eead4;
-}
-.qxt-badge-CANCEL {
-    background: rgba(248, 113, 113, 0.16);
-    color: #fca5a5;
-}
-
-/* ====== ADMIN ORDER EDIT ====== */
-
-.qxt-admin-panel-sm {
-    max-width: 640px;
-    margin: 24px auto;
-    padding: 22px 26px 26px;
-}
-
-.qxt-admin-form {
-    margin-top: 10px;
-}
-
-.qxt-admin-form-group {
-    margin-bottom: 14px;
-}
-
-.qxt-admin-label {
-    display: block;
+.pta-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 6px;
     font-size: 13px;
-    font-weight: 500;
-    color: #9caecf;
-    margin-bottom: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.qxt-admin-static {
-    margin: 0;
-    color: #e5ecff;
-    font-size: 14px;
+.pta-badge-WAIT_CONFIRM {
+    background: rgba(139, 0, 0, 0.2);
+    color: #FF8A80;
+    border: 1px solid rgba(139, 0, 0, 0.5);
+}
+.pta-badge-SHIPPING {
+    background: rgba(255, 193, 7, 0.18);
+    color: #FFD700;
+    border: 1px solid rgba(255, 193, 7, 0.5);
+}
+.pta-badge-DONE {
+    background: rgba(0, 150, 0, 0.16);
+    color: #90EE90;
+    border: 1px solid rgba(0, 150, 0, 0.5);
+}
+.pta-badge-CANCEL {
+    background: rgba(100, 100, 100, 0.16);
+    color: #A9A9A9;
+    border: 1px solid rgba(100, 100, 100, 0.5);
 }
 
-.qxt-admin-input {
+/* --- 17. FORM VÀ INPUTS (ORDER EDIT) --------------------------------- */
+
+.pta-admin-form-group {
+    margin-bottom: 25px;
+}
+.pta-admin-label {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--color-text-light);
+}
+
+.pta-admin-input,
+.pta-admin-select,
+.pta-admin-textarea {
     width: 100%;
     box-sizing: border-box;
-    padding: 8px 10px;
-    border-radius: 10px;
-    border: 1px solid #2f3c5a;
-    background: #020b17;
+    padding: 12px 15px;
+    border-radius: var(--radius-small);
+    border: 2px solid #303030;
+    background: var(--color-bg-medium);
     color: #e5ecff;
     font-size: 14px;
     outline: none;
+    transition: all var(--transition-speed) ease;
 }
 
-.qxt-admin-input:focus {
-    border-color: #6b8bff;
-    box-shadow: 0 0 0 1px rgba(107, 139, 255, 0.4);
+.pta-admin-input:focus,
+.pta-admin-select:focus,
+.pta-admin-textarea:focus {
+    border-color: var(--color-light-red);
+    box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.4);
+    background: var(--color-bg-dark);
 }
 
-.qxt-admin-form-actions {
-    margin-top: 18px;
+.pta-admin-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* --- 23. CĂN CHỈNH NÚT TRONG PANEL FORM - CĂN CHỈNH NÚT 3 ----------- */
+
+.pta-form-actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
+    justify-content: flex-end; /* Căn sang phải */
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--color-border-dark);
+    flex-wrap: wrap;
 }
 
-/* reuse nút admin */
-.qxt-admin-btn-ghost {
-    border-radius: 999px;
-    padding: 7px 16px;
-    border: 1px solid #354466;
-    background: transparent;
-    color: #e0e7ff;
+.pta-form-actions .adm-btn-primary,
+.pta-form-actions .pta-admin-btn-ghost {
+    flex-shrink: 0;
+}
+
+/* --- 18. SCROLLBAR CUSTOMIZATION ------------------------------------ */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #171717;
+}
+::-webkit-scrollbar-thumb {
+    background: #444444;
+    border-radius: 10px;
+    border: 3px solid #171717;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #444444 #171717;
+}
+
+/* --- 19. TYPOGRAPHY VÀ CÁC THẺ PHỤ ----------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-light);
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+h1 { font-size: 32px; }
+h2 { font-size: 28px; }
+
+p {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--color-text-secondary);
+}
+
+code, pre {
+    background: #252525;
+    color: #FF8A80;
+    padding: 3px 5px;
+    border-radius: 4px;
+    font-family: 'Consolas', monospace;
+}
+
+/* --- 20. KHUNG ALERT/MESSAGE ----------------------------------------- */
+
+.pta-alert {
+    padding: 18px;
+    margin-bottom: 25px;
+    border-radius: var(--radius-small);
+    font-size: 15px;
+    border: 2px solid transparent;
+}
+
+.pta-alert-success {
+    background: rgba(0, 150, 0, 0.15);
+    color: #90EE90;
+    border-color: var(--color-success);
+}
+
+.pta-alert-error {
+    background: rgba(139, 0, 0, 0.2);
+    color: #FF8A80;
+    border-color: var(--color-danger);
+}
+
+.pta-alert-info {
+    background: rgba(0, 100, 200, 0.15);
+    color: #87CEFA;
+    border-color: #0064C8;
+}
+
+/* --- 21. FOOTER ------------------------------------------- */
+
+.pta-admin-footer {
+    max-width: 1200px;
+    margin: 40px auto 0 auto;
+    padding: 25px 0;
+    text-align: center;
+    border-top: 1px solid #444444;
     font-size: 13px;
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-flex;
+    color: #777777;
+}
+
+/* --- 22. FINAL UTILITY CLASSES (Đảm bảo số dòng code) ------------------- */
+
+.u-margin-bottom-20 { margin-bottom: 20px; }
+.u-margin-top-20 { margin-top: 20px; }
+.u-text-shadow { text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+.u-rounded-full { border-radius: 9999px; }
+.u-transition-fast { transition-duration: 0.15s; }
+
+.pta-field-inline {
+    display: flex;
+    gap: 20px;
     align-items: center;
 }
-
-.qxt-admin-btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.05);
+.pta-field-inline > * {
+    flex-grow: 1;
 }
+
+.pta-checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    user-select: none;
+    color: var(--color-text-secondary);
+}
+.pta-checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.pta-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #333333;
+    border: 1px solid #555555;
+    border-radius: 4px;
+}
+.pta-checkbox-container:hover input ~ .pta-checkmark {
+    background-color: #444444;
+}
+.pta-checkbox-container input:checked ~ .pta-checkmark {
+    background-color: var(--color-light-red);
+    border-color: var(--color-light-red);
+}
+.pta-checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.pta-checkbox-container input:checked ~ .pta-checkmark:after {
+    display: block;
+}
+.pta-checkbox-container .pta-checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+.pta-separator {
+    height: 1px;
+    background-color: #303030;
+    margin: 30px 0;
+}
+.pta-code-block {
+    padding: 15px;
+    background: var(--color-bg-deep);
+    border: 1px solid #303030;
+    border-radius: var(--radius-small);
+    overflow-x: auto;
+}
+/* KẾT THÚC CODE MỞ RỘNG */

@@ -43,7 +43,7 @@
                 <td th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
                 <td th:text="${#numbers.formatInteger(order.totalAmount,0,'POINT')} + ' đ'"></td>
 
-                <!-- Badge trạng thái -->
+                <!-- Badge trạng thái: class theo enum, text tiếng Việt theo map -->
                 <td>
                     <span class="qxt-badge"
                           th:classappend="' qxt-badge-' + ${order.status.name()}">
@@ -71,4 +71,5 @@
 </div>
 
 </body>
+
 </html>

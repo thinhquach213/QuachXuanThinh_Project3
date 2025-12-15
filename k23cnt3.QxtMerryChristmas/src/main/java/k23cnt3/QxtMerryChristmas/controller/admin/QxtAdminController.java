@@ -123,7 +123,7 @@ public class QxtAdminController {
         return "redirect:/admin/orders?deleted";
     }
 
-    /* ========== QUẢN LÝ ADMIN ========== */
+    /* ========== QUẢN LÝ ADMIN (ROLE = ADMIN) ========== */
 
     @GetMapping("/admin-users")
     public String listAdminUsers(HttpSession session, Model model) {
@@ -132,12 +132,12 @@ public class QxtAdminController {
             return "redirect:/login";
         }
 
-        model.addAttribute("admins",
-                userRepository.findByRole(QxtUserRole.ADMIN));
+        List<QxtUser> admins = userRepository.findByRole(QxtUserRole.ADMIN);
+        model.addAttribute("admins", admins);
         return "admin/QxtAdminUserList";
     }
 
-    /* ========== QUẢN LÝ KHÁCH HÀNG ========== */
+    /* ========== QUẢN LÝ KHÁCH HÀNG (ROLE = CUSTOMER) ========== */
 
     @GetMapping("/customers")
     public String listCustomers(HttpSession session, Model model) {
@@ -146,12 +146,12 @@ public class QxtAdminController {
             return "redirect:/login";
         }
 
-        model.addAttribute("customers",
-                userRepository.findByRole(QxtUserRole.CUSTOMER));
+        List<QxtUser> customers = userRepository.findByRole(QxtUserRole.CUSTOMER);
+        model.addAttribute("customers", customers);
         return "admin/QxtCustomerList";
     }
 
-    /* ========== CREATE USER ========== */
+    /* ========== FORM THÊM USER (ADMIN / CUSTOMER) ========== */
 
     @GetMapping("/users/create")
     public String showCreateUserForm(@RequestParam("role") QxtUserRole role,
@@ -184,10 +184,10 @@ public class QxtAdminController {
             return "redirect:/login";
         }
 
+        // Check trùng email
         Optional<QxtUser> opt = userRepository.findByEmail(email);
         if (opt.isPresent()) {
             model.addAttribute("error", "Email đã tồn tại");
-
             QxtUser u = new QxtUser();
             u.setFullName(fullName);
             u.setEmail(email);
@@ -202,15 +202,81 @@ public class QxtAdminController {
         QxtUser user = new QxtUser();
         user.setFullName(fullName);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(password);   // demo: chưa mã hóa
         user.setPhone(phone);
         user.setRole(role);
 
         userRepository.save(user);
+
         return redirectByRole(role);
     }
 
-    /* ========== DELETE USER ========== */
+    /* ========== SỬA USER ========== */
+
+    @GetMapping("/users/edit/{id}")
+    public String showEditUserForm(@PathVariable Long id,
+                                   HttpSession session,
+                                   Model model) {
+        QxtUser currentUser = (QxtUser) session.getAttribute("currentUser");
+        if (!isAdmin(currentUser)) {
+            return "redirect:/login";
+        }
+
+        QxtUser user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        model.addAttribute("user", user);
+        model.addAttribute("formMode", "EDIT");
+        return "admin/QxtUserForm";
+    }
+
+    @PostMapping("/users/update")
+    public String updateUser(@RequestParam Long id,
+                             @RequestParam String fullName,
+                             @RequestParam String email,
+                             @RequestParam(required = false) String password,
+                             @RequestParam(required = false) String phone,
+                             @RequestParam QxtUserRole role,
+                             HttpSession session,
+                             Model model) {
+
+        QxtUser currentUser = (QxtUser) session.getAttribute("currentUser");
+        if (!isAdmin(currentUser)) {
+            return "redirect:/login";
+        }
+
+        QxtUser user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // Check email trùng với người khác
+        Optional<QxtUser> opt = userRepository.findByEmail(email);
+        if (opt.isPresent() && !opt.get().getId().equals(id)) {
+            model.addAttribute("error", "Email đã được sử dụng bởi tài khoản khác");
+            user.setFullName(fullName);
+            user.setEmail(email);
+            user.setPhone(phone);
+            user.setRole(role);
+
+            model.addAttribute("user", user);
+            model.addAttribute("formMode", "EDIT");
+            return "admin/QxtUserForm";
+        }
+
+        user.setFullName(fullName);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setRole(role);
+
+        if (password != null && !password.isBlank()) {
+            user.setPassword(password);
+        }
+
+        userRepository.save(user);
+
+        return redirectByRole(user.getRole());
+    }
+
+    /* ========== XOÁ USER ========== */
 
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable Long id,
@@ -223,10 +289,10 @@ public class QxtAdminController {
         QxtUser user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
+        // optional: không cho tự xoá chính mình
         if (currentUser.getId().equals(user.getId())) {
             return redirectByRole(user.getRole()) + "?error=cannot_delete_yourself";
         }
-
         QxtUserRole role = user.getRole();
         userRepository.delete(user);
 

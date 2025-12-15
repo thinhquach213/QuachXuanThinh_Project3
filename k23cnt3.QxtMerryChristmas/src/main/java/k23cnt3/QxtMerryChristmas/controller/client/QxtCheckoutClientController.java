@@ -54,11 +54,10 @@ public class QxtCheckoutClientController {
 
     // ============= POST CHECKOUT =============
     @PostMapping("/checkout")
-    public String handleCheckout(
-            @Valid @ModelAttribute("checkoutForm") QxtCheckoutForm form,
-            BindingResult bindingResult,
-            HttpSession session,
-            Model model) {
+    public String handleCheckout(@Valid @ModelAttribute("checkoutForm") QxtCheckoutForm form,
+                                 BindingResult bindingResult,
+                                 HttpSession session,
+                                 Model model) {
 
         // ⭐ 1. Chưa login → bắt buộc login
         QxtUser user = (QxtUser) session.getAttribute("currentUser");

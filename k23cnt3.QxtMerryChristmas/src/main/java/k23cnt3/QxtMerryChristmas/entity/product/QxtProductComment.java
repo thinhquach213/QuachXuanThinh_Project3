@@ -16,20 +16,23 @@ public class QxtProductComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "qxt_id")
     private Long id;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(name = "qxt_content", columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(name = "qxt_star", nullable = false)
     private int star; // 1–5
 
+    @Column(name = "qxt_created_at")
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "qxt_product_id")
     private QxtProduct product;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "qxt_user_id")
     private QxtUser user;
 }

@@ -18,9 +18,7 @@
             <!-- HEADER PANEL -->
             <div class="qxt-admin-panel-header" style="margin-bottom: 14px;">
                 <div>
-                    <h2 th:text="${formMode == 'CREATE'} ? 'Thêm sản phẩm mới' : 'Sửa sản phẩm'">
-                        Thêm sản phẩm
-                    </h2>
+                    <h2 th:text="${formMode == 'CREATE'} ? 'Thêm sản phẩm mới' : 'Sửa sản phẩm'">Thêm sản phẩm</h2>
                     <p class="qxt-admin-panel-sub"
                        th:text="${formMode == 'CREATE'} ?
                                 'Điền thông tin để tạo sản phẩm mới.' :
@@ -52,8 +50,7 @@
                 <!-- Tên sản phẩm -->
                 <div class="qxt-admin-form-group">
                     <label class="qxt-admin-label">Tên sản phẩm</label>
-                    <input type="text" class="qxt-admin-input"
-                           th:field="*{name}" required
+                    <input type="text" class="qxt-admin-input" th:field="*{name}" required
                            placeholder="Nhập tên sản phẩm">
                 </div>
 
@@ -93,8 +90,7 @@
                         <img th:src="@{'/uploads/product-images/' + *{image}}"
                              alt="Ảnh hiện tại"
                              style="width:90px; height:90px; border-radius:14px; object-fit:cover;">
-                        <p class="qxt-admin-static"
-                           style="font-size:13px; color:#9ca3af;">
+                        <p class="qxt-admin-static" style="font-size:13px; color:#9ca3af;">
                             Bạn có thể chọn ảnh mới để thay thế.
                         </p>
                     </div>
@@ -109,16 +105,7 @@
                            style="padding:6px 8px; background:#020617;">
                 </div>
 
-                <!-- Tag -->
-                <div class="qxt-admin-form-group">
-                    <label class="qxt-admin-label">Phân loại đặc biệt</label>
-                    <select class="qxt-admin-input" th:field="*{tag}">
-                        <option value="">Không</option>
-                        <option value="tangbanhai">Tặng bạn gái</option>
-                        <option value="bigsize">Big size</option>
-                        <option value="intenn">Gấu bông in tên</option>
-                    </select>
-                </div>
+
 
                 <!-- ACTION BUTTONS -->
                 <div class="qxt-admin-form-actions">

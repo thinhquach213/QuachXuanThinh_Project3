@@ -23,8 +23,7 @@ public class QxtMyOrderController {
             return "redirect:/login?redirect=/my-orders";
         }
 
-        model.addAttribute(
-                "orders",
+        model.addAttribute("orders",
                 orderService.findByUserId(user.getId())
         );
 

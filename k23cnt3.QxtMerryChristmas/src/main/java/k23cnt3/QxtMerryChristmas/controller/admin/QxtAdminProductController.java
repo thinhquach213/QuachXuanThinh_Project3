@@ -29,13 +29,16 @@ public class QxtAdminProductController {
     private final QxtCategoryRepository categoryRepository;
 
     /** Thư mục lưu ảnh **/
-    private final String uploadDir = "D:/prj3/project3/uploads/product-images";
+    private final String uploadDir = "C:/project3/PhamTuanAnh-K23CNT3-Project3/project3/uploads/product-images";
+
 
     /** Check user trong session có phải ADMIN không */
     private boolean isAdmin(HttpSession session) {
         QxtUser currentUser = (QxtUser) session.getAttribute("currentUser");
         return currentUser != null && currentUser.getRole() == QxtUserRole.ADMIN;
     }
+
+    /* ========== DANH SÁCH SẢN PHẨM ========== */
 
     @GetMapping
     public String listProducts(HttpSession session, Model model) {
@@ -45,8 +48,10 @@ public class QxtAdminProductController {
 
         List<QxtProduct> products = productRepository.findAll();
         model.addAttribute("products", products);
-        return "admin/QxtProductList";
+        return "admin/QxtProductList";   // view list sản phẩm
     }
+
+    /* ========== FORM THÊM MỚI ========== */
 
     @GetMapping("/create")
     public String showCreateForm(HttpSession session, Model model) {
@@ -73,6 +78,7 @@ public class QxtAdminProductController {
             return "redirect:/login";
         }
 
+        // xử lý upload ảnh
         if (imageFile != null && !imageFile.isEmpty()) {
             try {
                 String fileName = saveImage(imageFile);
@@ -88,6 +94,8 @@ public class QxtAdminProductController {
         productRepository.save(product);
         return "redirect:/admin/products?created";
     }
+
+    /* ========== FORM SỬA ========== */
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id,
@@ -144,6 +152,8 @@ public class QxtAdminProductController {
         return "redirect:/admin/products?updated";
     }
 
+    /* ========== XOÁ ========== */
+
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id,
                                 HttpSession session) {
@@ -154,6 +164,8 @@ public class QxtAdminProductController {
         productRepository.deleteById(id);
         return "redirect:/admin/products?deleted";
     }
+
+    /* ========== HÀM LƯU ẢNH ========== */
 
     private String saveImage(MultipartFile imageFile) throws IOException {
         String originalName = StringUtils.cleanPath(imageFile.getOriginalFilename());

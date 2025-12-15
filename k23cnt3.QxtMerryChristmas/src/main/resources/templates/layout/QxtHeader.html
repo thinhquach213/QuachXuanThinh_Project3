@@ -2,7 +2,7 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Header</title>
+    <title>Helios Shop</title>
     <link rel="stylesheet" th:href="@{/css/qxt-style.css}">
 </head>
 <body>
@@ -12,17 +12,25 @@
     <!-- HÀNG TRÊN: LOGO + SEARCH + HOTLINE + CART + LOGIN -->
     <div class="header-top">
 
-        <!-- Logo -->
-        <div class="top-left">
-            <a th:href="@{/}">
-                <img class="qxt-logo-img" th:src="@{/images/logo.jpg}" alt="Logo QXT Teddy">
+        <!-- Logo + Tên shop -->
+        <div class="logo-wrap">
+            <a th:href="@{/}" style="display:flex; align-items:center; gap:14px;">
+                <img class="qxt-logo-img"
+                     th:src="@{/images/logo.jpg}"
+                     alt="Logo Helios Shop">
+
+                <!-- TÊN SHOP -->
+                <span class="shop-name">HELIOS SHOP</span>
             </a>
         </div>
 
         <!-- Thanh tìm kiếm -->
         <div class="top-search">
             <form class="search-form" th:action="@{/search}" method="get">
-                <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm..." required>
+                <input type="text"
+                       name="keyword"
+                       placeholder="Tìm kiếm sản phẩm..."
+                       required>
                 <button type="submit">Tìm</button>
             </form>
         </div>
@@ -31,7 +39,7 @@
         <div class="top-right">
 
             <div class="hotline">
-                Hotline: <span>0927 162 3671</span>
+                Hotline: <span>0984551682</span>
             </div>
 
             <a th:href="@{/cart}" class="cart-icon" title="Giỏ hàng">
@@ -45,13 +53,18 @@
 
             <!-- Nếu đã đăng nhập -->
             <div th:if="${session.currentUser != null}" class="logged-wrap">
-                <span class="user-name" th:text="'Xin chào, ' + ${session.currentUser.fullName}">Xin chào</span>
+                <span class="user-name"
+                      th:text="'Xin chào, ' + ${session.currentUser.fullName}">
+                    Xin chào
+                </span>
 
-                <button>  <a th:if="${session.currentUser.role.name() == 'ADMIN'}"
-                             th:href="@{/admin/dashboard}" class="btn-link">Quản trị</a>
-                </button>
+                <a th:if="${session.currentUser.role.name() == 'ADMIN'}"
+                   th:href="@{/admin/dashboard}"
+                   class="btn-link">Quản trị</a>
+
                 <a th:if="${session.currentUser.role.name() == 'SHIPPER'}"
-                   th:href="@{/ship/orders}" class="btn-link">Đơn giao</a>
+                   th:href="@{/ship/orders}"
+                   class="btn-link">Đơn giao</a>
 
                 <a th:href="@{/logout}" class="btn-auth">Đăng xuất</a>
             </div>
@@ -60,17 +73,14 @@
 
     </div>
 
-    <!-- HÀNG DƯỚI: MENU + KHẨU HIỆU + MENU PHẢI -->
+    <!-- HÀNG DƯỚI: MENU -->
     <nav class="qxt-main-menu">
 
-        <!-- Bên trái -->
-        <div class="menu-left">
-            <a th:href="@{/}" class="menu-item">Trang chủ</a>
-        </div>
-
-        <!-- Khẩu hiệu giữa -->
+        <!-- Khẩu hiệu -->
         <div class="menu-center">
-            <span class="menu-tagline">Quà tặng gấu bông cho người bạn thương</span>
+            <span class="menu-tagline">
+                Đây là những "Câu chuyện" mới nhất được rèn thành chế tác.
+            </span>
         </div>
 
         <!-- Menu bên phải -->
@@ -79,7 +89,6 @@
             <a href="#" class="menu-item">Dịch vụ</a>
             <a href="/contact" class="menu-item">Liên hệ</a>
             <a th:href="@{/my-orders}" class="menu-item">Theo dõi đơn</a>
-
         </div>
 
     </nav>
