@@ -29,7 +29,7 @@ public class QxtAdminProductController {
     private final QxtCategoryRepository categoryRepository;
 
     /** Thư mục lưu ảnh **/
-    private final String uploadDir = "C:/project3/PhamTuanAnh-K23CNT3-Project3/project3/uploads/product-images";
+    private final String uploadDir = "E:/Project3/k23cnt3.QxtMerryChristmas/uploads/product-images";
 
 
     /** Check user trong session có phải ADMIN không */
