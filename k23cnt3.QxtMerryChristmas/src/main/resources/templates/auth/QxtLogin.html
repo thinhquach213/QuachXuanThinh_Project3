@@ -2,37 +2,95 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng nhập</title>
+    <title>🎄 Đăng Nhập - Merry Chismart</title>
     <link rel="stylesheet" th:href="@{/css/qxt-style.css}">
 </head>
-<body class="product-detail-page">
+<body class="login-page">
 
 <!-- HEADER -->
 <th:block th:replace="layout/qxtHeader :: qxt_header"></th:block>
 
-<div class="auth-container">
-    <h2>Đăng nhập</h2>
-
-    <form th:action="@{/login}" method="post" onsubmit="return validateForm()">
-
-        <!-- HIDDEN FIELD giữ lại trang cần quay về -->
-        <input type="hidden" name="redirect" th:value="${redirect}">
-
-        <label>Email</label>
-        <input type="text" name="email" id="email" value="" placeholder="Nhập email của bạn">
-
-        <label>Mật khẩu</label>
-        <div class="password-wrapper">
-            <input type="password" name="password" id="password" placeholder="Nhập mật khẩu">
-            <span class="toggle-pass" onclick="togglePassword()">👁</span>
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <!-- Tiêu đề với hình ảnh Noel -->
+        <div class="auth-header">
+            <div class="noel-icon">🎅</div>
+            <h1>Đăng Nhập Merry Chismart</h1>
+            <p class="auth-subtitle">Chào mừng đến với cửa hàng trang trí Noel số 1</p>
         </div>
 
-        <button type="submit" class="auth-btn">Đăng nhập</button>
-    </form>
+        <form th:action="@{/login}" method="post" onsubmit="return validateForm()" class="auth-form">
 
-    <div class="auth-switch">
-        Chưa có tài khoản?
-        <a th:href="@{/register}">Đăng ký ngay</a>
+            <!-- HIDDEN FIELD giữ lại trang cần quay về -->
+            <input type="hidden" name="redirect" th:value="${redirect}">
+
+            <!-- Thông báo lỗi (nếu có) -->
+            <div th:if="${param.error}" class="auth-error">
+                <p>❌ Email hoặc mật khẩu không đúng. Vui lòng thử lại.</p>
+            </div>
+
+            <div th:if="${param.logout}" class="auth-success">
+                <p>✅ Bạn đã đăng xuất thành công.</p>
+            </div>
+
+            <div class="form-group">
+                <label for="email">📧 Email</label>
+                <input type="email" name="email" id="email" value=""
+                       placeholder="Nhập email đăng ký" required>
+                <div class="form-hint">Email bạn đã dùng để đăng ký tài khoản</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">🔒 Mật khẩu</label>
+                <div class="password-wrapper">
+                    <input type="password" name="password" id="password"
+                           placeholder="Nhập mật khẩu của bạn" required>
+                    <button type="button" class="toggle-pass" onclick="togglePassword()">
+                        👁️
+                    </button>
+                </div>
+                <div class="form-hint">
+                    <a href="/forgot-password" class="forgot-link">🎄 Quên mật khẩu?</a>
+                </div>
+            </div>
+
+            <div class="form-group remember">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="remember-me"> Ghi nhớ đăng nhập
+                </label>
+            </div>
+
+            <button type="submit" class="auth-btn">🎅 Đăng Nhập</button>
+
+            <div class="auth-divider">
+                <span>Hoặc đăng nhập với</span>
+            </div>
+
+            <div class="social-login">
+                <button type="button" class="social-btn facebook">
+                    <span>📘 Facebook</span>
+                </button>
+                <button type="button" class="social-btn google">
+                    <span>🔵 Google</span>
+                </button>
+            </div>
+        </form>
+
+        <div class="auth-switch">
+            <p>🎁 Chưa có tài khoản Merry Chismart?</p>
+            <a th:href="@{/register}" class="register-link">✨ Đăng ký ngay để nhận ưu đãi Noel</a>
+        </div>
+
+        <div class="auth-benefits">
+            <h3>🎄 Lợi ích khi đăng nhập:</h3>
+            <ul>
+                <li>✅ Theo dõi đơn hàng dễ dàng</li>
+                <li>✅ Lưu danh sách yêu thích</li>
+                <li>✅ Nhận ưu đãi đặc biệt cho thành viên</li>
+                <li>✅ Tích lũy điểm đổi quà Noel</li>
+                <li>✅ Được tư vấn trang trí miễn phí</li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -41,29 +99,53 @@
     function validateForm() {
         const email = document.getElementById('email');
         const password = document.getElementById('password');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!email.value.trim()) {
-            alert('Vui lòng nhập email');
+            alert('🎅 Vui lòng nhập email của bạn');
             email.focus();
             return false;
         }
+
+        if (!emailRegex.test(email.value)) {
+            alert('🎅 Email không đúng định dạng. Vui lòng kiểm tra lại.');
+            email.focus();
+            return false;
+        }
+
         if (!password.value.trim()) {
-            alert('Vui lòng nhập mật khẩu');
+            alert('🎅 Vui lòng nhập mật khẩu');
             password.focus();
             return false;
         }
+
+
         return true;
     }
 
     // Toggle show/hide password
     function togglePassword() {
         const passInput = document.getElementById('password');
+        const toggleBtn = document.querySelector('.toggle-pass');
+
         if (passInput.type === 'password') {
             passInput.type = 'text';
+            toggleBtn.textContent = '👁️‍🗨️';
+            toggleBtn.setAttribute('aria-label', 'Ẩn mật khẩu');
         } else {
             passInput.type = 'password';
+            toggleBtn.textContent = '👁️';
+            toggleBtn.setAttribute('aria-label', 'Hiển thị mật khẩu');
         }
     }
+
+    // Tự động focus vào email input khi trang load
+    document.addEventListener('DOMContentLoaded', function() {
+        const emailInput = document.getElementById('email');
+        if (emailInput) {
+            emailInput.focus();
+        }
+    });
 </script>
 
 </body>

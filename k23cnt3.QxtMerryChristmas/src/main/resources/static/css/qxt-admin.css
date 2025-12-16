@@ -430,8 +430,8 @@ a:hover {
         grid-template-columns: 1fr;
     }
 
-    .pta-table-actions,
-    .pta-form-actions {
+    .qxt-table-actions,
+    .qxt-form-actions {
         justify-content: center; /* Căn giữa nút trên mobile */
         gap: 10px;
     }
@@ -439,30 +439,30 @@ a:hover {
 
 
 /* ==================================================================== */
-/* --- II. PHẦN MỞ RỘNG (PTA- PREFIX) ---------------------------------- */
+/* --- II. PHẦN MỞ RỘNG (qxt- PREFIX) ---------------------------------- */
 /* ==================================================================== */
 
-.pta-admin-body {
+.qxt-admin-body {
     margin: 0;
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: radial-gradient(circle at 0 0, #1E1E1E 0%, #171717 55%, var(--color-bg-dark) 100%);
     color: #e5e7eb;
 }
 
-.pta-admin-shell {
+.qxt-admin-shell {
     min-height: 100vh;
     display: flex;
     flex-direction: row;
 }
 
-.pta-admin-main {
+.qxt-admin-main {
     flex: 1;
     padding: 24px 32px;
 }
 
 /* --- 13. PANEL CHÍNH ------------------------------------------------ */
 
-.pta-admin-panel {
+.qxt-admin-panel {
     max-width: 1200px;
     margin: 0 auto;
     background: radial-gradient(circle at top left, var(--color-bg-medium) 0%, var(--color-bg-dark) 60%);
@@ -472,12 +472,12 @@ a:hover {
     border: 2px solid var(--color-panel-border);
     transition: box-shadow var(--transition-speed);
 }
-.pta-admin-panel:hover {
+.qxt-admin-panel:hover {
     box-shadow: 0 12px 30px rgba(139, 0, 0, 0.3);
 }
 
 /* nút ghost */
-.pta-admin-btn-ghost {
+.qxt-admin-btn-ghost {
     padding: 9px 18px;
     border-radius: var(--radius-small);
     border: 2px solid var(--color-light-red);
@@ -491,7 +491,7 @@ a:hover {
     flex-shrink: 0;
 }
 
-.pta-admin-btn-ghost:hover {
+.qxt-admin-btn-ghost:hover {
     background: rgba(139, 0, 0, 0.3);
     border-color: var(--color-light-red);
     transform: translateY(-1px);
@@ -499,7 +499,7 @@ a:hover {
 
 /* --- 14. TABLE ĐƠN HÀNG --------------------------------------------- */
 
-.pta-admin-table {
+.qxt-admin-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -511,30 +511,30 @@ a:hover {
     border: 1px solid var(--color-border-dark);
 }
 
-.pta-admin-table thead {
+.qxt-admin-table thead {
     background: rgba(35, 35, 35, 0.95);
     color: var(--color-light-red);
     font-weight: 700;
 }
 
-.pta-admin-table th,
-.pta-admin-table td {
+.qxt-admin-table th,
+.qxt-admin-table td {
     padding: 14px 18px;
     text-align: left;
     border-bottom: 1px solid var(--color-border-dark);
 }
-.pta-admin-table td:last-child {
+.qxt-admin-table td:last-child {
     white-space: nowrap; /* Ngăn nút xuống dòng nếu không cần */
     width: 1%;
 }
 
-.pta-admin-table tbody tr:hover {
+.qxt-admin-table tbody tr:hover {
     background: rgba(139, 0, 0, 0.12);
 }
 
 /* --- 15. NÚT TRONG BẢNG - CĂN CHỈNH NÚT 2 --------------------------- */
 
-.pta-table-actions {
+.qxt-table-actions {
     display: flex;
     gap: 8px; /* Khoảng cách nhỏ hơn cho nút trong bảng */
     justify-content: flex-end; /* Căn nút sang phải */
@@ -542,7 +542,7 @@ a:hover {
     flex-wrap: wrap;
 }
 
-.pta-admin-btn {
+.qxt-admin-btn {
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 13px;
@@ -551,18 +551,18 @@ a:hover {
     flex-shrink: 0;
 }
 
-.pta-admin-btn:hover {
+.qxt-admin-btn:hover {
     transform: translateY(-1px);
 }
 
-.pta-admin-btn-danger {
+.qxt-admin-btn-danger {
     background: linear-gradient(135deg, #FF4500, #B22222);
     box-shadow: 0 3px 6px rgba(255, 69, 0, 0.5);
 }
 
 /* --- 16. BADGE TRẠNG THÁI -------------------------------------------- */
 
-.pta-badge {
+.qxt-badge {
     display: inline-block;
     padding: 6px 12px;
     border-radius: 6px;
@@ -572,22 +572,22 @@ a:hover {
     letter-spacing: 0.5px;
 }
 
-.pta-badge-WAIT_CONFIRM {
+.qxt-badge-WAIT_CONFIRM {
     background: rgba(139, 0, 0, 0.2);
     color: #FF8A80;
     border: 1px solid rgba(139, 0, 0, 0.5);
 }
-.pta-badge-SHIPPING {
+.qxt-badge-SHIPPING {
     background: rgba(255, 193, 7, 0.18);
     color: #FFD700;
     border: 1px solid rgba(255, 193, 7, 0.5);
 }
-.pta-badge-DONE {
+.qxt-badge-DONE {
     background: rgba(0, 150, 0, 0.16);
     color: #90EE90;
     border: 1px solid rgba(0, 150, 0, 0.5);
 }
-.pta-badge-CANCEL {
+.qxt-badge-CANCEL {
     background: rgba(100, 100, 100, 0.16);
     color: #A9A9A9;
     border: 1px solid rgba(100, 100, 100, 0.5);
@@ -595,10 +595,10 @@ a:hover {
 
 /* --- 17. FORM VÀ INPUTS (ORDER EDIT) --------------------------------- */
 
-.pta-admin-form-group {
+.qxt-admin-form-group {
     margin-bottom: 25px;
 }
-.pta-admin-label {
+.qxt-admin-label {
     display: block;
     font-size: 15px;
     font-weight: 600;
@@ -606,9 +606,9 @@ a:hover {
     color: var(--color-text-light);
 }
 
-.pta-admin-input,
-.pta-admin-select,
-.pta-admin-textarea {
+.qxt-admin-input,
+.qxt-admin-select,
+.qxt-admin-textarea {
     width: 100%;
     box-sizing: border-box;
     padding: 12px 15px;
@@ -621,22 +621,22 @@ a:hover {
     transition: all var(--transition-speed) ease;
 }
 
-.pta-admin-input:focus,
-.pta-admin-select:focus,
-.pta-admin-textarea:focus {
+.qxt-admin-input:focus,
+.qxt-admin-select:focus,
+.qxt-admin-textarea:focus {
     border-color: var(--color-light-red);
     box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.4);
     background: var(--color-bg-dark);
 }
 
-.pta-admin-textarea {
+.qxt-admin-textarea {
     min-height: 120px;
     resize: vertical;
 }
 
 /* --- 23. CĂN CHỈNH NÚT TRONG PANEL FORM - CĂN CHỈNH NÚT 3 ----------- */
 
-.pta-form-actions {
+.qxt-form-actions {
     display: flex;
     justify-content: flex-end; /* Căn sang phải */
     gap: 15px;
@@ -646,8 +646,8 @@ a:hover {
     flex-wrap: wrap;
 }
 
-.pta-form-actions .adm-btn-primary,
-.pta-form-actions .pta-admin-btn-ghost {
+.qxt-form-actions .adm-btn-primary,
+.qxt-form-actions .qxt-admin-btn-ghost {
     flex-shrink: 0;
 }
 
@@ -700,7 +700,7 @@ code, pre {
 
 /* --- 20. KHUNG ALERT/MESSAGE ----------------------------------------- */
 
-.pta-alert {
+.qxt-alert {
     padding: 18px;
     margin-bottom: 25px;
     border-radius: var(--radius-small);
@@ -708,19 +708,19 @@ code, pre {
     border: 2px solid transparent;
 }
 
-.pta-alert-success {
+.qxt-alert-success {
     background: rgba(0, 150, 0, 0.15);
     color: #90EE90;
     border-color: var(--color-success);
 }
 
-.pta-alert-error {
+.qxt-alert-error {
     background: rgba(139, 0, 0, 0.2);
     color: #FF8A80;
     border-color: var(--color-danger);
 }
 
-.pta-alert-info {
+.qxt-alert-info {
     background: rgba(0, 100, 200, 0.15);
     color: #87CEFA;
     border-color: #0064C8;
@@ -728,7 +728,7 @@ code, pre {
 
 /* --- 21. FOOTER ------------------------------------------- */
 
-.pta-admin-footer {
+.qxt-admin-footer {
     max-width: 1200px;
     margin: 40px auto 0 auto;
     padding: 25px 0;
@@ -746,16 +746,16 @@ code, pre {
 .u-rounded-full { border-radius: 9999px; }
 .u-transition-fast { transition-duration: 0.15s; }
 
-.pta-field-inline {
+.qxt-field-inline {
     display: flex;
     gap: 20px;
     align-items: center;
 }
-.pta-field-inline > * {
+.qxt-field-inline > * {
     flex-grow: 1;
 }
 
-.pta-checkbox-container {
+.qxt-checkbox-container {
     display: block;
     position: relative;
     padding-left: 35px;
@@ -765,14 +765,14 @@ code, pre {
     user-select: none;
     color: var(--color-text-secondary);
 }
-.pta-checkbox-container input {
+.qxt-checkbox-container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     height: 0;
     width: 0;
 }
-.pta-checkmark {
+.qxt-checkmark {
     position: absolute;
     top: 0;
     left: 0;
@@ -782,22 +782,22 @@ code, pre {
     border: 1px solid #555555;
     border-radius: 4px;
 }
-.pta-checkbox-container:hover input ~ .pta-checkmark {
+.qxt-checkbox-container:hover input ~ .qxt-checkmark {
     background-color: #444444;
 }
-.pta-checkbox-container input:checked ~ .pta-checkmark {
+.qxt-checkbox-container input:checked ~ .qxt-checkmark {
     background-color: var(--color-light-red);
     border-color: var(--color-light-red);
 }
-.pta-checkmark:after {
+.qxt-checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
-.pta-checkbox-container input:checked ~ .pta-checkmark:after {
+.qxt-checkbox-container input:checked ~ .qxt-checkmark:after {
     display: block;
 }
-.pta-checkbox-container .pta-checkmark:after {
+.qxt-checkbox-container .qxt-checkmark:after {
     left: 7px;
     top: 3px;
     width: 5px;
@@ -806,12 +806,12 @@ code, pre {
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
 }
-.pta-separator {
+.qxt-separator {
     height: 1px;
     background-color: #303030;
     margin: 30px 0;
 }
-.pta-code-block {
+.qxt-code-block {
     padding: 15px;
     background: var(--color-bg-deep);
     border: 1px solid #303030;

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">Quản lý user</title>
+    <link rel="stylesheet" th:href="@{/css/pta-admin.css}">
+</head>
+<body class="pta-admin-body">
+
+<div class="pta-admin-main">
+    <div class="pta-admin-panel">
+
+        <div class="pta-admin-panel-header">
+            <div>
+                <h2 th:text="${pageTitle}">Quản lý user</h2>
+                <p class="pta-admin-panel-sub">
+                    Danh sách tài khoản có vai trò
+                    <span th:text="${pageRole}">ROLE</span>.
+                </p>
+            </div>
+            <div>
+                <a th:href="@{/admin/dashboard}" class="pta-admin-btn-ghost">
+                    ← Về bảng điều khiển
+                </a>
+            </div>
+        </div>
+
+        <table class="pta-admin-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>SĐT</th>
+                <th>Role</th>
+                <th class="pta-col-actions" style="text-align:center;">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="u : ${users}">
+                <td th:text="${u.id}"></td>
+                <td th:text="${u.fullName}"></td>
+                <td th:text="${u.email}"></td>
+                <td th:text="${u.phone}"></td>
+                <td th:text="${u.role}"></td>
+
+                <td style="text-align:center;">
+                    <!-- sau này thêm sửa/xóa/đổi role ở đây -->
+                    <a href="javascript:void(0)" class="pta-admin-btn pta-admin-btn-sm" style="opacity:.6; cursor:default;">
+                        Sửa (coming soon)
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

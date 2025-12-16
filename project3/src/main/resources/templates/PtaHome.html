@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Helios Shop - Trang chủ</title>
+    <link rel="stylesheet" th:href="@{/css/pta-style.css}">
+</head>
+<body>
+
+<!-- ===== HEADER (DÙNG TEMPLATE CHUNG) ===== -->
+<th:block th:replace="~{layout/PtaHeader :: pta_header}"></th:block>
+
+
+<!-- ========== BANNER RIÊNG ========== -->
+<section class="pta-banner">
+    <img src="/images/banner2.jpg" alt="Banner" class="home-banner">
+</section>
+
+
+<!-- ========== CATEGORY BAR (PHÂN LOẠI SẢN PHẨM) ========== -->
+<section class="pta-category-bar">
+    <div class="pta-category-list">
+        <div class="pta-breadcrumb">
+            <a href="/" class="crumb">Trang chủ </a>
+            <a href="/category/1" class="crumb">Nhẫn </a>
+            <a href="/category/2" class="crumb">Mặt dây chuyền</a>
+            <a href="/category/3" class="crumb">Vòng tay</a>
+            <a href="/category/4" class="crumb">Khuyên tai</a>
+        </div>
+    </div>
+</section>
+
+<!-- ========== SẢN PHẨM NỔI BẬT ========== -->
+<section class="pta-section">
+    <h3 class="pta-section-title">Sản phẩm nổi bật</h3>
+
+    <div class="pta-product-grid">
+
+        <div class="pta-product-card" th:each="p : ${products}">
+            <a th:href="@{'/product/' + ${p.id}}">
+
+                <!-- Ảnh sản phẩm -->
+                <img th:src="@{'/uploads/product-images/' + ${p.image}}" alt="Ảnh sản phẩm">
+
+                <!-- Tên sản phẩm -->
+                <h4 th:text="${p.name}"></h4>
+
+                <!-- Giá -->
+                <p class="price"
+                   th:text="${#numbers.formatInteger(p.price, 0, 'POINT')} + ' đ'">
+                </p>
+
+            </a>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ===== FOOTER ===== -->
+<div th:insert="~{layout/PtaFooter :: pta_footer}"></div>
+
+</body>
+</html>

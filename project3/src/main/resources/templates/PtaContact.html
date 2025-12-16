@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liên hệ Helios Shop</title>
+    <link rel="stylesheet" th:href="@{/css/pta-style.css}">
+</head>
+<body>
+
+<!-- HEADER -->
+<th:block th:replace="layout/PtaHeader :: pta_header"></th:block>
+
+<div class="contact-wrapper">
+
+    <h2 class="contact-title">Liên hệ với Helios Shop</h2>
+
+    <p class="contact-sub">Chúng mình luôn sẵn sàng lắng nghe bạn!</p>
+
+    <div class="contact-box">
+
+        <!-- Thông tin shop -->
+        <div class="contact-info">
+            <h3>Thông tin liên hệ</h3>
+            <p><b>📍 Địa chỉ:</b> Hà Nội, Việt Nam</p>
+            <p><b>📞 Hotline:</b> 0984551682</p>
+            <p><b>📧 Email:</b> support@ptahelios.com</p>
+            <p><b>🌐 Facebook:</b>
+                <a href="https://www.facebook.com/pham.tuan.290500" target="_blank">Phạm Tuấn</a>
+            </p>
+
+        </div>
+
+        <!-- Form gửi tin nhắn -->
+        <div class="contact-form">
+
+            <h3>Gửi tin nhắn cho shop</h3>
+
+            <form>
+
+                <label>Họ tên</label>
+                <input type="text" placeholder="Nhập họ tên của bạn">
+
+                <label>Email</label>
+                <input type="email" placeholder="Email để shop phản hồi">
+
+                <label>Nội dung tin nhắn</label>
+                <textarea rows="4" placeholder="Bạn muốn nhắn gì với shop?"></textarea>
+
+                <button type="submit" class="contact-btn">Gửi tin nhắn</button>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<th:block th:replace="layout/PtaFooter :: pta_footer"></th:block>
+
+</body>
+</html>

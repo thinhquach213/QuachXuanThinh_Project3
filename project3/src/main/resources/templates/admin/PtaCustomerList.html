@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý khách hàng</title>
+    <link rel="stylesheet" th:href="@{/css/pta-admin.css}">
+</head>
+<body class="pta-admin-body">
+
+<div class="pta-admin-main">
+    <div class="pta-admin-panel">
+        <div class="pta-admin-panel-header">
+            <div>
+                <h2>Quản lý khách hàng</h2>
+                <p class="pta-admin-panel-sub">Danh sách user có quyền CUSTOMER</p>
+            </div>
+            <a th:href="@{/admin/dashboard}" class="pta-admin-btn-ghost">← Về bảng điều khiển</a>
+        </div>
+
+        <div style="margin-top:14px; text-align:right;">
+            <a th:href="@{/admin/users/create(role='CUSTOMER')}"
+               class="pta-admin-btn pta-admin-btn-sm">
+                + Thêm khách hàng
+            </a>
+        </div>
+
+        <table class="pta-admin-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th class="pta-col-actions" style="text-align:center;">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="u : ${customers}">
+                <td th:text="${u.id}"></td>
+                <td th:text="${u.fullName}"></td>
+                <td th:text="${u.email}"></td>
+                <td th:text="${u.phone}"></td>
+                <td style="text-align:center;">
+                    <a th:href="@{|/admin/users/edit/${u.id}|}" class="pta-admin-btn pta-admin-btn-sm">Sửa</a>
+                    <a th:href="@{|/admin/users/delete/${u.id}|}"
+                       class="pta-admin-btn pta-admin-btn-sm pta-admin-btn-danger"
+                       onclick="return confirm('Xóa khách hàng này?');">
+                        Xóa
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý đơn hàng</title>
+    <link rel="stylesheet" th:href="@{/css/pta-admin.css}">
+</head>
+<body class="pta-admin-body">
+
+
+<div class="pta-admin-main">
+    <div class="pta-admin-panel">
+
+        <div class="pta-admin-panel-header">
+            <div>
+                <h2>Quản lý đơn hàng</h2>
+                <p class="pta-admin-panel-sub">
+                    Xem và cập nhật trạng thái các đơn hàng mới nhất.
+                </p>
+            </div>
+            <div>
+                <a th:href="@{/admin/dashboard}" class="pta-admin-btn-ghost">
+                    ← Về bảng điều khiển
+                </a>
+            </div>
+        </div>
+
+        <table class="pta-admin-table">
+            <thead>
+            <tr>
+                <th>Mã đơn</th>
+                <th>Khách hàng</th>
+                <th>Ngày tạo</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th class="pta-col-actions" style="text-align:center;">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.customerName}"></td>
+                <td th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${#numbers.formatInteger(order.totalAmount,0,'POINT')} + ' đ'"></td>
+
+                <!-- Badge trạng thái: class theo enum, text tiếng Việt theo map -->
+                <td>
+                    <span class="pta-badge"
+                          th:classappend="' pta-badge-' + ${order.status.name()}">
+                        <span th:text="${statusLabels[order.status.name()]}"></span>
+                    </span>
+                </td>
+
+                <td style="text-align:center;">
+                    <a th:href="@{|/admin/orders/edit/${order.id}|}"
+                       class="pta-admin-btn pta-admin-btn-sm">
+                        Sửa
+                    </a>
+                    <a th:href="@{|/admin/orders/delete/${order.id}|}"
+                       class="pta-admin-btn pta-admin-btn-sm pta-admin-btn-danger"
+                       style="margin-left:6px;"
+                       onclick="return confirm('Xóa đơn hàng này?');">
+                        Xóa
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</body>
+
+</html>

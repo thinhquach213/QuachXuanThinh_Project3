@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" th:href="@{/css/pta-style.css}">
+</head>
+<body class="product-detail-page">
+
+<!-- HEADER -->
+<th:block th:replace="layout/ptaHeader :: pta_header"></th:block>
+
+<div class="auth-container">
+    <h2>Đăng nhập</h2>
+
+    <form th:action="@{/login}" method="post" onsubmit="return validateForm()">
+
+        <!-- HIDDEN FIELD giữ lại trang cần quay về -->
+        <input type="hidden" name="redirect" th:value="${redirect}">
+
+        <label>Email</label>
+        <input type="text" name="email" id="email" value="" placeholder="Nhập email của bạn">
+
+        <label>Mật khẩu</label>
+        <div class="password-wrapper">
+            <input type="password" name="password" id="password" placeholder="Nhập mật khẩu">
+            <span class="toggle-pass" onclick="togglePassword()">👁</span>
+        </div>
+
+        <button type="submit" class="auth-btn">Đăng nhập</button>
+    </form>
+
+    <div class="auth-switch">
+        Chưa có tài khoản?
+        <a th:href="@{/register}">Đăng ký ngay</a>
+    </div>
+</div>
+
+<script>
+    // Kiểm tra form trước khi submit
+    function validateForm() {
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+
+        if (!email.value.trim()) {
+            alert('Vui lòng nhập email');
+            email.focus();
+            return false;
+        }
+        if (!password.value.trim()) {
+            alert('Vui lòng nhập mật khẩu');
+            password.focus();
+            return false;
+        }
+        return true;
+    }
+
+    // Toggle show/hide password
+    function togglePassword() {
+        const passInput = document.getElementById('password');
+        if (passInput.type === 'password') {
+            passInput.type = 'text';
+        } else {
+            passInput.type = 'password';
+        }
+    }
+</script>
+
+</body>
+</html>

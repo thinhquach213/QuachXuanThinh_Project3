@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanh toán</title>
+    <link rel="stylesheet" th:href="@{/css/pta-style.css}">
+</head>
+<body>
+
+<!-- HEADER -->
+<th:block th:replace="~{layout/PtaHeader :: pta_header}"></th:block>
+
+<div class="pta-page-wrapper">
+
+    <h2 class="pta-page-title">Thanh toán</h2>
+
+    <!-- DANH SÁCH SẢN PHẨM -->
+    <table class="pta-cart-table">
+        <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.productName}"></td>
+            <td th:text="${#numbers.formatInteger(item.price,0,'POINT')} + ' đ'"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${#numbers.formatInteger(item.price * item.quantity,0,'POINT')} + ' đ'"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="pta-cart-bottom">
+        <div class="pta-cart-total">
+            Tổng cộng:
+            <span th:text="${#numbers.formatInteger(total,0,'POINT')} + ' đ'"></span>
+        </div>
+    </div>
+
+    <!-- FORM THANH TOÁN -->
+    <form th:action="@{/checkout}" th:object="${checkoutForm}" method="post">
+
+        <div th:if="${#fields.hasGlobalErrors()}" class="pta-error">
+            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+        </div>
+
+        <div class="pta-form-group">
+            <label>Họ tên *</label>
+            <input type="text" th:field="*{customerName}" placeholder="Vui lòng nhập họ tên">
+            <div class="pta-field-error" th:errors="*{customerName}"></div>
+        </div>
+
+        <div class="pta-form-group">
+            <label>Số điện thoại *</label>
+            <input type="text" th:field="*{phone}" placeholder="Vui lòng nhập số điện thoại">
+            <div class="pta-field-error" th:errors="*{phone}"></div>
+        </div>
+
+        <div class="pta-form-group">
+            <label>Địa chỉ nhận hàng *</label>
+            <textarea rows="2" th:field="*{address}" placeholder="Vui lòng nhập địa chỉ"></textarea>
+            <div class="pta-field-error" th:errors="*{address}"></div>
+        </div>
+
+        <div class="pta-payment-box">
+            <label>Phương thức thanh toán *</label>
+            <label class="option">
+                <input type="radio" th:field="*{paymentMethod}" value="COD">
+                Thanh toán khi nhận hàng (COD)
+            </label>
+            <label class="option">
+                <input type="radio" th:field="*{paymentMethod}" value="BANK">
+                Chuyển khoản ngân hàng
+            </label>
+
+            <div id="qrBox" class="qr-box">
+                <p>Quét mã QR để thanh toán:</p>
+                <img src="/images/qr-bank.jpg" alt="QR Banking" class="qr-image">
+                <p class="bank-info">
+                    Ngân hàng: Vietin Bank<br>
+                    Chủ tài khoản: Phạm Tuấn Anh<br>
+                    Nội dung: <b>Thanh toán đơn hàng</b>
+                </p>
+            </div>
+        </div>
+
+        <div class="pta-form-group">
+            <label>Ghi chú cho shop</label>
+            <textarea rows="2" th:field="*{note}" placeholder="Bạn muốn ghi gì cho shop?"></textarea>
+        </div>
+
+        <div class="pta-cart-actions">
+            <a th:href="@{/cart}" class="pta-btn-outline">Quay lại giỏ hàng</a>
+            <button type="submit" class="pta-btn-primary">Đặt hàng</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    function updateQR() {
+        const bank = document.querySelector('input[value="BANK"]');
+        const qr = document.getElementById("qrBox");
+        qr.style.display = bank.checked ? "block" : "none";
+    }
+    document.querySelectorAll('input[name="paymentMethod"]').forEach(r => {
+        r.addEventListener("change", updateQR);
+    });
+    updateQR();
+</script>
+
+<th:block th:replace="layout/PtaFooter :: pta_footer"></th:block>
+
+</body>
+</html>

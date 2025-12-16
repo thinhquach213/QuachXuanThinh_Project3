@@ -1,0 +1,2619 @@
+/* ====================================================================
+   DEEP PURPLE GALAXY MODE - FINAL CSS (OPTIMIZED)
+   Bản sửa đổi KHÔNG CẮT BỎ code gốc, chỉ ADD/TWEAK để đáp ứng yêu cầu.
+==================================================================== */
+
+:root {
+    /* Bộ màu Galaxy chủ đạo */
+    --bg-deep: #050505; /* Đen gần tuyệt đối */
+    --glass-bg: rgba(255, 255, 255, 0.04); /* Hiệu ứng kính */
+    --glass-border: rgba(255, 255, 255, 0.1);
+
+    /* Màu Galaxy chính (Tím/Magenta) */
+    --deep-purple: #4c1d95; /* Tím đậm */
+    --magenta-accent: #a8008e; /* Magenta (Màu chủ đạo) */
+    --text-glow: #a855f7; /* Màu tím sáng cho tên/social */
+
+    /* Gradient điểm nhấn */
+    --galaxy-gradient: linear-gradient(90deg, #a8008e, #673ab7); /* Magenta sang Tím */
+    --title-gradient: linear-gradient(to right, #673ab7 0%, #a8008e 100%);
+
+    /* Hiệu ứng bóng */
+    --shadow-glow: 0 0 10px rgba(168, 0, 142, 0.2);
+}
+
+/* ============================
+   RESET & BASE (CODE GỐC)
+============================ */
+* { padding: 0; margin: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Arial', sans-serif; }
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+img { max-width: 100%; height: auto; display: block; } /* Áp dụng auto-scale cho tất cả ảnh */
+
+body {
+    background-color: var(--bg-deep);
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(168, 0, 142, 0.1), transparent 25%);
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* =====================================================
+   HEADER TRÊN: LOGO + SEARCH + ICONS (Flexbox) - CHỈNH SỬA TÊN SHOP
+===================================================== */
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 20px; /* Thêm gap để cân đối */
+}
+
+/* --- LOGO --- */
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pta-logo-img {
+    height: 36px; /* Kích thước chuẩn */
+    max-width: 150px;
+    object-fit: contain;
+    filter: none !important; /* QUAN TRỌNG: Giữ màu gốc */
+}
+
+/* CHỈNH SỬA: Tên Shop to, nổi bật cạnh logo */
+.shop-name {
+    font-size: 24px; /* TĂNG KÍCH THƯỚC */
+    font-weight: 800; /* TĂNG ĐỘ ĐẬM */
+    color: var(--text-glow);
+    text-shadow: 0 0 10px rgba(168,85,247,0.9); /* Tăng độ sáng */
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- SEARCH (CODE GỐC) --- */
+.top-search {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.search-form {
+    display: flex;
+    width: 100%;
+    max-width: 560px; /* Chiều rộng tối đa */
+}
+
+.search-form input {
+    flex: 1;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #333;
+    border-radius: 30px 0 0 30px;
+    color: #fff;
+    outline: none;
+    min-width: 0;
+}
+
+.search-form input:focus {
+    border-color: var(--magenta-accent);
+    box-shadow: 0 0 10px rgba(168, 0, 142, 0.4);
+}
+
+.search-form button {
+    padding: 10px 25px;
+    background: var(--galaxy-gradient);
+    border: none;
+    color: white;
+    font-weight: 700;
+    border-radius: 0 30px 30px 0;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.search-form button:hover {
+    opacity: 0.9;
+}
+
+/* --- RIGHT AREA (CODE GỐC) --- */
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    min-width: auto;
+    justify-content: flex-end;
+}
+
+.hotline {
+    color: #ccc;
+    font-size: 14px;
+}
+.hotline span {
+    font-weight: 600;
+    color: #fff;
+}
+
+.cart-icon {
+    color: var(--magenta-accent);
+    font-size: 24px;
+}
+.cart-icon:hover {
+    text-shadow: 0 0 8px var(--magenta-accent);
+}
+
+.btn-auth {
+    padding: 8px 20px;
+    background: var(--magenta-accent);
+    border: 1px solid var(--magenta-accent);
+    color: #fff !important;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.btn-auth:hover {
+    background: var(--deep-purple);
+    border-color: var(--deep-purple);
+    box-shadow: 0 0 10px rgba(168, 0, 142, 0.4);
+}
+
+.logged-wrap {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.logged-wrap .user-name {
+    color: #ccc;
+}
+
+.logged-wrap .btn-link {
+    color: var(--magenta-accent);
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   MENU CHÍNH & CATEGORY BAR (CODE GỐC)
+===================================================== */
+
+.pta-main-menu {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 12px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-center {
+    flex: 1;
+    text-align: left;
+    color: #999;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.menu-right {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.menu-item {
+    color: #ccc;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+}
+
+.menu-item:hover {
+    color: var(--magenta-accent);
+    text-shadow: 0 0 5px var(--magenta-accent);
+}
+
+.pta-category-bar {
+    width: 100%;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.pta-category-list {
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pta-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    font-size: 14px;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.pta-breadcrumb .crumb {
+    background: transparent;
+    color: #ccc;
+    border-radius: 4px;
+    padding: 8px 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: 0.3s;
+    border: none;
+}
+
+.pta-breadcrumb .crumb:hover {
+    background: transparent;
+    color: var(--magenta-accent);
+    text-shadow: 0 0 8px rgba(168, 0, 142, 0.6);
+    transform: translateY(1px);
+}
+
+/* =====================================================
+   BANNER & TITLES - CHỈNH SỬA CHIỀU CAO & KHOẢNG CÁCH
+===================================================== */
+.pta-banner {
+    width: 100%;
+    height: 380px; /* SỬA: GIẢM CHIỀU CAO TỪ 480PX XUỐNG 380PX */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0; /* SỬA: KHỬ MARGIN DƯ THỪA DƯỚI BANNER */
+    background: #000;
+    position: relative;
+    overflow: hidden;
+}
+.pta-banner::after {
+    content: '';
+    position: absolute;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle, #330033 0%, #000000 80%);
+    z-index: 1;
+}
+.home-banner { position: relative; z-index: 2; width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+body.product-detail-page .pta-banner { display: none !important; } /* Ẩn banner trên trang chi tiết */
+
+.pta-section-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    background: var(--title-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 5px rgba(103, 58, 183, 0.4));
+}
+
+
+/* =====================================================
+   FEATURE BOXES (Buttons 3D/In-set Effect) - CODE GỐC
+===================================================== */
+
+.pta-feature-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 0;
+    background: transparent;
+    flex-wrap: wrap; /* Thêm flex-wrap để tự động xuống dòng */
+}
+
+.pta-feature-card {
+    flex: 1 1 240px; /* Tự co/giãn/kích thước cơ sở */
+    max-width: 320px;
+    height: 140px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    transition: all .3s ease-out;
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.4),
+        0 0 10px rgba(168, 0, 142, 0.1);
+}
+
+.pta-feature-card:hover {
+    transform: translateY(2px);
+    background: rgba(168, 0, 142, 0.1);
+    border-color: var(--magenta-accent);
+    color: var(--magenta-accent);
+
+    box-shadow:
+        inset 0 0 15px rgba(168, 0, 142, 0.5),
+        inset 0 0 5px rgba(0, 0, 0, 0.8),
+        0 0 15px rgba(168, 0, 142, 0.3);
+}
+
+
+/* =====================================================
+   PRODUCT CARDS (GLASS STYLE) - CODE GỐC
+===================================================== */
+.pta-section {
+    padding: 40px 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.pta-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    padding: 0 50px;
+    margin-bottom: 50px;
+    margin-top: 50px; /* THÊM: Tách khỏi Banner/Content phía trên */
+}
+
+.pta-product-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    transition: 0.4s;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.pta-product-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--magenta-accent);
+    box-shadow: 0 0 20px rgba(168, 0, 142, 0.4);
+}
+
+.pta-product-card img {
+    width: 100%;
+    height: 160px; /* Fix: Chiều cao ảnh chuẩn */
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.pta-product-card a {
+    color: #fff;
+    display: block;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.price {
+    color: var(--magenta-accent);
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 0 0 5px rgba(168, 0, 142, 0.3);
+}
+
+/* =====================================================
+   CHI TIẾT SẢN PHẨM & LOGIN/AUTH - ÁP DỤNG BỐ CỤC MỚI
+===================================================== */
+
+/* Thêm container Flexbox để chia 2 cột và Đánh giá 100% */
+.pta-detail-wrap { /* GIẢ ĐỊNH bạn thêm class này vào thẻ cha của ảnh và nội dung */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+.detail-image { /* Ảnh chiếm 40% và sticky */
+    flex: 0 0 40%;
+    max-width: 450px;
+    position: sticky;
+    top: 120px;
+}
+.detail-content { /* Nội dung chiếm phần còn lại */
+    flex: 1 1 50%;
+    min-width: 300px;
+}
+.product-reviews { /* Đánh giá chiếm 100% và nằm dưới */
+    width: 100%;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--glass-border);
+}
+.detail-content .price { /* Price tag chuyên nghiệp hơn */
+    color: var(--magenta-accent);
+    text-shadow: 0 0 10px rgba(168,0,142,0.6);
+    font-size: 24px;
+}
+
+
+/* Ảnh chi tiết sản phẩm (CODE GỐC + SỬA) */
+.pta-detail-image img {
+    width: 100%;
+    max-height: 480px; /* SỬA: Tăng max height để ảnh có không gian */
+    object-fit: contain;
+    background: #000;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(168, 0, 142, 0.4); /* Thêm hiệu ứng nổi bật */
+}
+
+.pta-breadcrumb .crumb { /* Đã fix trong phần category bar, chỉ cần hover */ }
+
+.detail-info .price {
+    color: var(--magenta-accent);
+    text-shadow: 0 0 10px rgba(168,0,142,0.6);
+}
+
+/* Nút chính (CODE GỐC) */
+.btn-primary {
+    background: var(--galaxy-gradient);
+    border-radius: 30px;
+    box-shadow: 0 0 20px rgba(168, 0, 142, 0.4);
+    padding: 10px 25px; /* Đảm bảo kích thước chuẩn */
+    font-weight: 700;
+    color: white;
+}
+
+.auth-container {
+    background: #111;
+    border: 1px solid #333;
+    box-shadow: 0 0 30px rgba(168, 0, 142, 0.15);
+}
+
+.auth-container input:focus {
+    border-color: var(--magenta-accent);
+    box-shadow: var(--shadow-glow);
+}
+
+.auth-btn {
+    background: var(--galaxy-gradient);
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-weight: 700;
+    color: white;
+}
+
+
+/* =====================================================
+   FOOTER (Dark Mode - Grid Layout) - SỬA LẠI CỘT SOCIAL
+===================================================== */
+.pta-footer {
+    background: #020202;
+    padding: 50px 20px 20px;
+    border-top: 1px solid #222;
+    margin-top: 50px;
+    color: #888;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr; /* LOGO | LIÊN HỆ | THEO DÕI */
+    gap: 40px;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column; /* ĐẢM BẢO CÁC CỘT DÀN DỌC */
+    gap: 10px;
+}
+
+.footer-logo {
+    height: 34px;
+    max-width: 150px;
+    width: auto;
+    object-fit: contain;
+    filter: none !important; /* Fix: Logo không bị ép màu */
+}
+
+.footer-desc {
+    color: #888;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 320px;
+}
+
+.footer-col h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.footer-col p {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.5;
+}
+
+/* THÊM/SỬA cho Social Links nếu chúng nằm trong một container (ví dụ: .social-links) */
+/* Nếu HTML của bạn là các thẻ <a> trực tiếp dưới .footer-col, thì flex-direction: column đã giải quyết. */
+/* Nếu bạn có một wrapper: */
+/*
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+*/
+
+.footer-col a {
+    color: #bbb;
+    font-size: 14px;
+}
+
+.footer-col a:hover {
+    color: var(--magenta-accent);
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    margin-top: 40px;
+    padding-top: 15px;
+    border-top: 1px solid #222;
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+}
+
+/* =====================================================
+   RESPONSIVE (Đã hợp nhất các Media Query)
+===================================================== */
+@media (max-width: 900px) {
+    /* --- HEADER --- */
+    .header-top { flex-wrap: wrap; gap: 15px; padding: 15px; }
+    .top-search { order: 3; width: 100%; padding: 0; margin-top: 10px; }
+    .top-right { min-width: auto; gap: 20px; }
+
+    /* --- MENU --- */
+    .pta-main-menu { flex-direction: column; gap: 10px; padding: 10px 20px; }
+    .menu-center { text-align: center; margin-bottom: 5px; }
+
+    /* --- BANNER --- */
+    .pta-banner { height: 320px; margin-bottom: 0; } /* SỬA: Giảm nhỏ hơn và khử margin */
+
+    /* --- PRODUCT DETAIL: Stack ảnh và nội dung --- */
+    .pta-detail-wrap {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .detail-image, .detail-content {
+        max-width: 100%;
+        flex: 1 1 100%;
+        position: static; /* Loại bỏ sticky trên mobile */
+    }
+    .product-reviews { margin-top: 20px; } /* Giảm margin trên mobile */
+
+    /* --- CONTENT --- */
+    .pta-product-grid { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
+
+    /* --- FOOTER --- */
+    .footer-container { grid-template-columns: 1fr 1fr; }
+    .footer-col:first-child {
+        grid-column: 1 / -1;
+        align-items: center;
+        text-align: center;
+    }
+    .footer-desc { max-width: none; }
+}
+
+@media (max-width: 600px) {
+    /* --- HEADER --- */
+    .header-top { justify-content: center; text-align: center; }
+    .logo-wrap { width: 100%; justify-content: center; }
+    .top-right { justify-content: center; margin-top: 10px; }
+    .shop-name { font-size: 20px; } /* SỬA: Giảm tên shop trên màn hình siêu nhỏ */
+
+    .hotline, .logged-wrap .user-name, .logged-wrap .btn-link { display: none; }
+
+    /* --- MENU/CONTENT --- */
+    .menu-right { flex-wrap: wrap; justify-content: center; gap: 15px; }
+    .pta-product-grid { grid-template-columns: 1fr; padding: 0 20px; }
+
+    /* --- BANNER --- */
+    .pta-banner { height: 450px; } /* SỬA: Giảm nhỏ hơn nữa */
+
+    /* --- FOOTER --- */
+    .footer-container { grid-template-columns: 1fr; gap: 30px; }
+    .footer-col { align-items: center; }
+}
+/* =====================================================
+   ADD ONLY – FOOTER FIX (KHÔNG ĐỤNG CODE CŨ)
+   Mục tiêu: dàn thẳng Social / Link theo cột
+===================================================== */
+
+/* Ép tất cả link trong footer xuống dòng */
+.pta-footer .footer-col a {
+    display: block;
+    width: fit-content;
+}
+
+/* Nếu có icon social (i, svg) thì canh gọn */
+.pta-footer .footer-col a i,
+.pta-footer .footer-col a svg {
+    margin-right: 8px;
+}
+
+/* Khoảng cách đều, không phá layout */
+.pta-footer .footer-col {
+    gap: 8px;
+}
+
+/* Mobile vẫn dàn thẳng */
+@media (max-width: 768px) {
+    .pta-footer .footer-col {
+        align-items: center;
+        text-align: center;
+    }
+
+    .pta-footer .footer-col a {
+        margin: 0 auto;
+    }
+}
+/* =====================================================
+   PRODUCT DETAIL PAGE – LAYOUT FIX
+   Áp dụng cho HTML bạn gửi
+===================================================== */
+
+/* BREADCRUMB gọn lại */
+.product-detail-page .pta-breadcrumb {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+/* =========================
+   KHỐI TRÊN: ẢNH + INFO
+========================= */
+.product-detail-page .pta-detail-wrap {
+    max-width: 1200px;
+    margin: 30px auto 10px;
+    padding: 0 20px;
+
+    display: flex;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+/* ẢNH BÊN TRÁI */
+.product-detail-page .pta-detail-img-wrap {
+    flex: 0 0 38%;
+    max-width: 420px;
+}
+
+.product-detail-page .pta-detail-img-wrap img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    background: #000;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/* INFO BÊN PHẢI */
+.product-detail-page .detail-info {
+    flex: 1;
+}
+
+.product-detail-page .detail-info h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.product-detail-page .detail-info .price {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--magenta-accent);
+    margin-bottom: 15px;
+}
+
+.product-detail-page .pta-detail-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #d1d5db;
+    margin-bottom: 20px;
+}
+
+/* BENEFIT LIST */
+.product-detail-page .pta-benefit-wrap {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 25px;
+}
+
+.product-detail-page .pta-benefit-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.product-detail-page .pta-benefit-list li {
+    font-size: 14px;
+    color: #cbd5f5;
+    margin-bottom: 6px;
+    position: relative;
+    padding-left: 16px;
+}
+
+.product-detail-page .pta-benefit-list li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    color: var(--magenta-accent);
+    font-size: 12px;
+}
+
+/* NÚT THÊM GIỎ */
+.product-detail-page .btn-primary {
+    margin-top: 10px;
+    padding: 12px 30px;
+    font-size: 15px;
+}
+
+/* =========================
+   ĐÁNH GIÁ – NẰM BÊN DƯỚI
+========================= */
+.product-detail-page .pta-detail-extra {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.product-detail-page .pta-review-section {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 30px;
+}
+
+/* FORM REVIEW */
+.product-detail-page .review-form {
+    margin-bottom: 30px;
+}
+
+.product-detail-page .review-form label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.product-detail-page .review-form select,
+.product-detail-page .review-form textarea {
+    width: 100%;
+    background: #111;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 12px;
+}
+
+.product-detail-page .review-form textarea {
+    min-height: 90px;
+}
+
+.product-detail-page .review-form button {
+    background: var(--galaxy-gradient);
+    border: none;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* CARD COMMENT */
+.product-detail-page .pta-review-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.product-detail-page .pta-review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.product-detail-page .pta-review-stars {
+    color: #facc15;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+    .product-detail-page .pta-detail-wrap {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .product-detail-page .pta-detail-img-wrap {
+        max-width: 100%;
+    }
+
+    .product-detail-page .pta-benefit-wrap {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+/* =====================================================
+   PRODUCT DETAIL – STICKY IMAGE (ADD ONLY)
+===================================================== */
+
+.product-detail-page .pta-detail-img-wrap {
+    position: sticky;
+    top: 120px; /* né header */
+    align-self: flex-start;
+}
+/* =====================================================
+   ADD TO CART BUTTON – HOVER ANIMATION
+===================================================== */
+
+.product-detail-page .btn-primary {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s ease;
+}
+
+/* Hover: nổi + phát sáng */
+.product-detail-page .btn-primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+        0 8px 25px rgba(168, 0, 142, 0.6),
+        0 0 15px rgba(168, 0, 142, 0.5);
+}
+
+/* Hiệu ứng ánh sáng quét */
+.product-detail-page .btn-primary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    transition: 0.6s;
+}
+
+.product-detail-page .btn-primary:hover::after {
+    left: 120%;
+}
+
+/* Click xuống có phản hồi */
+.product-detail-page .btn-primary:active {
+    transform: scale(0.97);
+}
+/* ===================================================================
+   PRODUCT DETAIL – FULL PROFESSIONAL CSS (ADD ONLY)
+   Copy & Paste – không phá code cũ
+=================================================================== */
+
+/* =========================
+   BREADCRUMB
+========================= */
+.product-detail-page .pta-breadcrumb {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+/* =========================
+   LAYOUT: IMAGE LEFT – INFO RIGHT
+========================= */
+.product-detail-page .pta-detail-wrap {
+    max-width: 1200px;
+    margin: 40px auto 20px;
+    padding: 0 20px;
+
+    display: flex;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+/* =========================
+   IMAGE LEFT (STICKY)
+========================= */
+.product-detail-page .pta-detail-img-wrap {
+    flex: 0 0 38%;
+    max-width: 420px;
+    position: sticky;
+    top: 120px;
+}
+
+.product-detail-page .pta-detail-img-wrap img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    background: #000;
+    border-radius: 14px;
+    padding: 10px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.6),
+        0 0 25px rgba(168,0,142,0.35);
+
+    transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.product-detail-page .pta-detail-img-wrap img:hover {
+    transform: scale(1.03);
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.7),
+        0 0 35px rgba(168,0,142,0.5);
+}
+
+/* =========================
+   INFO RIGHT
+========================= */
+.product-detail-page .detail-info {
+    flex: 1;
+}
+
+.product-detail-page .detail-info h2 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin-bottom: 12px;
+}
+
+.product-detail-page .detail-info .price {
+    display: inline-block;
+    font-size: 26px;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: rgba(168,0,142,0.12);
+    box-shadow: inset 0 0 12px rgba(168,0,142,0.4);
+    margin-bottom: 18px;
+    color: var(--magenta-accent);
+}
+
+.product-detail-page .pta-detail-desc {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #e5e7eb;
+    margin-bottom: 24px;
+}
+
+/* =========================
+   BENEFITS
+========================= */
+.product-detail-page .pta-benefit-wrap {
+    display: flex;
+    gap: 40px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+}
+
+.product-detail-page .pta-benefit-list {
+    list-style: none;
+    padding: 0;
+}
+
+.product-detail-page .pta-benefit-list li {
+    font-size: 14px;
+    color: #dbeafe;
+    margin-bottom: 6px;
+    position: relative;
+    padding-left: 16px;
+}
+
+.product-detail-page .pta-benefit-list li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    font-size: 12px;
+    color: var(--magenta-accent);
+}
+
+/* =========================
+   ADD TO CART BUTTON
+========================= */
+.product-detail-page .btn-primary {
+    position: relative;
+    overflow: hidden;
+    font-size: 16px;
+    letter-spacing: .5px;
+    padding: 14px 36px;
+    border-radius: 30px;
+    transition: all .35s ease;
+    box-shadow: 0 10px 30px rgba(168,0,142,0.45);
+}
+
+.product-detail-page .btn-primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+        0 16px 40px rgba(168,0,142,0.6),
+        0 0 18px rgba(168,0,142,0.5);
+}
+
+.product-detail-page .btn-primary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    transition: .6s;
+}
+
+.product-detail-page .btn-primary:hover::after {
+    left: 120%;
+}
+
+.product-detail-page .btn-primary:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   REVIEW SECTION (BOTTOM)
+========================= */
+.product-detail-page .pta-detail-extra {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.product-detail-page .pta-review-section {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 30px;
+}
+
+.product-detail-page .pta-review-section h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 12px;
+}
+
+.product-detail-page .pta-review-section h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 4px;
+    height: 20px;
+    background: var(--galaxy-gradient);
+    border-radius: 2px;
+}
+
+/* =========================
+   REVIEW FORM
+========================= */
+.product-detail-page .review-form {
+    margin-bottom: 35px;
+}
+
+.product-detail-page .review-form label {
+    font-size: 14px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.product-detail-page .review-form select,
+.product-detail-page .review-form textarea {
+    width: 100%;
+    background: #111;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 12px;
+}
+
+.product-detail-page .review-form textarea {
+    min-height: 90px;
+}
+
+.product-detail-page .review-form select:focus,
+.product-detail-page .review-form textarea:focus {
+    outline: none;
+    border-color: var(--magenta-accent);
+    box-shadow: 0 0 12px rgba(168,0,142,0.5);
+}
+
+/* SUBMIT REVIEW BUTTON */
+.product-detail-page .review-form button {
+    position: relative;
+    background: var(--galaxy-gradient);
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    padding: 12px 28px;
+    border-radius: 24px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all .35s ease;
+    box-shadow: 0 8px 20px rgba(168,0,142,0.35);
+}
+
+.product-detail-page .review-form button:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+        0 14px 35px rgba(168,0,142,0.55),
+        0 0 18px rgba(168,0,142,0.45);
+}
+
+.product-detail-page .review-form button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.45),
+        transparent
+    );
+    transition: .6s;
+}
+
+.product-detail-page .review-form button:hover::after {
+    left: 120%;
+}
+
+.product-detail-page .review-form button:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   REVIEW CARD
+========================= */
+.product-detail-page .pta-review-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid rgba(168,0,142,0.5);
+    border-radius: 10px;
+    padding: 15px 18px;
+    margin-bottom: 15px;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.product-detail-page .pta-review-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.5),
+        0 0 15px rgba(168,0,142,0.3);
+}
+
+.product-detail-page .pta-review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.product-detail-page .pta-review-header span:first-child {
+    font-weight: 600;
+    color: #e5e7eb;
+}
+
+.product-detail-page .pta-review-stars {
+    color: #facc15;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgba(250,204,21,0.6);
+}
+
+.product-detail-page .pta-review-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #d1d5db;
+    margin: 6px 0 10px;
+}
+
+.product-detail-page .pta-review-card small {
+    display: block;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+    .product-detail-page .pta-detail-wrap {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .product-detail-page .pta-detail-img-wrap {
+        position: static;
+        max-width: 100%;
+    }
+
+    .product-detail-page .pta-benefit-wrap {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+/* ======================================================
+   REVIEW SECTION – FORCE PROFESSIONAL LOOK (OVERRIDE)
+   Đảm bảo thay đổi nhìn thấy ngay
+====================================================== */
+
+/* Toàn khối đánh giá */
+body.product-detail-page .pta-review-section {
+    background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.04),
+        rgba(255,255,255,0.015)
+    );
+    border-radius: 16px;
+    padding: 30px 30px 20px;
+    margin-top: 40px;
+}
+
+/* Tiêu đề đánh giá */
+body.product-detail-page .pta-review-section > h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    letter-spacing: .3px;
+    color: #fff;
+}
+
+/* Card đánh giá */
+body.product-detail-page .pta-review-card {
+    background: rgba(0,0,0,0.45) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-left: 4px solid #a8008e !important;
+    border-radius: 14px !important;
+    padding: 16px 20px !important;
+    margin-bottom: 18px !important;
+
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+/* Hover card */
+body.product-detail-page .pta-review-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 14px 35px rgba(0,0,0,0.6),
+        0 0 22px rgba(168,0,142,0.45);
+}
+
+/* Header card */
+body.product-detail-page .pta-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+/* Tên người đánh giá */
+body.product-detail-page .pta-review-header span:first-child {
+    font-weight: 700;
+    font-size: 14px;
+    color: #f9fafb;
+}
+
+/* Sao đánh giá */
+body.product-detail-page .pta-review-stars {
+    font-size: 14px;
+    color: #facc15;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(250,204,21,0.7);
+}
+
+/* Nội dung đánh giá */
+body.product-detail-page .pta-review-card p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: #e5e7eb;
+    margin: 6px 0 10px;
+}
+
+/* Thời gian */
+body.product-detail-page .pta-review-card small {
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* =========================
+   FORM GỬI ĐÁNH GIÁ – NỔI RÕ
+========================= */
+body.product-detail-page .review-form {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 30px;
+}
+
+/* Label */
+body.product-detail-page .review-form label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Select + textarea */
+body.product-detail-page .review-form select,
+body.product-detail-page .review-form textarea {
+    background: #0b0b0f !important;
+    border: 1px solid #333 !important;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+/* Focus */
+body.product-detail-page .review-form select:focus,
+body.product-detail-page .review-form textarea:focus {
+    outline: none;
+    border-color: #a8008e !important;
+    box-shadow: 0 0 14px rgba(168,0,142,0.6);
+}
+
+/* NÚT GỬI ĐÁNH GIÁ */
+body.product-detail-page .review-form button {
+    margin-top: 6px;
+    background: linear-gradient(135deg,#a8008e,#5b1fa6) !important;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: .5px;
+    padding: 12px 30px;
+    border-radius: 26px;
+    cursor: pointer;
+
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+/* Hover nút gửi */
+body.product-detail-page .review-form button:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow:
+        0 14px 35px rgba(168,0,142,0.6),
+        0 0 20px rgba(168,0,142,0.5);
+}
+/* ===================================================================
+   CONTACT PAGE – FULL PROFESSIONAL UPGRADE
+=================================================================== */
+
+/* ---------------------------------------------------
+   WRAPPER CHUNG
+--------------------------------------------------- */
+.contact-wrapper {
+    max-width: 1100px;
+    margin: 50px auto 80px;
+    padding: 0 20px;
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Tiêu đề chính */
+.contact-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: .5px;
+    color: #fff;
+}
+
+.contact-sub {
+    text-align: center;
+    font-size: 15px;
+    color: #9ca3af;
+    margin-bottom: 40px;
+}
+
+/* ---------------------------------------------------
+   KHUNG CHÍNH CONTACT BOX
+--------------------------------------------------- */
+.contact-box {
+    display: flex;
+    gap: 40px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.6),
+        0 0 30px rgba(168,0,142,0.25);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+/* Hover tổng thể box */
+.contact-box:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.65),
+        0 0 35px rgba(168,0,142,0.35);
+}
+
+/* ===================================================
+   THÔNG TIN SHOP
+=================================================== */
+.contact-info {
+    flex: 1;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 26px 28px;
+}
+
+.contact-info h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    position: relative;
+    padding-left: 14px;
+    color: #fff;
+}
+
+.contact-info h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 4px;
+    height: 20px;
+    background: var(--galaxy-gradient);
+    border-radius: 2px;
+}
+
+.contact-info p {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    color: #e5e7eb;
+    word-break: break-word;
+}
+
+.contact-info b {
+    color: #f9fafb;
+}
+
+/* ---------------------------------------------------
+   FORM LIÊN HỆ
+--------------------------------------------------- */
+.contact-form {
+    flex: 1.2;
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 26px 28px;
+    position: relative;
+}
+
+.contact-form h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    position: relative;
+    padding-left: 14px;
+    color: #fff;
+}
+
+.contact-form h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 4px;
+    height: 20px;
+    background: var(--galaxy-gradient);
+    border-radius: 2px;
+}
+
+/* Label */
+.contact-form label {
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    color: #e5e7eb;
+}
+
+/* Input + textarea */
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    background: #0b0b0f;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 14px;
+    margin-bottom: 14px;
+    transition: border .3s ease, box-shadow .3s ease;
+}
+
+.contact-form textarea {
+    resize: none;
+    min-height: 100px;
+}
+
+/* Focus */
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--magenta-accent);
+    box-shadow: 0 0 14px rgba(168,0,142,0.6);
+}
+
+/* -------------------------------
+   NÚT GỬI TIN NHẮN
+--------------------------------- */
+.contact-btn {
+    margin-top: 6px;
+    background: var(--galaxy-gradient);
+    border: none;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    padding: 14px 36px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all .35s ease;
+    box-shadow: 0 10px 30px rgba(168,0,142,0.45);
+}
+
+.contact-btn:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow:
+        0 16px 40px rgba(168,0,142,0.6),
+        0 0 20px rgba(168,0,142,0.5);
+}
+
+.contact-btn:active {
+    transform: scale(0.96);
+}
+
+/* ---------------------------------------------------
+   ICONS BÊN TRONG P INFO (OPTIONAL)
+   Giả sử HTML thêm icon trước text
+--------------------------------------------------- */
+.contact-info p::before {
+    content: "•"; /* thay bằng SVG nếu muốn */
+    display: inline-block;
+    width: 18px;
+    margin-right: 6px;
+    color: var(--magenta-accent);
+}
+
+/* ---------------------------------------------------
+   GOOGLE MAP EMBED
+--------------------------------------------------- */
+.contact-map {
+    width: 100%;
+    height: 300px;
+    border-radius: 16px;
+    margin-top: 30px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* ---------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------- */
+@media (max-width: 768px) {
+    .contact-box {
+        flex-direction: column;
+        padding: 25px;
+    }
+}
+
+/* ---------------------------------------------------
+   ANIMATION: fadeInUp
+--------------------------------------------------- */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.contact-info a {
+    color: var(--magenta-accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.contact-info a:hover {
+    background: linear-gradient(90deg, #a8008e, #673ab7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 8px rgba(168,0,142,0.6);
+}
+/* ===================================================================
+   ORDER PAGE – PROFESSIONAL STYLE
+=================================================================== */
+
+/* ---------------------------------------------------
+   WRAPPER CHUNG
+--------------------------------------------------- */
+.pta-page-wrapper {
+    max-width: 1100px;
+    margin: 50px auto 80px;
+    padding: 0 20px;
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Tiêu đề trang */
+.pta-page-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: 0.5px;
+}
+
+/* ---------------------------------------------------
+   KHUNG ĐƠN HÀNG
+--------------------------------------------------- */
+.order-card {
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 26px 28px;
+    margin-bottom: 30px;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.6),
+        0 0 25px rgba(168,0,142,0.25);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+/* Hover hiệu ứng */
+.order-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.7),
+        0 0 35px rgba(168,0,142,0.35);
+}
+
+/* Tiêu đề đơn */
+.order-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    position: relative;
+    padding-left: 14px;
+    color: #fff;
+}
+
+.order-card h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 4px;
+    height: 20px;
+    background: var(--galaxy-gradient);
+    border-radius: 2px;
+}
+
+/* Nội dung đơn */
+.order-card p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #e5e7eb;
+    margin-bottom: 8px;
+}
+
+.order-card p b {
+    color: #fff;
+}
+
+/* Trạng thái đơn – highlight theo màu galaxy */
+.order-card span[th\\:text*='order.status'] {
+    font-weight: 600;
+    color: var(--magenta-accent);
+}
+
+/* ---------------------------------------------------
+   THÔNG BÁO KHÔNG CÓ ĐƠN HÀNG
+--------------------------------------------------- */
+.pta-page-wrapper > div[th\\:if*='orders.isEmpty()'] {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 16px;
+    padding: 40px 0;
+    background: rgba(255,255,255,0.02);
+    border-radius: 12px;
+}
+
+/* ---------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------- */
+@media (max-width: 768px) {
+    .pta-page-wrapper {
+        padding: 0 15px;
+    }
+
+    .order-card {
+        padding: 20px 18px;
+    }
+
+    .pta-page-title {
+        font-size: 26px;
+        margin-bottom: 30px;
+    }
+}
+
+/* ---------------------------------------------------
+   ANIMATION: fadeInUp (tái sử dụng)
+--------------------------------------------------- */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* ===================================================================
+   LOGIN / AUTH PAGE – PROFESSIONAL STYLE
+=================================================================== */
+
+/* ---------------------------------------------------
+   WRAPPER CHUNG: căn giữa màn hình
+--------------------------------------------------- */
+.auth-container {
+    max-width: 400px;
+    width: 90%;
+    margin: 80px auto;
+    padding: 40px 30px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.7),
+        0 0 35px rgba(168,0,142,0.25);
+    backdrop-filter: blur(10px);
+    animation: fadeInScale 0.6s ease forwards;
+    color: #fff;
+}
+
+/* Tiêu đề */
+.auth-container h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    color: var(--magenta-accent);
+    text-shadow: 0 0 8px rgba(168,0,142,0.6);
+}
+
+/* FORM */
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-container label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #e5e7eb;
+}
+
+/* INPUT */
+.auth-container input[type="text"],
+.auth-container input[type="password"] {
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    outline: none;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.auth-container input[type="text"]:focus,
+.auth-container input[type="password"]:focus {
+    border-color: var(--magenta-accent);
+    box-shadow: 0 0 12px rgba(168,0,142,0.5);
+}
+
+/* BUTTON */
+.auth-container .auth-btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 30px;
+    background: var(--galaxy-gradient);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(168,0,142,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-container .auth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(168,0,142,0.6);
+}
+
+/* SWITCH REGISTER */
+.auth-container .auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.auth-container .auth-switch a {
+    color: var(--magenta-accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.auth-container .auth-switch a:hover {
+    text-shadow: 0 0 8px rgba(168,0,142,0.6);
+}
+
+/* ---------------------------------------------------
+   ANIMATION: fadeInScale
+--------------------------------------------------- */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    .auth-container {
+        margin: 50px 15px;
+        padding: 30px 20px;
+    }
+
+    .auth-container h2 {
+        font-size: 24px;
+    }
+}
+/* ===================================================================
+   LOGIN / AUTH PAGE – PROFESSIONAL UPGRADE (BRIGHT + HOVER EFFECT)
+=================================================================== */
+
+/* ---------------------------------------------------
+   WRAPPER CHUNG: nổi bật hơn, căn giữa
+--------------------------------------------------- */
+.auth-container {
+    max-width: 400px;
+    width: 90%;
+    margin: 80px auto;
+    padding: 40px 30px;
+    background: rgba(50, 0, 50, 0.85); /* sáng hơn, tím đậm semi-transparent */
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.7),
+        0 0 40px rgba(168,0,142,0.35);
+    backdrop-filter: blur(12px);
+    animation: fadeInScale 0.6s ease forwards;
+    color: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* Hover nâng khung */
+.auth-container:hover {
+    transform: translateY(-3px);
+    background: rgba(70, 0, 70, 0.95);
+    box-shadow:
+        0 35px 80px rgba(0,0,0,0.75),
+        0 0 50px rgba(168,0,142,0.45);
+}
+
+/* Tiêu đề */
+.auth-container h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    color: var(--magenta-accent);
+    text-shadow: 0 0 12px rgba(168,0,142,0.7);
+}
+
+/* FORM */
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-container label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #e5e7eb;
+}
+
+/* INPUT */
+.auth-container input[type="text"],
+.auth-container input[type="password"] {
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.08); /* sáng hơn */
+    color: #fff;
+    outline: none;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.auth-container input[type="text"]:focus,
+.auth-container input[type="password"]:focus {
+    border-color: var(--magenta-accent);
+    box-shadow: 0 0 15px rgba(168,0,142,0.6);
+}
+
+/* BUTTON */
+.auth-container .auth-btn {
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 30px;
+    background: var(--galaxy-gradient);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(168,0,142,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.auth-container .auth-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 18px 45px rgba(168,0,142,0.65);
+    background: linear-gradient(135deg, #a8008e, #7e3af2);
+}
+
+/* SWITCH REGISTER */
+.auth-container .auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.auth-container .auth-switch a {
+    color: var(--magenta-accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.auth-container .auth-switch a:hover {
+    text-shadow: 0 0 12px rgba(168,0,142,0.7);
+}
+
+/* ---------------------------------------------------
+   ANIMATION: fadeInScale
+--------------------------------------------------- */
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.85);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    .auth-container {
+        margin: 50px 15px;
+        padding: 30px 20px;
+    }
+
+    .auth-container h2 {
+        font-size: 24px;
+    }
+}
+/* ---------------------------------------------------
+   PASSWORD WRAPPER + TOGGLE ICON
+--------------------------------------------------- */
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px; /* dành chỗ cho icon */
+}
+
+.toggle-pass {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #ccc;
+    transition: color 0.3s ease;
+}
+
+.toggle-pass:hover {
+    color: var(--magenta-accent);
+    text-shadow: 0 0 8px rgba(168,0,142,0.7);
+}
+
+/* ---------------------------------------------------
+   INPUT HOVER/FOCUS NỔI BẬT + PLACEHOLDER
+--------------------------------------------------- */
+.auth-container input::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+.auth-container input:focus::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+.auth-container input:invalid {
+    border-color: #ff4d4f;
+    box-shadow: 0 0 10px rgba(255,77,79,0.5);
+}
+
+/* ---------------------------------------------------
+   FORM HOVER EFFECT
+--------------------------------------------------- */
+.auth-container form input:hover {
+    border-color: var(--magenta-accent);
+    box-shadow: 0 0 12px rgba(168,0,142,0.4);
+}
+/* ---------------------------------------------------
+   PASSWORD WRAPPER + TOGGLE ICON
+--------------------------------------------------- */
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.toggle-pass {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #ccc;
+    transition: color 0.3s ease;
+}
+
+.toggle-pass:hover {
+    color: var(--magenta-accent);
+    text-shadow: 0 0 8px rgba(168,0,142,0.7);
+}
+
+/* ---------------------------------------------------
+   INPUT HOVER/FOCUS NỔI BẬT + PLACEHOLDER
+--------------------------------------------------- */
+.auth-container input::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+.auth-container input:focus::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+.auth-container input:invalid {
+    border-color: #ff4d4f;
+    box-shadow: 0 0 10px rgba(255,77,79,0.5);
+}
+
+/* ---------------------------------------------------
+   FORM HOVER EFFECT
+--------------------------------------------------- */
+.auth-container form input:hover {
+    border-color: var(--magenta-accent);
+    box-shadow: 0 0 12px rgba(168,0,142,0.4);
+}
+
+/* ---------------------------------------------------
+   KHUNG ĐĂNG KÝ CHUYÊN NGHIỆP
+--------------------------------------------------- */
+.auth-container {
+    background: rgba(255,255,255,0.05); /* sáng hơn nền */
+    border-radius: 16px;
+    padding: 40px 30px;
+    max-width: 420px;
+    margin: 60px auto;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 25px rgba(168,0,142,0.3);
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-glow);
+    text-shadow: 0 0 8px rgba(168,0,142,0.6);
+}
+
+.auth-btn {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    padding: 14px 36px;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(168,0,142,0.45);
+    transition: all 0.3s ease;
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(168,0,142,0.55);
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.auth-switch a {
+    color: var(--magenta-accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-switch a:hover {
+    text-shadow: 0 0 8px rgba(168,0,142,0.7);
+}
+/* ===============================================
+   GIỎ HÀNG – NỀN GRADIENT SANG TRỌNG, CHUYÊN NGHIỆP
+================================================ */
+
+/* Khung giỏ hàng */
+.pta-cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: linear-gradient(145deg, #1f1f1f, #2a2a2a, #1f1f1f);
+    border: 2px solid #fff; /* viền trắng nổi bật */
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    padding: 10px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+}
+
+/* Header table */
+.pta-cart-table thead tr {
+    background: linear-gradient(90deg, #e91e63, #f50057);
+}
+
+.pta-cart-table th {
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+/* Body table */
+.pta-cart-table td {
+    color: #f3f4f6;
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Sản phẩm */
+.pta-cart-product-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #fff;
+}
+
+/* Input số lượng */
+.pta-qty-input {
+    width: 60px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    background: #3a3a3a;
+    color: #fff;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.pta-qty-input:focus {
+    border-color: #f50057;
+    box-shadow: 0 0 12px rgba(245,0,87,0.6);
+}
+
+/* Nút cập nhật số lượng – bên phải */
+.pta-cart-form-inline {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.pta-btn-outline.pta-btn-xs {
+    padding: 6px 14px;
+    font-size: 13px;
+    border-radius: 14px;
+    background: #3a3a3a;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.pta-btn-outline.pta-btn-xs:hover {
+    background: #e91e63;
+    color: #fff;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(233,30,99,0.5);
+}
+
+/* Nút Xóa */
+.pta-btn-link {
+    color: #ff2e8b;
+    background: #3a3a3a;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.pta-btn-link:hover {
+    color: #fff;
+    background: #f50057;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(245,0,87,0.55);
+}
+
+/* Tổng tiền */
+.pta-cart-total {
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Hộp hành động – thanh toán / tiếp tục mua sắm */
+.pta-cart-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* Nút Thanh toán */
+.pta-cart-btn-primary {
+    background: linear-gradient(135deg, #e91e63, #f50057);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 24px;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(245,0,87,0.5);
+    transition: all 0.3s ease;
+}
+
+.pta-cart-btn-primary:hover {
+    background: linear-gradient(135deg, #f50057, #e91e63);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 12px 35px rgba(245,0,87,0.55);
+}
+
+/* Nút Tiếp tục mua sắm */
+.pta-cart-btn-outline {
+    background: #3a3a3a;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 24px;
+    border: 1px solid #fff;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.pta-cart-btn-outline:hover {
+    background: #e91e63;
+    color: #fff;
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(233,30,99,0.45);
+}
+
+/* Giỏ hàng trống */
+.pta-cart-empty {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+    border: 2px solid #fff;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.pta-cart-empty a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 25px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #e91e63, #f50057);
+    color: #fff;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.pta-cart-empty a:hover {
+    background: linear-gradient(135deg, #f50057, #e91e63);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(245,0,87,0.5);
+}
+/* ==============================
+   PAGE WRAPPER
+============================== */
+.pta-page-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #1f1f1f; /* nền tối, nhưng không quá tối */
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    color: #f5f5f5;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ==============================
+   PAGE TITLE
+============================== */
+.pta-page-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+/* ==============================
+   CART TABLE
+============================== */
+.pta-cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+.pta-cart-table th,
+.pta-cart-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #444;
+}
+.pta-cart-table th {
+    background-color: #2b2b2b;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* ==============================
+   CART TOTAL
+============================== */
+.pta-cart-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.pta-cart-total {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* ==============================
+   FORM GROUP
+============================== */
+.pta-form-group {
+    margin-bottom: 20px;
+}
+.pta-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+.pta-form-group input,
+.pta-form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid #555;
+    background-color: #2c2c2c;
+    color: #fff;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+.pta-form-group input:focus,
+.pta-form-group textarea:focus {
+    outline: none;
+    border-color: #f5007f;
+    box-shadow: 0 0 12px rgba(245,0,87,0.5);
+}
+.pta-field-error {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #ff2e8b;
+}
+
+/* ==============================
+   PAYMENT BOX
+============================== */
+.pta-payment-box {
+    margin-top: 24px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(245,0,87,0.3);
+    background-color: #2a2a2a;
+}
+.pta-payment-box .option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+.pta-payment-box .option input[type="radio"] {
+    accent-color: #f5007f;
+}
+
+/* ==============================
+   QR BOX
+============================== */
+.qr-box {
+    display: none;
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 14px;
+    background-color: #1f1f1f;
+    border: 1px solid rgba(245,0,87,0.3);
+    text-align: center;
+}
+.qr-box p {
+    margin-bottom: 12px;
+}
+.qr-box .qr-image {
+    max-width: 150px;
+    width: 50%;
+    height: auto;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto 10px;
+    box-shadow: 0 4px 12px rgba(245,0,87,0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.qr-box .qr-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(245,0,87,0.6);
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+.pta-btn-primary,
+.pta-btn-outline {
+    padding: 10px 28px;
+    border-radius: 28px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+.pta-btn-primary {
+    background-color: #f5007f;
+    color: #fff;
+    border: none;
+}
+.pta-btn-primary:hover {
+    background-color: #ff2e8b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245,0,87,0.4);
+}
+.pta-btn-outline {
+    background-color: transparent;
+    color: #f5007f;
+    border: 2px solid #f5007f;
+}
+.pta-btn-outline:hover {
+    background-color: #f5007f;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245,0,87,0.4);
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+@media screen and (max-width: 600px) {
+    .pta-cart-bottom {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .qr-box .qr-image {
+        width: 70%;
+    }
+}

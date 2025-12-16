@@ -2,95 +2,158 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Đặt hàng thành công</title>
+    <title>🎄 Đặt Hàng Thành Công - Merry Chismart</title>
     <link rel="stylesheet" th:href="@{/css/qxt-style.css}">
 </head>
-<body>
+<body class="success-page">
 
 <!-- HEADER -->
 <th:block th:replace="layout/qxtHeader :: qxt_header"></th:block>
 
 <div class="qxt-page-wrapper">
 
-    <h2 class="qxt-page-title">Đặt hàng thành công</h2>
+    <!-- ICON THÀNH CÔNG -->
+    <div class="success-icon">
+        <div class="success-checkmark">✓</div>
+        <div class="success-icon-decor">🎅✨🎄</div>
+    </div>
 
-    <p style="text-align: center; margin-bottom: 16px;">
-        Cảm ơn <strong th:text="${order.customerName}">bạn</strong> đã tin tưởng Helios Shop<br>
-        Đơn hàng của bạn đã được ghi nhận, chúng mình sẽ liên hệ xác nhận sớm nhất.
+    <h1 class="qxt-page-title">🎉 Đặt Hàng Thành Công!</h1>
+
+    <p class="success-message">
+        Cảm ơn <strong th:text="${order.customerName}">bạn</strong> đã tin tưởng <span class="shop-name">Merry Chismart</span>!<br>
+        Đơn hàng trang trí Noel của bạn đã được ghi nhận, chúng tôi sẽ liên hệ xác nhận trong 30 phút.
     </p>
 
-    <!-- Thông tin đơn hàng + khách -->
-    <div class="qxt-cart-bottom" style="align-items: flex-start; margin-top: 10px;">
-        <div>
-            <p><strong>Mã đơn hàng:</strong> <span th:text="${order.id}">1</span></p>
-            <p>
-                <strong>Ngày đặt:</strong>
-                <span th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}">01/12/2025 12:00</span>
-            </p>
-            <p>
-                <strong>Trạng thái:</strong>
-                <span class="qxt-order-status-badge"
-                      th:text="${order.status}">Đang chờ xác nhận</span>
-            </p>
+    <!-- THÔNG TIN ĐƠN HÀNG -->
+    <div class="order-info-card">
+        <div class="order-info-header">
+            <h2>📋 Thông Tin Đơn Hàng</h2>
         </div>
 
-        <div>
-            <p><strong>Khách hàng:</strong> <span th:text="${order.customerName}">Tên khách</span></p>
-            <p><strong>Số điện thoại:</strong> <span th:text="${order.phone}">0123456789</span></p>
-            <p><strong>Địa chỉ giao hàng:</strong> <span th:text="${order.address}">Địa chỉ</span></p>
-            <p th:if="${order.note != null and !#strings.isEmpty(order.note)}">
-                <strong>Ghi chú:</strong> <span th:text="${order.note}"></span>
-            </p>
+        <div class="order-info-grid">
+            <div class="order-info-col">
+                <h3>📦 Thông tin đơn hàng</h3>
+                <div class="info-item">
+                    <span class="info-label">Mã đơn hàng:</span>
+                    <span class="info-value order-id" th:text="${order.id}">1</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Ngày đặt:</span>
+                    <span class="info-value" th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}">01/12/2025 12:00</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Trạng thái:</span>
+                    <span class="qxt-order-status-badge status-pending"
+                          th:text="${order.status}">Đang chờ xác nhận</span>
+                </div>
+            </div>
+
+            <div class="order-info-col">
+                <h3>👤 Thông tin khách hàng</h3>
+                <div class="info-item">
+                    <span class="info-label">Khách hàng:</span>
+                    <span class="info-value" th:text="${order.customerName}">Tên khách</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Số điện thoại:</span>
+                    <span class="info-value" th:text="${order.phone}">0123456789</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Địa chỉ giao hàng:</span>
+                    <span class="info-value" th:text="${order.address}">Địa chỉ</span>
+                </div>
+                <div class="info-item" th:if="${order.note != null and !#strings.isEmpty(order.note)}">
+                    <span class="info-label">Ghi chú trang trí:</span>
+                    <span class="info-value" th:text="${order.note}"></span>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Bảng chi tiết sản phẩm -->
-    <h3 class="qxt-section-title" style="margin-top: 24px;">Chi tiết sản phẩm</h3>
+    <!-- CHI TIẾT SẢN PHẨM -->
+    <div class="products-section">
+        <h2 class="section-title">🎁 Chi Tiết Sản Phẩm Trang Trí</h2>
 
-    <table class="qxt-cart-table">
-        <thead>
-        <tr>
-            <th>Sản phẩm</th>
-            <th>Giá</th>
-            <th style="width: 80px;">SL</th>
-            <th>Thành tiền</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item : ${order.items}">
-            <td>
-                <span class="qxt-cart-product-name"
-                      th:text="${item.productName}">Phụ Kiện</span>
-            </td>
-            <td th:text="${#numbers.formatInteger(item.productPrice, 0, 'POINT')} + ' đ'">199.000 đ</td>
-            <td th:text="${item.quantity}">1</td>
-            <td th:text="${#numbers.formatInteger(item.productPrice * item.quantity, 0, 'POINT')} + ' đ'">199.000 đ</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <!-- Tổng tiền + nút -->
-    <div class="qxt-cart-bottom">
-        <div class="qxt-cart-total">
-            Tổng thanh toán:
-            <span th:text="${#numbers.formatInteger(order.totalAmount, 0, 'POINT')} + ' đ'">199.000 đ</span>
-        </div>
-
-        <div class="qxt-cart-actions">
-            <a th:href="@{/}" class="qxt-btn-outline">Tiếp tục mua sắm</a>
-            <!-- Sau này làm trang tra cứu đơn hàng thì thêm link ở đây -->
-            <!--
-            <a th:href="@{'/order/track'(id=${order.id})}" class="qxt-btn-primary">Theo dõi đơn hàng</a>
-            -->
+        <div class="products-table-container">
+            <table class="qxt-cart-table">
+                <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${order.items}">
+                    <td>
+                        <div class="product-info">
+                            <span class="product-name" th:text="${item.productName}">Đồ trang trí Noel</span>
+                        </div>
+                    </td>
+                    <td class="price-cell" th:text="${#numbers.formatInteger(item.productPrice, 0, 'POINT')} + ' đ'">199.000 đ</td>
+                    <td class="quantity-cell" th:text="${item.quantity}">1</td>
+                    <td class="total-cell" th:text="${#numbers.formatInteger(item.productPrice * item.quantity, 0, 'POINT')} + ' đ'">199.000 đ</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <p style="margin-top: 16px; font-size: 14px; color: #666; text-align: center;">
-        Shop sẽ gọi điện / nhắn tin xác nhận đơn.
-        Vui lòng chú ý điện thoại giúp tụi mình nhé
-    </p>
+    <!-- TỔNG TIỀN VÀ NÚT HÀNH ĐỘNG -->
+    <div class="order-summary">
+        <div class="total-section">
+            <div class="total-line">
+                <span>Tổng tiền hàng:</span>
+                <span th:text="${#numbers.formatInteger(order.totalAmount, 0, 'POINT')} + ' đ'">199.000 đ</span>
+            </div>
+            <div class="total-line discount">
+                <span>Giảm giá Noel:</span>
+                <span>-50.000 đ</span>
+            </div>
+            <div class="total-line shipping">
+                <span>Phí vận chuyển:</span>
+                <span>Miễn phí</span>
+            </div>
+            <div class="total-line grand-total">
+                <span>Tổng thanh toán:</span>
+                <span class="grand-total-amount"
+                      th:text="${#numbers.formatInteger(order.totalAmount, 0, 'POINT')} + ' đ'">149.000 đ</span>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a th:href="@{/}" class="btn-continue">🛍️ Tiếp tục mua sắm</a>
+            <a th:href="@{'/my-orders'}" class="btn-track">📱 Theo dõi đơn hàng</a>
+            <a href="tel:0984551682" class="btn-call">📞 Gọi ngay 0984.551.682</a>
+        </div>
+    </div>
+
+    <!-- THÔNG TIN BỔ SUNG -->
+    <div class="additional-info">
+        <h3>📢 Thông tin quan trọng</h3>
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-icon">📞</div>
+                <h4>Xác nhận đơn hàng</h4>
+                <p>Nhân viên sẽ gọi điện xác nhận trong 30 phút. Vui lòng chú ý điện thoại.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">🚚</div>
+                <h4>Thời gian giao hàng</h4>
+                <p>Giao hàng nội thành Hà Nội: 1-2 ngày<br>Ngoại tỉnh: 2-4 ngày làm việc</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">🎁</div>
+                <h4>Quà tặng kèm</h4>
+                <p>Đơn hàng trên 500K được tặng kèm 1 bộ đèn nháy mini trị giá 50K</p>
+            </div>
+        </div>
+    </div>
 
 </div>
+
 <th:block th:replace="layout/qxtFooter :: qxt_footer"></th:block>
 
 </body>

@@ -2,47 +2,129 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng ký</title>
+    <title>🎄 Đăng Ký - Merry Chismart</title>
     <link rel="stylesheet" th:href="@{/css/qxt-style.css}">
 </head>
-<body class="product-detail-page">
+<body class="register-page">
 
 <!-- HEADER -->
 <th:block th:replace="~{layout/qxtHeader :: qxt_header}"></th:block>
 
-
-<div class="auth-container">
-    <h2>Đăng ký tài khoản</h2>
-
-    <!-- THÔNG BÁO LỖI -->
-    <div th:if="${error}" style="color:#ff4d4f; margin-bottom:10px;" th:text="${error}"></div>
-
-    <form th:action="@{/register}" method="post" onsubmit="return validateRegisterForm()">
-
-        <!-- GIỮ LẠI URL QUAY VỀ -->
-        <input type="hidden" name="redirect" th:value="${redirect}">
-
-        <label>Họ tên *</label>
-        <input type="text" name="fullName" id="fullName" placeholder="Nhập họ tên của bạn" value="">
-
-        <label>Email *</label>
-        <input type="email" name="email" id="regEmail" placeholder="Nhập email" value="">
-
-        <label>Mật khẩu *</label>
-        <div class="password-wrapper">
-            <input type="password" name="password" id="regPassword" placeholder="Nhập mật khẩu">
-            <span class="toggle-pass" onclick="togglePassword('regPassword')">👁</span>
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <!-- Tiêu đề với hình ảnh Noel -->
+        <div class="auth-header">
+            <div class="noel-icon">🎁</div>
+            <h1>Đăng Ký Merry Chismart</h1>
+            <p class="auth-subtitle">Tạo tài khoản để nhận ưu đãi đặc biệt mùa Noel</p>
         </div>
 
-        <label>Số điện thoại</label>
-        <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại" value="">
+        <!-- THÔNG BÁO LỖI -->
+        <div th:if="${error}" class="auth-error" th:text="${error}"></div>
+        <div th:if="${success}" class="auth-success" th:text="${success}"></div>
 
-        <button type="submit" class="auth-btn">Đăng ký</button>
-    </form>
+        <form th:action="@{/register}" method="post" onsubmit="return validateRegisterForm()" class="auth-form">
 
-    <div class="auth-switch">
-        Đã có tài khoản?
-        <a th:href="@{/login(redirect=${redirect})}">Đăng nhập ngay</a>
+            <!-- GIỮ LẠI URL QUAY VỀ -->
+            <input type="hidden" name="redirect" th:value="${redirect}">
+
+            <div class="form-group">
+                <label for="fullName">👤 Họ tên *</label>
+                <input type="text" name="fullName" id="fullName"
+                       placeholder="Nhập họ tên của bạn" value=""
+                       required>
+                <div class="form-hint">Tên sẽ hiển thị trên tài khoản và đơn hàng</div>
+            </div>
+
+            <div class="form-group">
+                <label for="regEmail">📧 Email *</label>
+                <input type="email" name="email" id="regEmail"
+                       placeholder="Nhập email của bạn" value=""
+                       required>
+                <div class="form-hint">Email dùng để đăng nhập và nhận thông báo</div>
+            </div>
+
+            <div class="form-group">
+                <label for="regPassword">🔒 Mật khẩu *</label>
+                <div class="password-wrapper">
+                    <input type="password" name="password" id="regPassword"
+                           placeholder="Nhập mật khẩu (ít nhất 6 ký tự)" required>
+                    <button type="button" class="toggle-pass" onclick="togglePassword('regPassword')">
+                        👁️
+                    </button>
+                </div>
+                <div class="password-strength">
+                    <div class="strength-bar"></div>
+                    <span class="strength-text">Độ mạnh mật khẩu: <span id="strengthLabel">Yếu</span></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">✅ Xác nhận mật khẩu *</label>
+                <div class="password-wrapper">
+                    <input type="password" id="confirmPassword"
+                           placeholder="Nhập lại mật khẩu" required>
+                    <button type="button" class="toggle-pass" onclick="togglePassword('confirmPassword')">
+                        👁️
+                    </button>
+                </div>
+                <div id="passwordMatch" class="form-hint"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">📱 Số điện thoại</label>
+                <input type="tel" name="phone" id="phone"
+                       placeholder="Nhập số điện thoại (10-11 số)" value="">
+                <div class="form-hint">Để nhận thông báo về đơn hàng và khuyến mãi</div>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <span>Tôi đồng ý với <a href="/terms" target="_blank">Điều khoản sử dụng</a>
+                    và <a href="/privacy" target="_blank">Chính sách bảo mật</a> của Merry Chismart</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="newsletter" checked>
+                    <span>Đăng ký nhận bản tin khuyến mãi Noel và ý tưởng trang trí</span>
+                </label>
+            </div>
+
+            <button type="submit" class="auth-btn">🎅 Tạo Tài Khoản</button>
+
+            <div class="auth-divider">
+                <span>Hoặc đăng ký với</span>
+            </div>
+
+            <div class="social-login">
+                <button type="button" class="social-btn facebook">
+                    <span>📘 Facebook</span>
+                </button>
+                <button type="button" class="social-btn google">
+                    <span>🔵 Google</span>
+                </button>
+            </div>
+        </form>
+
+        <div class="auth-switch">
+            <p>🎄 Đã có tài khoản Merry Chismart?</p>
+            <a th:href="@{/login(redirect=${redirect})}" class="login-link">✨ Đăng nhập ngay</a>
+        </div>
+
+        <div class="auth-benefits">
+            <h3>🎁 Lợi ích khi đăng ký thành viên:</h3>
+            <ul>
+                <li>✅ Nhận ngay <strong>voucher 50K</strong> cho đơn hàng đầu tiên</li>
+                <li>✅ Tích lũy điểm đổi quà Noel đặc biệt</li>
+                <li>✅ Ưu tiên nhận thông báo khuyến mãi sớm nhất</li>
+                <li>✅ Lịch sử mua hàng & theo dõi đơn dễ dàng</li>
+                <li>✅ Được tư vấn trang trí miễn phí 24/7</li>
+                <li>✅ Giảm thêm 5% cho thành viên thân thiết</li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -52,34 +134,154 @@
         const fullName = document.getElementById('fullName');
         const email = document.getElementById('regEmail');
         const password = document.getElementById('regPassword');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const phone = document.getElementById('phone');
+        const agreeTerms = document.getElementById('agreeTerms');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8,9})$/;
 
         if (!fullName.value.trim()) {
-            alert('Vui lòng nhập họ tên');
+            alert('🎅 Vui lòng nhập họ tên của bạn');
             fullName.focus();
             return false;
         }
+
         if (!email.value.trim()) {
-            alert('Vui lòng nhập email');
+            alert('🎅 Vui lòng nhập email');
             email.focus();
             return false;
         }
+
+        if (!emailRegex.test(email.value)) {
+            alert('🎅 Email không đúng định dạng. Vui lòng kiểm tra lại.');
+            email.focus();
+            return false;
+        }
+
         if (!password.value.trim()) {
-            alert('Vui lòng nhập mật khẩu');
+            alert('🎅 Vui lòng nhập mật khẩu');
             password.focus();
             return false;
         }
+
+        if (password.value.length < 6) {
+            alert('🎅 Mật khẩu phải có ít nhất 6 ký tự');
+            password.focus();
+            return false;
+        }
+
+        if (password.value !== confirmPassword.value) {
+            alert('🎅 Mật khẩu xác nhận không khớp. Vui lòng kiểm tra lại.');
+            confirmPassword.focus();
+            return false;
+        }
+
+        if (phone.value.trim() && !phoneRegex.test(phone.value)) {
+            alert('🎅 Số điện thoại không đúng định dạng. Vui lòng kiểm tra lại.');
+            phone.focus();
+            return false;
+        }
+
+        if (!agreeTerms.checked) {
+            alert('🎅 Vui lòng đồng ý với Điều khoản sử dụng và Chính sách bảo mật');
+            agreeTerms.focus();
+            return false;
+        }
+
         return true;
     }
 
     // Toggle show/hide password
     function togglePassword(id) {
         const passInput = document.getElementById(id);
+        const toggleBtn = passInput.nextElementSibling;
+
         if (passInput.type === 'password') {
             passInput.type = 'text';
+            toggleBtn.textContent = '👁️‍🗨️';
         } else {
             passInput.type = 'password';
+            toggleBtn.textContent = '👁️';
         }
     }
+
+    // Kiểm tra độ mạnh mật khẩu
+    function checkPasswordStrength(password) {
+        let strength = 0;
+        const strengthBar = document.querySelector('.strength-bar');
+        const strengthLabel = document.getElementById('strengthLabel');
+
+        if (password.length >= 6) strength++;
+        if (password.length >= 8) strength++;
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+        // Cập nhật thanh độ mạnh
+        const width = (strength / 5) * 100;
+        strengthBar.style.width = width + '%';
+
+        // Cập nhật màu và nhãn
+        if (strength <= 2) {
+            strengthBar.style.background = '#ff4444';
+            strengthLabel.textContent = 'Yếu';
+            strengthLabel.style.color = '#ff4444';
+        } else if (strength <= 3) {
+            strengthBar.style.background = '#ff9800';
+            strengthLabel.textContent = 'Trung bình';
+            strengthLabel.style.color = '#ff9800';
+        } else if (strength <= 4) {
+            strengthBar.style.background = '#4caf50';
+            strengthLabel.textContent = 'Mạnh';
+            strengthLabel.style.color = '#4caf50';
+        } else {
+            strengthBar.style.background = '#2e7d32';
+            strengthLabel.textContent = 'Rất mạnh';
+            strengthLabel.style.color = '#2e7d32';
+        }
+    }
+
+    // Kiểm tra mật khẩu trùng khớp
+    function checkPasswordMatch() {
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const matchDiv = document.getElementById('passwordMatch');
+
+        if (!confirmPassword) {
+            matchDiv.textContent = '';
+            return;
+        }
+
+        if (password === confirmPassword) {
+            matchDiv.textContent = '✅ Mật khẩu trùng khớp';
+            matchDiv.style.color = '#4caf50';
+        } else {
+            matchDiv.textContent = '❌ Mật khẩu không khớp';
+            matchDiv.style.color = '#ff4444';
+        }
+    }
+
+    // Gắn sự kiện cho các input
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('regPassword');
+        const confirmInput = document.getElementById('confirmPassword');
+        const fullNameInput = document.getElementById('fullName');
+
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function() {
+                checkPasswordStrength(this.value);
+                checkPasswordMatch();
+            });
+        }
+
+        if (confirmInput) {
+            confirmInput.addEventListener('input', checkPasswordMatch);
+        }
+
+        if (fullNameInput) {
+            fullNameInput.focus();
+        }
+    });
 </script>
 
 </body>

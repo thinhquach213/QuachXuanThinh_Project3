@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${formMode == 'CREATE'} ? 'Thêm sản phẩm' : 'Sửa sản phẩm'">
+        Thêm / Sửa sản phẩm
+    </title>
+    <link rel="stylesheet" th:href="@{/css/pta-admin.css}">
+</head>
+<body class="pta-admin-body">
+
+
+<div class="pta-admin-shell">
+    <div class="pta-admin-main">
+
+        <div class="pta-admin-panel pta-admin-panel-sm">
+
+            <!-- HEADER PANEL -->
+            <div class="pta-admin-panel-header" style="margin-bottom: 14px;">
+                <div>
+                    <h2 th:text="${formMode == 'CREATE'} ? 'Thêm sản phẩm mới' : 'Sửa sản phẩm'">Thêm sản phẩm</h2>
+                    <p class="pta-admin-panel-sub"
+                       th:text="${formMode == 'CREATE'} ?
+                                'Điền thông tin để tạo sản phẩm mới.' :
+                                'Cập nhật thông tin sản phẩm.'">
+                        Mô tả...
+                    </p>
+                </div>
+                <div>
+                    <a th:href="@{/admin/products}" class="pta-admin-btn-ghost">
+                        ← Quay lại danh sách
+                    </a>
+                </div>
+            </div>
+
+            <!-- THÔNG BÁO LỖI UPLOAD ẢNH (nếu có) -->
+            <p th:if="${error}" th:text="${error}"
+               style="color:#fca5a5; margin-bottom:12px; font-size:13px;"></p>
+
+            <!-- FORM -->
+            <form th:object="${product}"
+                  th:action="${formMode == 'CREATE'} ? @{/admin/products/create} : @{/admin/products/update}"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="pta-admin-form">
+
+                <!-- Ẩn id khi update -->
+                <input type="hidden" th:if="${formMode == 'EDIT'}" th:field="*{id}"/>
+
+                <!-- Tên sản phẩm -->
+                <div class="pta-admin-form-group">
+                    <label class="pta-admin-label">Tên sản phẩm</label>
+                    <input type="text" class="pta-admin-input" th:field="*{name}" required
+                           placeholder="Nhập tên sản phẩm">
+                </div>
+
+                <!-- Danh mục -->
+                <div class="pta-admin-form-group">
+                    <label class="pta-admin-label">Danh mục</label>
+                    <select class="pta-admin-input" th:field="*{category.id}">
+                        <option value="">-- Chọn danh mục --</option>
+                        <option th:each="c : ${categories}"
+                                th:value="${c.id}"
+                                th:text="${c.name}">
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Giá -->
+                <div class="pta-admin-form-group">
+                    <label class="pta-admin-label">Giá (VNĐ)</label>
+                    <input type="number" step="1000" min="0"
+                           class="pta-admin-input"
+                           th:field="*{price}"
+                           placeholder="Ví dụ: 150000">
+                </div>
+
+                <!-- Mô tả -->
+                <div class="pta-admin-form-group">
+                    <label class="pta-admin-label">Mô tả</label>
+                    <textarea rows="4" class="pta-admin-input"
+                              th:field="*{description}"
+                              placeholder="Mô tả ngắn gọn về sản phẩm..."></textarea>
+                </div>
+
+                <!-- Ảnh hiện tại (nếu có) -->
+                <div class="pta-admin-form-group" th:if="*{image} != null">
+                    <label class="pta-admin-label">Ảnh hiện tại</label>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <img th:src="@{'/uploads/product-images/' + *{image}}"
+                             alt="Ảnh hiện tại"
+                             style="width:90px; height:90px; border-radius:14px; object-fit:cover;">
+                        <p class="pta-admin-static" style="font-size:13px; color:#9ca3af;">
+                            Bạn có thể chọn ảnh mới để thay thế.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Upload ảnh mới -->
+                <div class="pta-admin-form-group">
+                    <label class="pta-admin-label">Ảnh sản phẩm</label>
+                    <input type="file" name="imageFile"
+                           accept="image/*"
+                           class="pta-admin-input"
+                           style="padding:6px 8px; background:#020617;">
+                </div>
+
+
+
+                <!-- ACTION BUTTONS -->
+                <div class="pta-admin-form-actions">
+                    <a th:href="@{/admin/products}" class="pta-admin-btn-ghost">
+                        Hủy
+                    </a>
+                    <button type="submit" class="pta-admin-btn">
+                        <span th:text="${formMode == 'CREATE'} ? 'Tạo sản phẩm' : 'Lưu thay đổi'">
+                            Lưu
+                        </span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

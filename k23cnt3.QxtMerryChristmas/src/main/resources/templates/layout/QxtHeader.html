@@ -2,7 +2,7 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Helios Shop</title>
+    <title>Merry Chismart - Shop Đồ Trang Trí Noel</title>
     <link rel="stylesheet" th:href="@{/css/qxt-style.css}">
 </head>
 <body>
@@ -17,10 +17,10 @@
             <a th:href="@{/}" style="display:flex; align-items:center; gap:14px;">
                 <img class="qxt-logo-img"
                      th:src="@{/images/logo.jpg}"
-                     alt="Logo Helios Shop">
+                     alt="Logo Merry Chismart - Đồ trang trí Noel">
 
                 <!-- TÊN SHOP -->
-                <span class="shop-name">HELIOS SHOP</span>
+                <span class="shop-name">🎄 MERRY CHISMART 🎄</span>
             </a>
         </div>
 
@@ -29,9 +29,9 @@
             <form class="search-form" th:action="@{/search}" method="get">
                 <input type="text"
                        name="keyword"
-                       placeholder="Tìm kiếm sản phẩm..."
+                       placeholder="Tìm kiếm đồ trang trí Noel..."
                        required>
-                <button type="submit">Tìm</button>
+                <button type="submit">🔍 Tìm</button>
             </form>
         </div>
 
@@ -39,7 +39,7 @@
         <div class="top-right">
 
             <div class="hotline">
-                Hotline: <span>0984551682</span>
+                📞 Hotline Noel: <span>0984.551.682</span>
             </div>
 
             <a th:href="@{/cart}" class="cart-icon" title="Giỏ hàng">
@@ -54,7 +54,7 @@
             <!-- Nếu đã đăng nhập -->
             <div th:if="${session.currentUser != null}" class="logged-wrap">
                 <span class="user-name"
-                      th:text="'Xin chào, ' + ${session.currentUser.fullName}">
+                      th:text="'🎅 Xin chào, ' + ${session.currentUser.fullName}">
                     Xin chào
                 </span>
 
@@ -79,16 +79,16 @@
         <!-- Khẩu hiệu -->
         <div class="menu-center">
             <span class="menu-tagline">
-                Đây là những "Câu chuyện" mới nhất được rèn thành chế tác.
+                🎄 Mang Giáng Sinh ấm áp đến mọi nhà - Trang trí Noel độc đáo 🎁
             </span>
         </div>
 
         <!-- Menu bên phải -->
         <div class="menu-right">
-            <a href="#" class="menu-item">Khuyến mại</a>
-            <a href="#" class="menu-item">Dịch vụ</a>
-            <a href="/contact" class="menu-item">Liên hệ</a>
-            <a th:href="@{/my-orders}" class="menu-item">Theo dõi đơn</a>
+            <a href="/tag/khuyenmai" class="menu-item">🎉 Khuyến mãi Noel</a>
+            <a href="/service" class="menu-item">✨ Trang trí theo yêu cầu</a>
+            <a href="/contact" class="menu-item">📞 Liên hệ</a>
+            <a th:href="@{/my-orders}" class="menu-item">📱 Theo dõi đơn</a>
         </div>
 
     </nav>

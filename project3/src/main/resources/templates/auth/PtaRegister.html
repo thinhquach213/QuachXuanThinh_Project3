@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký</title>
+    <link rel="stylesheet" th:href="@{/css/pta-style.css}">
+</head>
+<body class="product-detail-page">
+
+<!-- HEADER -->
+<th:block th:replace="layout/ptaHeader :: pta_header"></th:block>
+
+<div class="auth-container">
+    <h2>Đăng ký tài khoản</h2>
+
+    <!-- THÔNG BÁO LỖI -->
+    <div th:if="${error}" style="color:#ff4d4f; margin-bottom:10px;" th:text="${error}"></div>
+
+    <form th:action="@{/register}" method="post" onsubmit="return validateRegisterForm()">
+
+        <!-- GIỮ LẠI URL QUAY VỀ -->
+        <input type="hidden" name="redirect" th:value="${redirect}">
+
+        <label>Họ tên *</label>
+        <input type="text" name="fullName" id="fullName" placeholder="Nhập họ tên của bạn" value="">
+
+        <label>Email *</label>
+        <input type="email" name="email" id="regEmail" placeholder="Nhập email" value="">
+
+        <label>Mật khẩu *</label>
+        <div class="password-wrapper">
+            <input type="password" name="password" id="regPassword" placeholder="Nhập mật khẩu">
+            <span class="toggle-pass" onclick="togglePassword('regPassword')">👁</span>
+        </div>
+
+        <label>Số điện thoại</label>
+        <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại" value="">
+
+        <button type="submit" class="auth-btn">Đăng ký</button>
+    </form>
+
+    <div class="auth-switch">
+        Đã có tài khoản?
+        <a th:href="@{/login(redirect=${redirect})}">Đăng nhập ngay</a>
+    </div>
+</div>
+
+<script>
+    // Kiểm tra form trước khi submit
+    function validateRegisterForm() {
+        const fullName = document.getElementById('fullName');
+        const email = document.getElementById('regEmail');
+        const password = document.getElementById('regPassword');
+
+        if (!fullName.value.trim()) {
+            alert('Vui lòng nhập họ tên');
+            fullName.focus();
+            return false;
+        }
+        if (!email.value.trim()) {
+            alert('Vui lòng nhập email');
+            email.focus();
+            return false;
+        }
+        if (!password.value.trim()) {
+            alert('Vui lòng nhập mật khẩu');
+            password.focus();
+            return false;
+        }
+        return true;
+    }
+
+    // Toggle show/hide password
+    function togglePassword(id) {
+        const passInput = document.getElementById(id);
+        if (passInput.type === 'password') {
+            passInput.type = 'text';
+        } else {
+            passInput.type = 'password';
+        }
+    }
+</script>
+
+</body>
+</html>

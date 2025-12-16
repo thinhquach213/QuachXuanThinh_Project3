@@ -2,7 +2,7 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${product.name}">Chi tiết sản phẩm</title>
+    <title th:text="${product.name}">Chi tiết sản phẩm - Merry Chismart</title>
     <link rel="stylesheet" th:href="@{/css/qxt-style.css}">
 </head>
 <body class="product-detail-page">
@@ -12,7 +12,9 @@
 
 <!-- BREADCRUMB -->
 <div class="qxt-breadcrumb">
-    <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/}">🎄 Trang chủ</a>
+    <span>/</span>
+    <a th:href="@{/category/all}">Đồ Trang Trí Noel</a>
     <span>/</span>
     <span th:text="${product.name}"></span>
 </div>
@@ -22,33 +24,79 @@
     <!-- ẢNH SẢN PHẨM -->
     <div class="qxt-detail-img-wrap">
         <img class="detail-img"
-             th:src="@{/uploads/product-images/{img}(img=${product.image})}">
+             th:src="@{/uploads/product-images/{img}(img=${product.image})}"
+             th:alt="${product.name}">
     </div>
 
     <!-- THÔNG TIN -->
     <div class="detail-info">
-        <h2 th:text="${product.name}"></h2>
+        <h1 th:text="${product.name}"></h1>
 
-        <p class="price"
-           th:text="${#numbers.formatInteger(product.price,0,'POINT')} + ' đ'"></p>
+        <p class="price" th:text="${#numbers.formatInteger(product.price,0,'POINT')} + ' đ'"></p>
+
+        <div class="product-tags">
+            <span class="tag hot">🎯 HOT</span>
+            <span class="tag discount">🎁 Giảm 15%</span>
+            <span class="tag shipping">🚚 Miễn phí vận chuyển</span>
+        </div>
 
         <p class="qxt-detail-desc" th:text="${product.description}"></p>
 
         <div class="qxt-benefit-wrap">
+            <h3>✨ Điểm nổi bật</h3>
             <ul class="qxt-benefit-list">
-                <li>99% bạc cao cấp</li>
-                <li>Có hộp đựng đi kèm</li>
-                <li>Bảo hành 6 tháng</li>
+                <li>✅ Chất liệu cao cấp, an toàn</li>
+                <li>✅ Dễ dàng lắp đặt và sử dụng</li>
+                <li>✅ Thiết kế độc đáo, sáng tạo</li>
+                <li>✅ Đèn LED tiết kiệm điện</li>
             </ul>
             <ul class="qxt-benefit-list">
-                <li>Ảnh chụp thật</li>
-                <li>Miễn phí ship</li>
+                <li>✅ Có thể tái sử dụng nhiều mùa</li>
+                <li>✅ Phù hợp trang trí trong & ngoài nhà</li>
+                <li>✅ An toàn cho trẻ em và vật nuôi</li>
+                <li>✅ Bảo hành 12 tháng</li>
             </ul>
         </div>
 
-        <form th:action="@{'/cart/add/' + ${product.id}}" method="post">
-            <button class="btn-primary">Thêm vào giỏ hàng</button>
-        </form>
+        <div class="action-buttons">
+            <form th:action="@{'/cart/add/' + ${product.id}}" method="post" class="add-to-cart-form">
+                <button type="submit" class="btn-primary">🛒 Thêm vào giỏ hàng</button>
+            </form>
+            <a href="tel:0984551682" class="btn-secondary">📞 Gọi đặt hàng ngay</a>
+        </div>
+
+        <div class="delivery-info">
+            <h3>🚚 Thông tin giao hàng</h3>
+            <ul>
+                <li>📦 Giao hàng toàn quốc trong 2-4 ngày</li>
+                <li>🎁 Miễn phí vận chuyển đơn từ 300K</li>
+                <li>💳 Thanh toán khi nhận hàng (COD)</li>
+                <li>🔄 Đổi trả trong 7 ngày nếu lỗi</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ========== RELATED PRODUCTS ========== -->
+<section class="related-products">
+    <h2>🎁 Sản phẩm liên quan</h2>
+    <div class="related-grid">
+        <!-- Sản phẩm liên quan sẽ được hiển thị tại đây -->
+        <div class="related-item">
+            <img src="/images/related-1.jpg" alt="Cây thông mini">
+            <h4>Cây Thông Noel Mini</h4>
+            <p class="price">150.000 đ</p>
+        </div>
+        <div class="related-item">
+            <img src="/images/related-2.jpg" alt="Đèn nháy">
+            <h4>Dây Đèn Nháy 5m</h4>
+            <p class="price">85.000 đ</p>
+        </div>
+        <div class="related-item">
+            <img src="/images/related-3.jpg" alt="Quả châu">
+            <h4>Quả Châu Bạc</h4>
+            <p class="price">35.000 đ</p>
+        </div>
     </div>
 </section>
 
@@ -56,7 +104,7 @@
 <section class="qxt-detail-extra">
 
     <div class="qxt-review-section">
-        <h3>Đánh giá khách hàng</h3>
+        <h2>⭐ Đánh giá từ khách hàng</h2>
 
         <!-- FORM GỬI COMMENT (CHỈ HIỆN KHI ĐÃ ĐĂNG NHẬP) -->
         <form class="review-form"
@@ -64,25 +112,27 @@
               th:action="@{'/product/' + ${product.id} + '/comment'}"
               method="post">
 
-            <label>Đánh giá của bạn</label>
+            <label>Đánh giá sản phẩm của bạn</label>
 
-            <select name="star" required>
-                <option value="5">★★★★★ - Rất tốt</option>
-                <option value="4">★★★★☆ - Tốt</option>
-                <option value="3">★★★☆☆ - Bình thường</option>
-                <option value="2">★★☆☆☆ - Kém</option>
-                <option value="1">★☆☆☆☆ - Rất tệ</option>
-            </select>
+            <div class="star-rating">
+                <span class="star" data-value="5">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="1">★</span>
+            </div>
+
+            <input type="hidden" name="star" id="selected-rating" value="5">
 
             <textarea name="content"
-                      placeholder="Viết đánh giá của bạn..."
+                      placeholder="Chia sẻ trải nghiệm của bạn với sản phẩm này..."
                       required></textarea>
 
-            <button type="submit">Gửi đánh giá</button>
+            <button type="submit" class="submit-review">🎄 Gửi đánh giá</button>
         </form>
 
         <!-- NẾU CHƯA ĐĂNG NHẬP -->
-        <p th:if="${currentUser == null}" style="font-size:14px;">
+        <p th:if="${currentUser == null}" class="login-prompt">
             Vui lòng <a th:href="@{/login}">đăng nhập</a> để đánh giá sản phẩm.
         </p>
 
@@ -91,20 +141,20 @@
              th:each="c : ${comments}">
 
             <div class="qxt-review-header">
-                <span th:text="${c.user.fullName}"></span>
+                <span class="reviewer-name" th:text="${c.user.fullName}"></span>
                 <span class="qxt-review-stars"
-                      th:text="${'★'.repeat(c.star)}"></span>
+                      th:text="${'★'.repeat(c.star) + '☆'.repeat(5-c.star)}"></span>
             </div>
 
-            <p th:text="${c.content}"></p>
+            <p class="review-content" th:text="${c.content}"></p>
 
-            <small th:text="${#temporals.format(c.createdAt,'dd/MM/yyyy HH:mm')}"></small>
+            <small class="review-date" th:text="${#temporals.format(c.createdAt,'dd/MM/yyyy HH:mm')}"></small>
         </div>
 
         <!-- NẾU CHƯA CÓ COMMENT -->
         <p th:if="${#lists.isEmpty(comments)}"
-           style="font-size:14px; color:#9ca3af;">
-            Chưa có đánh giá nào cho sản phẩm này.
+           class="no-reviews">
+            Chưa có đánh giá nào cho sản phẩm này. Hãy là người đầu tiên nhé! 🎅
         </p>
 
     </div>

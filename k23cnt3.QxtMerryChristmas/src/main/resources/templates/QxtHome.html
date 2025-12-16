@@ -2,7 +2,8 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Helios Shop - Trang chủ</title>
+    <!-- Đổi tên trang -->
+    <title>Merry Chismart - Shop Đồ Trang Trí Noel</title>
     <link rel="stylesheet" th:href="@{/css/qxt-style.css}">
 </head>
 <body>
@@ -13,43 +14,58 @@
 
 <!-- ========== BANNER RIÊNG ========== -->
 <section class="qxt-banner">
-    <img src="/images/banner2.jpg" alt="Banner" class="home-banner">
+    <!-- Nên đổi ảnh banner phù hợp với Noel -->
+    <img src="/images/banner-noel.jpg" alt="Banner Giáng Sinh" class="home-banner">
 </section>
 
 
-<!-- ========== CATEGORY BAR (PHÂN LOẠI SẢN PHẨM) ========== -->
+<!-- ========== CATEGORY BAR (PHÂN LOẠI SẢN PHẨM NOEL) ========== -->
 <section class="qxt-category-bar">
     <div class="qxt-category-list">
         <div class="qxt-breadcrumb">
+            <!-- Giữ trang chủ, đổi danh mục sang đồ Noel -->
             <a href="/" class="crumb">Trang chủ </a>
-            <a href="/category/1" class="crumb">Nhẫn </a>
-            <a href="/category/2" class="crumb">Mặt dây chuyền</a>
-            <a href="/category/3" class="crumb">Vòng tay</a>
-            <a href="/category/4" class="crumb">Khuyên tai</a>
+            <a href="/category/1" class="crumb">Cây Thông & Phụ Kiện </a>
+            <a href="/category/2" class="crumb">Đèn Trang Trí</a>
+            <a href="/category/3" class="crumb">Vòng Hoa & Vòng Nguyệt Quế</a>
+            <a href="/category/4" class="crumb">Đồ Treo Tường & Cửa</a>
+            <!-- Có thể thêm danh mục nếu cần -->
+            <a href="/category/5" class="crumb">Quà Tặng Noel</a>
         </div>
     </div>
 </section>
 
 <!-- ========== SẢN PHẨM NỔI BẬT ========== -->
 <section class="qxt-section">
-    <h3 class="qxt-section-title">Sản phẩm nổi bật</h3>
+    <!-- Đổi tiêu đề section -->
+    <h3 class="qxt-section-title">🎄 Đồ Trang Trí Noel Nổi Bật</h3>
 
     <div class="qxt-product-grid">
-
+        <!--
+            Sản phẩm sẽ vẫn được hiển thị động từ backend (${products}).
+            Bạn cần đảm bảo backend đang trả về danh sách sản phẩm đồ trang trí Noel.
+            Dưới đây là ví dụ về cấu trúc một thẻ sản phẩm mẫu cho Noel,
+            bạn có thể thêm vào để hiển thị khi không có dữ liệu động.
+        -->
         <div class="qxt-product-card" th:each="p : ${products}">
             <a th:href="@{'/product/' + ${p.id}}">
-
                 <!-- Ảnh sản phẩm -->
-                <img th:src="@{'/uploads/product-images/' + ${p.image}}" alt="Ảnh sản phẩm">
-
+                <img th:src="@{'/uploads/product-images/' + ${p.image}}" alt="Đồ trang trí Noel">
                 <!-- Tên sản phẩm -->
                 <h4 th:text="${p.name}"></h4>
-
                 <!-- Giá -->
                 <p class="price"
                    th:text="${#numbers.formatInteger(p.price, 0, 'POINT')} + ' đ'">
                 </p>
+            </a>
+        </div>
 
+        <!-- Ví dụ về sản phẩm mẫu (có thể xóa khi có dữ liệu thật) -->
+        <div class="qxt-product-card" th:if="${products == null or products.empty}">
+            <a href="#">
+                <img src="/images/sample-noel.jpg" alt="Cây thông mini">
+                <h4>Cây Thông Noel Mini Cao Cấp</h4>
+                <p class="price">250.000 đ</p>
             </a>
         </div>
 
