@@ -2,240 +2,115 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>🎄 Thanh Toán - Merry Chismart</title>
+    <title>Thanh toán</title>
     <link rel="stylesheet" th:href="@{/css/qxt-style.css}">
 </head>
-<body class="checkout-page">
+<body>
 
 <!-- HEADER -->
 <th:block th:replace="~{layout/qxtHeader :: qxt_header}"></th:block>
 
 <div class="qxt-page-wrapper">
 
-    <!-- TIÊU ĐỀ VÀ TIẾN TRÌNH -->
-    <div class="checkout-header">
-        <h1 class="qxt-page-title">🎁 Thanh Toán Đơn Hàng Noel</h1>
-        <div class="checkout-steps">
-            <div class="step active">1. Giỏ hàng</div>
-            <div class="step active">2. Thông tin & Thanh toán</div>
-            <div class="step">3. Hoàn tất</div>
+    <h2 class="qxt-page-title">Thanh toán</h2>
+
+    <!-- DANH SÁCH SẢN PHẨM -->
+    <table class="qxt-cart-table">
+        <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.productName}"></td>
+            <td th:text="${#numbers.formatInteger(item.price,0,'POINT')} + ' đ'"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${#numbers.formatInteger(item.price * item.quantity,0,'POINT')} + ' đ'"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="qxt-cart-bottom">
+        <div class="qxt-cart-total">
+            Tổng cộng:
+            <span th:text="${#numbers.formatInteger(total,0,'POINT')} + ' đ'"></span>
         </div>
     </div>
 
-    <div class="checkout-layout">
-        <!-- CỘT TRÁI: THÔNG TIN KHÁCH HÀNG -->
-        <div class="checkout-left">
-            <div class="checkout-box">
-                <h2 class="section-title">📝 Thông Tin Giao Hàng</h2>
+    <!-- FORM THANH TOÁN -->
+    <form th:action="@{/checkout}" th:object="${checkoutForm}" method="post">
 
-                <form th:action="@{/checkout}" th:object="${checkoutForm}" method="post">
-                    <div th:if="${#fields.hasGlobalErrors()}" class="qxt-error">
-                        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
-                    </div>
+        <div th:if="${#fields.hasGlobalErrors()}" class="qxt-error">
+            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+        </div>
 
-                    <div class="qxt-form-group">
-                        <label>Họ tên người nhận *</label>
-                        <input type="text" th:field="*{customerName}" placeholder="Nhập họ tên đầy đủ">
-                        <div class="qxt-field-error" th:errors="*{customerName}"></div>
-                    </div>
+        <div class="qxt-form-group">
+            <label>Họ tên *</label>
+            <input type="text" th:field="*{customerName}" placeholder="Vui lòng nhập họ tên">
+            <div class="qxt-field-error" th:errors="*{customerName}"></div>
+        </div>
 
-                    <div class="qxt-form-group">
-                        <label>Số điện thoại *</label>
-                        <input type="text" th:field="*{phone}" placeholder="Số điện thoại liên hệ">
-                        <div class="qxt-field-error" th:errors="*{phone}"></div>
-                    </div>
+        <div class="qxt-form-group">
+            <label>Số điện thoại *</label>
+            <input type="text" th:field="*{phone}" placeholder="Vui lòng nhập số điện thoại">
+            <div class="qxt-field-error" th:errors="*{phone}"></div>
+        </div>
 
-                    <div class="qxt-form-group">
-                        <label>Email (để nhận thông tin đơn hàng)</label>
-                        <input type="email" placeholder="Email của bạn">
-                    </div>
+        <div class="qxt-form-group">
+            <label>Địa chỉ nhận hàng *</label>
+            <textarea rows="2" th:field="*{address}" placeholder="Vui lòng nhập địa chỉ"></textarea>
+            <div class="qxt-field-error" th:errors="*{address}"></div>
+        </div>
 
-                    <div class="qxt-form-group">
-                        <label>Địa chỉ nhận hàng *</label>
-                        <textarea rows="2" th:field="*{address}" placeholder="Địa chỉ cụ thể (số nhà, đường, phường/xã, quận/huyện, tỉnh/thành)"></textarea>
-                        <div class="qxt-field-error" th:errors="*{address}"></div>
-                    </div>
+        <div class="qxt-payment-box">
+            <label>Phương thức thanh toán *</label>
+            <label class="option">
+                <input type="radio" th:field="*{paymentMethod}" value="COD">
+                Thanh toán khi nhận hàng (COD)
+            </label>
+            <label class="option">
+                <input type="radio" th:field="*{paymentMethod}" value="BANK">
+                Chuyển khoản ngân hàng
+            </label>
 
-                    <div class="qxt-form-group">
-                        <label>Ghi chú trang trí</label>
-                        <textarea rows="2" th:field="*{note}" placeholder="Yêu cầu đặc biệt về trang trí, thời gian giao hàng..."></textarea>
-                    </div>
-            </div>
-
-            <!-- PHƯƠNG THỨC THANH TOÁN -->
-            <div class="checkout-box payment-methods">
-                <h2 class="section-title">💳 Phương Thức Thanh Toán</h2>
-
-                <div class="payment-options">
-                    <label class="payment-option">
-                        <input type="radio" th:field="*{paymentMethod}" value="COD" checked>
-                        <div class="payment-content">
-                            <div class="payment-icon">📦</div>
-                            <div>
-                                <h4>Thanh toán khi nhận hàng (COD)</h4>
-                                <p>Trả tiền mặt khi nhận được đồ trang trí</p>
-                            </div>
-                        </div>
-                    </label>
-
-                    <label class="payment-option">
-                        <input type="radio" th:field="*{paymentMethod}" value="BANK">
-                        <div class="payment-content">
-                            <div class="payment-icon">🏦</div>
-                            <div>
-                                <h4>Chuyển khoản ngân hàng</h4>
-                                <p>Giảm thêm 3% khi chuyển khoản trước</p>
-                            </div>
-                        </div>
-                    </label>
-
-                    <label class="payment-option">
-                        <input type="radio" th:field="*{paymentMethod}" value="MOMO">
-                        <div class="payment-content">
-                            <div class="payment-icon">💜</div>
-                            <div>
-                                <h4>Ví điện tử MoMo</h4>
-                                <p>Thanh toán nhanh qua QR MoMo</p>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-
-                <!-- THÔNG TIN CHUYỂN KHOẢN -->
-                <div id="bankInfo" class="bank-info-box">
-                    <h3>🏦 Thông Tin Chuyển Khoản</h3>
-                    <div class="bank-details">
-                        <div class="bank-qr">
-                            <img src="/images/qr-noel.jpg" alt="QR Code Merry Chismart" class="qr-image">
-                            <p>Quét mã QR để thanh toán</p>
-                        </div>
-                        <div class="bank-account">
-                            <div class="account-detail">
-                                <span class="label">Ngân hàng:</span>
-                                <span class="value">VietinBank</span>
-                            </div>
-                            <div class="account-detail">
-                                <span class="label">Số tài khoản:</span>
-                                <span class="value">1122 3344 5566</span>
-                            </div>
-                            <div class="account-detail">
-                                <span class="label">Chủ tài khoản:</span>
-                                <span class="value">QUACH XUAN THINH</span>
-                            </div>
-                            <div class="account-detail">
-                                <span class="label">Nội dung chuyển khoản:</span>
-                                <span class="value">MERRYCHISMART <strong>Tên_SĐT</strong></span>
-                            </div>
-                            <div class="notice">
-                                <p>⚠️ <strong>Lưu ý:</strong> Vui lòng ghi đúng nội dung để hệ thống tự động xác nhận đơn hàng của bạn.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- NÚT ĐẶT HÀNG -->
-                <div class="checkout-submit">
-                    <button type="submit" class="checkout-btn">🎅 Đặt Hàng Ngay</button>
-                    <p class="secure-checkout">
-                        🔒 Thanh toán an toàn • Bảo mật thông tin • Đổi trả trong 7 ngày
-                    </p>
-                </div>
-                </form>
+            <div id="qrBox" class="qr-box">
+                <p>Quét mã QR để thanh toán:</p>
+                <img src="/images/qr-bank.jpg" alt="QR Banking" class="qr-image">
+                <p class="bank-info">
+                    Ngân hàng: Vietin Bank<br>
+                    Chủ tài khoản: Quách Xuân Thịnh<br>
+                    Nội dung: <b>Thanh toán đơn hàng</b>
+                </p>
             </div>
         </div>
 
-        <!-- CỘT PHẢI: TÓM TẮT ĐƠN HÀNG -->
-        <div class="checkout-right">
-            <div class="order-summary-box">
-                <h2 class="section-title">📦 Tóm Tắt Đơn Hàng</h2>
-
-                <div class="order-items">
-                    <div class="order-item" th:each="item : ${items}">
-                        <div class="item-info">
-                            <span class="item-name" th:text="${item.productName}"></span>
-                            <span class="item-quantity" th:text="'×' + ${item.quantity}"></span>
-                        </div>
-                        <div class="item-price" th:text="${#numbers.formatInteger(item.price * item.quantity,0,'POINT')} + ' đ'"></div>
-                    </div>
-                </div>
-
-                <div class="order-totals">
-                    <div class="total-line">
-                        <span>Tạm tính:</span>
-                        <span th:text="${#numbers.formatInteger(total,0,'POINT')} + ' đ'"></span>
-                    </div>
-                    <div class="total-line discount">
-                        <span>Giảm giá Noel:</span>
-                        <span>-50.000 đ</span>
-                    </div>
-                    <div class="total-line shipping">
-                        <span>Phí vận chuyển:</span>
-                        <span>Miễn phí</span>
-                    </div>
-                    <div class="total-line grand-total">
-                        <span>Tổng thanh toán:</span>
-                        <span class="grand-total-amount" th:text="${#numbers.formatInteger(total - 50000,0,'POINT')} + ' đ'"></span>
-                    </div>
-                </div>
-
-                <div class="promo-code">
-                    <input type="text" placeholder="🎄 Nhập mã giảm giá">
-                    <button type="button" class="apply-btn">Áp dụng</button>
-                </div>
-
-                <div class="noel-benefits">
-                    <h3>🎁 Ưu Đãi Noel Đặc Biệt</h3>
-                    <ul>
-                        <li>✅ Miễn phí vận chuyển toàn quốc</li>
-                        <li>✅ Tặng kèm 1 bộ đèn nháy (đơn > 500K)</li>
-                        <li>✅ Giảm thêm 3% khi chuyển khoản</li>
-                        <li>✅ Hỗ trợ tư vấn trang trí miễn phí</li>
-                        <li>✅ Đổi trả trong 7 ngày nếu không hài lòng</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="support-box">
-                <h3>📞 Cần Hỗ Trợ?</h3>
-                <p>Hotline: <strong>0984.551.682</strong> (Zalo/Phone)</p>
-                <p>Thời gian: 8:00 - 22:00 hàng ngày</p>
-                <a href="tel:0984551682" class="support-btn">Gọi ngay để được tư vấn</a>
-            </div>
+        <div class="qxt-form-group">
+            <label>Ghi chú cho shop</label>
+            <textarea rows="2" th:field="*{note}" placeholder="Bạn muốn ghi gì cho shop?"></textarea>
         </div>
-    </div>
 
+        <div class="qxt-cart-actions">
+            <a th:href="@{/cart}" class="qxt-btn-outline">Quay lại giỏ hàng</a>
+            <button type="submit" class="qxt-btn-primary">Đặt hàng</button>
+        </div>
+
+    </form>
 </div>
 
 <script>
-    // Hiển thị/ẩn thông tin chuyển khoản
-    function updatePaymentInfo() {
-        const bankOption = document.querySelector('input[value="BANK"]');
-        const bankInfo = document.getElementById("bankInfo");
-
-        if (bankOption.checked) {
-            bankInfo.style.display = "block";
-        } else {
-            bankInfo.style.display = "none";
-        }
+    function updateQR() {
+        const bank = document.querySelector('input[value="BANK"]');
+        const qr = document.getElementById("qrBox");
+        qr.style.display = bank.checked ? "block" : "none";
     }
-
-    // Gắn sự kiện cho tất cả các radio button
-    document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
-        radio.addEventListener("change", updatePaymentInfo);
+    document.querySelectorAll('input[name="paymentMethod"]').forEach(r => {
+        r.addEventListener("change", updateQR);
     });
-
-    // Khởi tạo trạng thái ban đầu
-    updatePaymentInfo();
-
-    // Hiệu ứng khi nhấn nút áp dụng mã giảm giá
-    document.querySelector('.apply-btn').addEventListener('click', function() {
-        const promoInput = document.querySelector('.promo-code input');
-        if (promoInput.value.trim() === '') {
-            alert('Vui lòng nhập mã giảm giá!');
-        } else {
-            alert('🎉 Mã giảm giá "' + promoInput.value + '" đã được áp dụng!');
-        }
-    });
+    updateQR();
 </script>
 
 <th:block th:replace="layout/qxtFooter :: qxt_footer"></th:block>
