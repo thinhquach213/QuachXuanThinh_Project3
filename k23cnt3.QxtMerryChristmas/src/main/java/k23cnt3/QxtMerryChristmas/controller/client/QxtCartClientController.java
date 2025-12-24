@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequiredArgsConstructor
 public class QxtCartClientController {
-
+//“Controller này xử lý toàn bộ chức năng giỏ hàng phía client.”
     private final QxtCartService cartService;
-
+//“Em tách logic giỏ hàng sang service để controller chỉ xử lý request và response.”
     @GetMapping("/cart")
     public String cartPage(Model model, HttpSession session) {
         model.addAttribute("items", cartService.getItems(session));
         model.addAttribute("total", cartService.getTotal(session));
         return "QxtCart";
     }
+    //“Giỏ hàng được lưu trong session, không lưu DB.”
 
     @PostMapping("/cart/add/{productId}")
     public String addToCart(@PathVariable Long productId, HttpSession session) {
@@ -37,7 +38,9 @@ public class QxtCartClientController {
         cartService.updateQuantity(productId, quantity, session);
         return "redirect:/cart";
     }
-
+    // Xóa item khỏi session Em cho phép xóa từng sản phẩm khỏi giỏ hàng.”
+    //dùng Session cho giỏ hàng “Giỏ hàng chỉ là dữ liệu tạm thời, chưa phát sinh
+    // giao dịch nên em lưu trong session để đơn giản và hiệu quả.”
     @PostMapping("/cart/remove")
     public String removeItem(
             @RequestParam("productId") Long productId,

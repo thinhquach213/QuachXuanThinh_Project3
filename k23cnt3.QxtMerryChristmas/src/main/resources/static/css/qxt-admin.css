@@ -1,76 +1,114 @@
 /* ====================================================================
-   ADMIN THEME: MATTE DARK CRIMSON EXTENDED & OPTIMIZED
-   Tông màu Đỏ Cà Phê Nhám trên nền Xám Đá Sâu, giao diện phức tạp, bo góc đẹp.
-   - Đảm bảo hơn 700 dòng code.
-   - Fix lỗi khoảng cách và căn chỉnh nút (Gapping & Alignment Fix).
-==================================================================== */
+   ADMIN THEME: CHRISTMAS EDITION - GIÁNG SINH ẤM ÁP
+   Tông màu Giáng Sinh: Đỏ - Xanh Lá - Vàng Kim - Trắng
+   Giao diện ấm áp với hiệu ứng Noel, bo góc mềm mại
+   ==================================================================== */
 
-/* --- 01. THIẾT LẬP BIẾN GỐC (ROOT VARIABLES) ------------------------ */
+/* --- 01. THIẾT LẬP BIẾN GỐC (CHỦ ĐỀ GIÁNG SINH) -------------------- */
 
 :root {
-    /* MÀU CHỦ ĐẠO (Đỏ Cà Phê/Crimson Nhám) */
-    --color-primary: #8B0000;       /* Dark Crimson (Đỏ Sậm Mờ) */
-    --color-accent: #690000;        /* Maroon Sậm */
-    --color-light-red: #C53030;     /* Đỏ Vừa cho điểm nhấn và viền */
-    --color-danger: #D32F2F;        /* Màu đỏ cảnh báo */
-    --color-success: #388E3C;       /* Màu xanh lá thành công */
+    /* MÀU CHỦ ĐẠO GIÁNG SINH */
+    --color-primary: #c62828;       /* Đỏ Noel đậm */
+    --color-accent: #2e7d32;        /* Xanh lá cây Noel */
+    --color-light-red: #ef5350;     /* Đỏ Noel sáng */
+    --color-gold: #f9a825;          /* Vàng kim Noel */
+    --color-snow: #ffffff;          /* Trắng tuyết */
+    --color-light-green: #a5d6a7;   /* Xanh lá nhạt */
+
+    /* MÀU CẢNH BÁO THEME NOEL */
+    --color-danger: #ff5252;        /* Đỏ cảnh báo */
+    --color-success: #4caf50;       /* Xanh thành công */
+    --color-warning: #ffb300;       /* Vàng cảnh báo */
 
     /* MÀU NỀN & CHỮ */
-    --color-text-light: #F0F0F0;    /* Text trắng xám */
-    --color-text-secondary: #B0B0B0;/* Text phụ xám bạc */
-    --color-bg-deep: #0A0A0A;       /* Nền đen sâu nhất */
-    --color-bg-dark: #121212;       /* Nền đen chính (Matte Black) */
-    --color-bg-medium: #1F1F1F;     /* Nền trung gian (Xám đá) */
-    --color-panel-border: rgba(139, 0, 0, 0.3); /* Viền Đỏ rõ hơn */
-    --color-border-dark: #333333;   /* Viền xám tối */
+    --color-text-light: #fffde7;    /* Text vàng nhạt */
+    --color-text-secondary: #b0bec5;/* Text phụ xanh xám */
+    --color-bg-deep: #0d1f0c;       /* Nền xanh đậm */
+    --color-bg-dark: #1b5e20;       /* Nền xanh lá đậm */
+    --color-bg-medium: #2e7d32;     /* Nền xanh lá trung */
+    --color-panel-border: rgba(198, 40, 40, 0.4); /* Viền đỏ Noel */
+    --color-border-dark: #1b5e20;   /* Viền xanh đậm */
 
     /* THÔNG SỐ CHUNG */
-    --radius-large: 24px;
-    --radius-medium: 16px;
-    --radius-small: 10px;
+    --radius-large: 20px;
+    --radius-medium: 12px;
+    --radius-small: 8px;
     --transition-speed: 0.3s;
     --gap-base: 12px;
+
+    /* GRADIENT NOEL */
+    --gradient-noel: linear-gradient(135deg, #c62828 0%, #2e7d32 100%);
+    --gradient-gold: linear-gradient(135deg, #f9a825 0%, #ff9800 100%);
+    --gradient-snow: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
 }
 
-/* --- 02. HÀM VÀ GRADIENT --------------------------------------------- */
+/* --- 02. HIỆU ỨNG GIÁNG SINH --------------------------------------- */
 
-/* Hàm tạo Gradient Đỏ Nhám */
-.rainbow-gradient {
-    background: linear-gradient(135deg, var(--color-light-red), var(--color-primary));
-}
-.rainbow-gradient-shadow {
-    /* Bóng nhám, sâu */
-    box-shadow: 0 10px 25px rgba(139, 0, 0, 0.5);
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
 
-/* --- 03. NỀN CHUNG VÀ CƠ BẢN ----------------------------------------- */
+@keyframes snowFall {
+    0% { transform: translateY(-100px) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* --- 03. NỀN CHUNG VÀ CƠ BẢN --------------------------------------- */
 
 body {
     margin: 0;
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* Nền sâu Xám Đá */
-    background: radial-gradient(circle at top, #1E1E1E 0, #171717 55%, var(--color-bg-dark) 100%);
+    /* Nền với hiệu ứng Noel */
+    background: linear-gradient(135deg,
+        var(--color-bg-deep) 0%,
+        var(--color-bg-dark) 50%,
+        var(--color-bg-medium) 100%);
     color: var(--color-text-light);
     line-height: 1.6;
     min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Hiệu ứng tuyết rơi */
+body::before {
+    content: "❄❄❄";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.1;
+    font-size: 24px;
+    animation: snowFall 10s linear infinite;
 }
 
 a {
     text-decoration: none;
-    color: var(--color-light-red);
+    color: var(--color-gold);
     transition: color var(--transition-speed) ease;
 }
 a:hover {
-    color: var(--color-text-light);
+    color: var(--color-light-red);
 }
 
 .adm-page {
     min-height: 100vh;
     padding: 30px 50px;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 }
 
-/* --- 04. THANH ĐIỀU HƯỚNG TRÊN (TOP BAR) - CĂN CHỈNH NÚT 1 --------- */
+/* --- 04. THANH ĐIỀU HƯỚNG TRÊN (TOP BAR) --------------------------- */
 
 .adm-topbar {
     display: flex;
@@ -78,47 +116,64 @@ a:hover {
     justify-content: space-between;
     padding: 16px 25px;
     border-radius: var(--radius-medium);
-    background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(40, 40, 40, 0.95));
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.75);
+    background: linear-gradient(135deg,
+        rgba(198, 40, 40, 0.9),
+        rgba(46, 125, 50, 0.9));
+    box-shadow: 0 8px 20px rgba(198, 40, 40, 0.4);
     margin: 0 auto 30px auto;
     max-width: 1200px;
-    border: 1px solid var(--color-panel-border);
+    border: 2px solid var(--color-gold);
+    position: relative;
+    overflow: hidden;
+}
+
+.adm-topbar::before {
+    content: "🎄";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    opacity: 0.3;
 }
 
 .adm-topbar-left,
 .adm-topbar-right {
     display: flex;
     align-items: center;
-    gap: var(--gap-base); /* Khoảng cách giữa các nút/icon */
-    flex-wrap: wrap; /* Cho phép xuống dòng nếu khung quá hẹp */
+    gap: var(--gap-base);
+    flex-wrap: wrap;
 }
 
 .adm-topbar-center {
     flex: 1;
     text-align: center;
     font-size: 15px;
-    color: var(--color-text-secondary);
+    color: var(--color-text-light);
+    font-weight: bold;
 }
 
 .adm-topbar-icon {
     font-size: 22px;
-    color: var(--color-text-secondary);
+    color: var(--color-gold);
     cursor: pointer;
     padding: 8px;
     border-radius: var(--radius-small);
-    transition: background var(--transition-speed);
+    transition: all var(--transition-speed);
+    background: rgba(255, 255, 255, 0.1);
 }
 .adm-topbar-icon:hover {
-    background: rgba(139, 0, 0, 0.2);
-    color: var(--color-light-red);
+    background: rgba(249, 168, 37, 0.3);
+    color: var(--color-snow);
+    transform: rotate(15deg);
 }
 
-/* --- 05. NÚT CHỨC NĂNG (BUTTONS) ------------------------------------- */
+/* --- 05. NÚT CHỨC NĂNG (BUTTONS) GIÁNG SINH ------------------------ */
 
 .adm-btn-primary,
 .adm-btn-outline {
-    padding: 10px 24px;
-    border-radius: var(--radius-small);
+    padding: 12px 28px;
+    border-radius: var(--radius-medium);
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -130,41 +185,41 @@ a:hover {
     gap: 8px;
     transition: all var(--transition-speed) ease;
     text-transform: uppercase;
-    flex-shrink: 0; /* Ngăn nút bị co lại */
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
 }
 
 .adm-btn-primary {
-    background: linear-gradient(135deg, var(--color-light-red), var(--color-primary));
-    color: var(--color-text-light);
-    box-shadow: 0 5px 15px rgba(139, 0, 0, 0.6);
+    background: var(--gradient-noel);
+    color: var(--color-snow);
+    box-shadow: 0 5px 15px rgba(198, 40, 40, 0.6);
+    border: 2px solid var(--color-gold);
 }
 
 .adm-btn-primary:hover {
-    filter: brightness(1.2);
-    transform: translateY(-2px);
-    box-shadow: 0 7px 18px rgba(139, 0, 0, 0.8);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(198, 40, 40, 0.8);
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
 }
+
 .adm-btn-primary:active {
     transform: translateY(0);
-    box-shadow: 0 4px 10px rgba(139, 0, 0, 0.6);
 }
 
-
 .adm-btn-outline {
-    border: 2px solid var(--color-light-red);
-    color: var(--color-text-light);
-    background: rgba(30, 30, 30, 0.8);
+    border: 2px solid var(--color-gold);
+    color: var(--color-gold);
+    background: rgba(46, 125, 50, 0.2);
 }
 
 .adm-btn-outline:hover {
-    background: rgba(139, 0, 0, 0.6);
-    border-color: var(--color-light-red);
-}
-.adm-btn-outline:active {
-    transform: scale(0.98);
+    background: rgba(249, 168, 37, 0.3);
+    color: var(--color-snow);
+    transform: translateY(-2px);
 }
 
-/* --- 06. KHUNG CHÍNH (LAYOUT) ---------------------------------------- */
+/* --- 06. KHUNG CHÍNH (LAYOUT) -------------------------------------- */
 
 .adm-layout {
     max-width: 1200px;
@@ -175,37 +230,58 @@ a:hover {
     align-items: flex-start;
 }
 
-/* --- 07. THANH ĐIỀU HƯỚNG BÊN (SIDEBAR) ------------------------------ */
+/* --- 07. THANH ĐIỀU HƯỚNG BÊN (SIDEBAR) ---------------------------- */
 
 .adm-sidebar {
-    background: linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(25, 25, 25, 0.98));
+    background: linear-gradient(145deg,
+        rgba(27, 94, 32, 0.95),
+        rgba(46, 125, 50, 0.98));
     border-radius: var(--radius-large);
     padding: 20px 18px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
-    border: 1px solid var(--color-panel-border);
+    box-shadow: 0 8px 25px rgba(198, 40, 40, 0.3);
+    border: 2px solid var(--color-gold);
+    position: relative;
+}
+
+.adm-sidebar::before {
+    content: "🎅";
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    opacity: 0.2;
 }
 
 .adm-sidebar-header {
     padding: 12px 16px 16px;
     font-weight: 700;
-    font-size: 16px;
-    border-bottom: 2px solid rgba(139, 0, 0, 0.4);
+    font-size: 18px;
+    border-bottom: 2px solid rgba(249, 168, 37, 0.5);
     margin-bottom: 15px;
+    color: var(--color-gold);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.adm-sidebar-header::before {
+    content: "✨";
+    font-size: 20px;
 }
 
 .adm-menu {
     margin-top: 15px;
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Đảm bảo khoảng cách giữa các menu item */
+    gap: 8px;
 }
 
 .adm-menu-item {
-    padding: 12px 16px;
+    padding: 14px 16px;
     border-radius: var(--radius-medium);
     font-size: 15px;
-    color: var(--color-text-secondary);
-    background: transparent;
+    color: var(--color-text-light);
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid transparent;
     display: flex;
     align-items: center;
@@ -214,126 +290,191 @@ a:hover {
 }
 
 .adm-menu-item:hover {
-    background: rgba(139, 0, 0, 0.15);
-    color: var(--color-light-red);
-    border-color: var(--color-primary);
+    background: rgba(198, 40, 40, 0.3);
+    color: var(--color-snow);
+    border-color: var(--color-gold);
     padding-left: 20px;
+    transform: translateX(5px);
 }
 
 .adm-menu-item--active {
-    background: linear-gradient(135deg, rgba(139, 0, 0, 0.95), rgba(105, 0, 0, 0.9));
-    color: var(--color-text-light);
-    border-color: transparent;
-    box-shadow: 0 3px 10px rgba(139, 0, 0, 0.5);
+    background: var(--gradient-noel);
+    color: var(--color-snow);
+    border-color: var(--color-gold);
+    box-shadow: 0 4px 12px rgba(198, 40, 40, 0.5);
     font-weight: 700;
 }
 
-/* --- 08. KHU VỰC NỘI DUNG CHÍNH (MAIN CONTENT) ----------------------- */
+.adm-menu-item i {
+    color: var(--color-gold);
+    width: 20px;
+    text-align: center;
+}
+
+/* --- 08. KHU VỰC NỘI DUNG CHÍNH (MAIN CONTENT) --------------------- */
 
 .adm-main {
-    background: radial-gradient(circle at top left, rgba(139, 0, 0, 0.08), var(--color-bg-dark));
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(46, 125, 50, 0.1));
     border-radius: var(--radius-large);
     padding: 30px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
-    border: 1px solid var(--color-panel-border);
+    box-shadow: 0 12px 35px rgba(198, 40, 40, 0.2);
+    border: 2px solid var(--color-gold);
+    position: relative;
+    overflow: hidden;
+}
+
+.adm-main::before {
+    content: "🎄";
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    font-size: 40px;
+    opacity: 0.1;
+    z-index: 0;
 }
 
 .adm-page-title {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 800;
     letter-spacing: 0.5px;
-    border-bottom: 1px solid var(--color-border-dark);
-    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-gold);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    color: var(--color-snow);
+    position: relative;
+    z-index: 1;
+}
+
+.adm-page-title::after {
+    content: "✨";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 24px;
+    animation: twinkle 2s infinite;
 }
 
 .adm-page-subtitle {
     margin: 10px 0 25px;
-    font-size: 15px;
-    color: var(--color-text-secondary);
+    font-size: 16px;
+    color: var(--color-gold);
+    position: relative;
+    z-index: 1;
 }
 
-/* --- 09. THẺ CHỨC NĂNG (CARDS) --------------------------------------- */
+/* --- 09. THẺ CHỨC NĂNG (CARDS) GIÁNG SINH -------------------------- */
 
 .adm-card-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
 .adm-card {
-    background: rgba(30, 30, 30, 0.95);
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(46, 125, 50, 0.15));
     border-radius: var(--radius-medium);
-    padding: 20px;
+    padding: 25px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 170px;
+    min-height: 180px;
     position: relative;
-    border: 2px solid rgba(139, 0, 0, 0.3);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(249, 168, 37, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     transition: all var(--transition-speed) ease;
+    overflow: hidden;
+    z-index: 1;
 }
 
 .adm-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 30px rgba(139, 0, 0, 0.6);
-    border-color: var(--color-light-red);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(198, 40, 40, 0.4);
+    border-color: var(--color-gold);
+}
+
+.adm-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-noel);
 }
 
 .adm-card-title {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
+    color: var(--color-snow);
+    margin-bottom: 10px;
 }
 
 .adm-card-value {
-    font-size: 30px;
+    font-size: 36px;
     font-weight: 800;
-    color: var(--color-light-red);
+    color: var(--color-gold);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .adm-card-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-small);
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-medium);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(139, 0, 0, 0.2);
-    font-size: 22px;
+    background: rgba(249, 168, 37, 0.2);
+    font-size: 28px;
     margin-bottom: 15px;
-    color: var(--color-light-red);
+    color: var(--color-gold);
+    border: 2px solid rgba(249, 168, 37, 0.5);
 }
 
-/* Màu phụ cho Cards */
+/* Màu phụ cho Cards Noel */
 .adm-card-icon--green {
-    background: rgba(0, 180, 0, 0.15);
-    color: #90EE90;
+    background: rgba(76, 175, 80, 0.2);
+    color: #a5d6a7;
+    border-color: rgba(76, 175, 80, 0.5);
 }
 
 .adm-card-icon--blue {
-    background: rgba(0, 100, 200, 0.15);
-    color: #87CEFA;
+    background: rgba(33, 150, 243, 0.2);
+    color: #90caf9;
+    border-color: rgba(33, 150, 243, 0.5);
 }
 
 .adm-card-icon--orange {
-    background: rgba(255, 140, 0, 0.2);
-    color: #FFD700;
+    background: rgba(255, 152, 0, 0.2);
+    color: #ffcc80;
+    border-color: rgba(255, 152, 0, 0.5);
 }
 
 .adm-card-content p {
-    color: #A0A0A0;
+    color: var(--color-text-secondary);
     font-size: 14px;
+    line-height: 1.5;
 }
 
 .adm-card-arrow {
     position: absolute;
     right: 20px;
     bottom: 20px;
-    font-size: 20px;
-    color: var(--color-text-secondary);
+    font-size: 24px;
+    color: var(--color-gold);
+    opacity: 0.7;
+    transition: all var(--transition-speed);
 }
 
-/* --- 10. PHÂN TRANG (PAGINATION) ------------------------------------- */
+.adm-card:hover .adm-card-arrow {
+    transform: translateX(5px);
+    opacity: 1;
+}
+
+/* --- 10. PHÂN TRANG (PAGINATION) ----------------------------------- */
 
 .adm-pagination {
     display: flex;
@@ -344,109 +485,44 @@ a:hover {
 }
 
 .adm-pagination-item {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    color: var(--color-text-secondary);
-    background: var(--color-bg-medium);
-    border: 1px solid var(--color-border-dark);
-    font-size: 15px;
+    border-radius: var(--radius-small);
+    color: var(--color-text-light);
+    background: rgba(46, 125, 50, 0.3);
+    border: 2px solid var(--color-gold);
+    font-size: 16px;
     transition: all var(--transition-speed);
     cursor: pointer;
 }
 
 .adm-pagination-item:hover {
     background: var(--color-primary);
-    color: var(--color-text-light);
+    color: var(--color-snow);
+    transform: scale(1.1);
 }
 
 .adm-pagination-item--active {
-    background: var(--color-light-red);
-    color: var(--color-text-light);
+    background: var(--gradient-noel);
+    color: var(--color-snow);
     font-weight: 700;
-    box-shadow: 0 4px 10px rgba(139, 0, 0, 0.6);
+    box-shadow: 0 4px 12px rgba(198, 40, 40, 0.6);
+    border-color: var(--color-gold);
 }
 
-/* --- 11. ĐỊNH DẠNG CHUNG KHÁC (UTILITY CLASSES) --------------------- */
-
-.adm-shadow-lift {
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
-}
-
-.adm-border-primary {
-    border: 2px solid var(--color-light-red);
-}
-
-/* --- 12. RESPONSIVE DESIGN - CĂN CHỈNH TỔNG THỂ --------------------- */
-
-@media (max-width: 1000px) {
-    .adm-layout {
-        grid-template-columns: 240px minmax(0, 1fr);
-        gap: 25px;
-    }
-
-    .adm-card-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 780px) {
-    .adm-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .adm-page {
-        padding: 20px;
-    }
-
-    .adm-topbar {
-        /* Cho phép Topbar bọc nội dung và căn giữa */
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-
-    .adm-topbar-left,
-    .adm-topbar-right {
-        width: 100%; /* Chiếm toàn bộ chiều rộng */
-        justify-content: flex-start;
-    }
-
-    .adm-topbar-right {
-        justify-content: space-between;
-    }
-
-    .adm-topbar-center {
-        order: 3;
-        width: 100%;
-        margin-top: 6px;
-        text-align: left;
-    }
-
-    .adm-card-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .qxt-table-actions,
-    .qxt-form-actions {
-        justify-content: center; /* Căn giữa nút trên mobile */
-        gap: 10px;
-    }
-}
-
-
-/* ==================================================================== */
-/* --- II. PHẦN MỞ RỘNG (qxt- PREFIX) ---------------------------------- */
-/* ==================================================================== */
+/* --- 11. CÁC THÀNH PHẦN QXT-ADMIN (ĐÃ CHUYỂN ĐỔI) ------------------ */
 
 .qxt-admin-body {
     margin: 0;
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: radial-gradient(circle at 0 0, #1E1E1E 0%, #171717 55%, var(--color-bg-dark) 100%);
-    color: #e5e7eb;
+    background: linear-gradient(135deg,
+        var(--color-bg-deep) 0%,
+        var(--color-bg-dark) 50%,
+        var(--color-bg-medium) 100%);
+    color: var(--color-text-light);
 }
 
 .qxt-admin-shell {
@@ -460,27 +536,29 @@ a:hover {
     padding: 24px 32px;
 }
 
-/* --- 13. PANEL CHÍNH ------------------------------------------------ */
-
+/* Panel chính */
 .qxt-admin-panel {
     max-width: 1200px;
     margin: 0 auto;
-    background: radial-gradient(circle at top left, var(--color-bg-medium) 0%, var(--color-bg-dark) 60%);
+    background: linear-gradient(135deg,
+        rgba(46, 125, 50, 0.1),
+        rgba(198, 40, 40, 0.05));
     border-radius: var(--radius-medium);
     padding: 30px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-    border: 2px solid var(--color-panel-border);
-    transition: box-shadow var(--transition-speed);
-}
-.qxt-admin-panel:hover {
-    box-shadow: 0 12px 30px rgba(139, 0, 0, 0.3);
+    box-shadow: 0 10px 25px rgba(198, 40, 40, 0.2);
+    border: 2px solid var(--color-gold);
+    transition: all var(--transition-speed);
 }
 
-/* nút ghost */
+.qxt-admin-panel:hover {
+    box-shadow: 0 12px 30px rgba(198, 40, 40, 0.4);
+}
+
+/* Nút ghost */
 .qxt-admin-btn-ghost {
-    padding: 9px 18px;
+    padding: 10px 20px;
     border-radius: var(--radius-small);
-    border: 2px solid var(--color-light-red);
+    border: 2px solid var(--color-gold);
     color: var(--color-text-light);
     font-size: 14px;
     background: transparent;
@@ -492,118 +570,121 @@ a:hover {
 }
 
 .qxt-admin-btn-ghost:hover {
-    background: rgba(139, 0, 0, 0.3);
+    background: rgba(249, 168, 37, 0.2);
     border-color: var(--color-light-red);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
-/* --- 14. TABLE ĐƠN HÀNG --------------------------------------------- */
+/* --- 12. TABLE ĐƠN HÀNG -------------------------------------------- */
 
 .qxt-admin-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     margin-top: 20px;
-    background: var(--color-bg-medium);
+    background: rgba(46, 125, 50, 0.1);
     border-radius: var(--radius-small);
     overflow: hidden;
     font-size: 15px;
-    border: 1px solid var(--color-border-dark);
+    border: 2px solid var(--color-gold);
 }
 
 .qxt-admin-table thead {
-    background: rgba(35, 35, 35, 0.95);
-    color: var(--color-light-red);
+    background: var(--gradient-noel);
+    color: var(--color-snow);
     font-weight: 700;
 }
 
 .qxt-admin-table th,
 .qxt-admin-table td {
-    padding: 14px 18px;
+    padding: 16px 20px;
     text-align: left;
-    border-bottom: 1px solid var(--color-border-dark);
-}
-.qxt-admin-table td:last-child {
-    white-space: nowrap; /* Ngăn nút xuống dòng nếu không cần */
-    width: 1%;
+    border-bottom: 1px solid rgba(249, 168, 37, 0.3);
 }
 
 .qxt-admin-table tbody tr:hover {
-    background: rgba(139, 0, 0, 0.12);
+    background: rgba(198, 40, 40, 0.15);
 }
 
-/* --- 15. NÚT TRONG BẢNG - CĂN CHỈNH NÚT 2 --------------------------- */
+/* --- 13. NÚT TRONG BẢNG -------------------------------------------- */
 
 .qxt-table-actions {
     display: flex;
-    gap: 8px; /* Khoảng cách nhỏ hơn cho nút trong bảng */
-    justify-content: flex-end; /* Căn nút sang phải */
+    gap: 8px;
+    justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
 }
 
 .qxt-admin-btn {
-    padding: 6px 12px;
-    border-radius: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius-small);
     font-size: 13px;
-    gap: 4px;
-    box-shadow: 0 3px 6px rgba(139, 0, 0, 0.5);
+    gap: 6px;
+    box-shadow: 0 3px 6px rgba(198, 40, 40, 0.4);
     flex-shrink: 0;
+    transition: all var(--transition-speed);
 }
 
 .qxt-admin-btn:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(198, 40, 40, 0.6);
 }
 
 .qxt-admin-btn-danger {
-    background: linear-gradient(135deg, #FF4500, #B22222);
-    box-shadow: 0 3px 6px rgba(255, 69, 0, 0.5);
+    background: linear-gradient(135deg, #ff5252, #c62828);
+    border: 2px solid #ff5252;
 }
 
-/* --- 16. BADGE TRẠNG THÁI -------------------------------------------- */
+/* --- 14. BADGE TRẠNG THÁI GIÁNG SINH -------------------------------- */
 
 .qxt-badge {
     display: inline-block;
-    padding: 6px 12px;
-    border-radius: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius-small);
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    border: 2px solid;
 }
 
 .qxt-badge-WAIT_CONFIRM {
-    background: rgba(139, 0, 0, 0.2);
-    color: #FF8A80;
-    border: 1px solid rgba(139, 0, 0, 0.5);
-}
-.qxt-badge-SHIPPING {
-    background: rgba(255, 193, 7, 0.18);
-    color: #FFD700;
-    border: 1px solid rgba(255, 193, 7, 0.5);
-}
-.qxt-badge-DONE {
-    background: rgba(0, 150, 0, 0.16);
-    color: #90EE90;
-    border: 1px solid rgba(0, 150, 0, 0.5);
-}
-.qxt-badge-CANCEL {
-    background: rgba(100, 100, 100, 0.16);
-    color: #A9A9A9;
-    border: 1px solid rgba(100, 100, 100, 0.5);
+    background: rgba(198, 40, 40, 0.2);
+    color: #ffcdd2;
+    border-color: var(--color-primary);
 }
 
-/* --- 17. FORM VÀ INPUTS (ORDER EDIT) --------------------------------- */
+.qxt-badge-SHIPPING {
+    background: rgba(255, 193, 7, 0.2);
+    color: #fff59d;
+    border-color: #ffb300;
+}
+
+.qxt-badge-DONE {
+    background: rgba(76, 175, 80, 0.2);
+    color: #c8e6c9;
+    border-color: #4caf50;
+}
+
+.qxt-badge-CANCEL {
+    background: rgba(158, 158, 158, 0.2);
+    color: #f5f5f5;
+    border-color: #9e9e9e;
+}
+
+/* --- 15. FORM VÀ INPUTS -------------------------------------------- */
 
 .qxt-admin-form-group {
     margin-bottom: 25px;
 }
+
 .qxt-admin-label {
     display: block;
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 10px;
-    color: var(--color-text-light);
+    color: var(--color-gold);
 }
 
 .qxt-admin-input,
@@ -611,11 +692,11 @@ a:hover {
 .qxt-admin-textarea {
     width: 100%;
     box-sizing: border-box;
-    padding: 12px 15px;
+    padding: 14px 18px;
     border-radius: var(--radius-small);
-    border: 2px solid #303030;
-    background: var(--color-bg-medium);
-    color: #e5ecff;
+    border: 2px solid rgba(249, 168, 37, 0.5);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-light);
     font-size: 14px;
     outline: none;
     transition: all var(--transition-speed) ease;
@@ -624,9 +705,9 @@ a:hover {
 .qxt-admin-input:focus,
 .qxt-admin-select:focus,
 .qxt-admin-textarea:focus {
-    border-color: var(--color-light-red);
-    box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.4);
-    background: var(--color-bg-dark);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.3);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .qxt-admin-textarea {
@@ -634,127 +715,159 @@ a:hover {
     resize: vertical;
 }
 
-/* --- 23. CĂN CHỈNH NÚT TRONG PANEL FORM - CĂN CHỈNH NÚT 3 ----------- */
-
-.qxt-form-actions {
-    display: flex;
-    justify-content: flex-end; /* Căn sang phải */
-    gap: 15px;
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 1px solid var(--color-border-dark);
-    flex-wrap: wrap;
-}
-
-.qxt-form-actions .adm-btn-primary,
-.qxt-form-actions .qxt-admin-btn-ghost {
-    flex-shrink: 0;
-}
-
-/* --- 18. SCROLLBAR CUSTOMIZATION ------------------------------------ */
+/* --- 16. SCROLLBAR NOEL -------------------------------------------- */
 
 ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-::-webkit-scrollbar-track {
-    background: #171717;
-}
-::-webkit-scrollbar-thumb {
-    background: #444444;
-    border-radius: 10px;
-    border: 3px solid #171717;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary);
-}
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #444444 #171717;
+    width: 12px;
+    height: 12px;
 }
 
-/* --- 19. TYPOGRAPHY VÀ CÁC THẺ PHỤ ----------------------------------- */
+::-webkit-scrollbar-track {
+    background: rgba(27, 94, 32, 0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gradient-noel);
+    border-radius: 10px;
+    border: 3px solid rgba(27, 94, 32, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) rgba(27, 94, 32, 0.3);
+}
+
+/* --- 17. TYPOGRAPHY NOEL ------------------------------------------- */
 
 h1, h2, h3, h4, h5, h6 {
-    color: var(--color-text-light);
+    color: var(--color-snow);
     font-weight: 700;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
-h1 { font-size: 32px; }
-h2 { font-size: 28px; }
+
+h1 {
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    font-size: 28px;
+    color: var(--color-gold);
+}
 
 p {
     margin-top: 0;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
     color: var(--color-text-secondary);
 }
 
-code, pre {
-    background: #252525;
-    color: #FF8A80;
-    padding: 3px 5px;
-    border-radius: 4px;
-    font-family: 'Consolas', monospace;
-}
-
-/* --- 20. KHUNG ALERT/MESSAGE ----------------------------------------- */
+/* --- 18. ALERT/MESSAGE GIÁNG SINH ---------------------------------- */
 
 .qxt-alert {
-    padding: 18px;
+    padding: 20px;
     margin-bottom: 25px;
-    border-radius: var(--radius-small);
+    border-radius: var(--radius-medium);
     font-size: 15px;
-    border: 2px solid transparent;
+    border: 2px solid;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.qxt-alert::before {
+    content: "🎄";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    opacity: 0.2;
 }
 
 .qxt-alert-success {
-    background: rgba(0, 150, 0, 0.15);
-    color: #90EE90;
-    border-color: var(--color-success);
+    background: rgba(76, 175, 80, 0.15);
+    color: #c8e6c9;
+    border-color: #4caf50;
 }
 
 .qxt-alert-error {
-    background: rgba(139, 0, 0, 0.2);
-    color: #FF8A80;
-    border-color: var(--color-danger);
+    background: rgba(198, 40, 40, 0.15);
+    color: #ffcdd2;
+    border-color: var(--color-primary);
 }
 
 .qxt-alert-info {
-    background: rgba(0, 100, 200, 0.15);
-    color: #87CEFA;
-    border-color: #0064C8;
+    background: rgba(33, 150, 243, 0.15);
+    color: #bbdefb;
+    border-color: #2196f3;
 }
 
-/* --- 21. FOOTER ------------------------------------------- */
+/* --- 19. FORM ACTIONS ---------------------------------------------- */
+
+.qxt-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(249, 168, 37, 0.3);
+    flex-wrap: wrap;
+}
+
+/* --- 20. FOOTER GIÁNG SINH ----------------------------------------- */
 
 .qxt-admin-footer {
     max-width: 1200px;
     margin: 40px auto 0 auto;
     padding: 25px 0;
     text-align: center;
-    border-top: 1px solid #444444;
-    font-size: 13px;
-    color: #777777;
+    border-top: 2px solid var(--color-gold);
+    font-size: 14px;
+    color: var(--color-gold);
+    position: relative;
 }
 
-/* --- 22. FINAL UTILITY CLASSES (Đảm bảo số dòng code) ------------------- */
+.qxt-admin-footer::before {
+    content: "🎅🎄✨";
+    display: block;
+    font-size: 24px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+    animation: twinkle 3s infinite;
+}
+
+/* --- 21. UTILITY CLASSES GIÁNG SINH -------------------------------- */
 
 .u-margin-bottom-20 { margin-bottom: 20px; }
 .u-margin-top-20 { margin-top: 20px; }
-.u-text-shadow { text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
-.u-rounded-full { border-radius: 9999px; }
-.u-transition-fast { transition-duration: 0.15s; }
 
-.qxt-field-inline {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-.qxt-field-inline > * {
-    flex-grow: 1;
+.u-text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+.u-rounded-full {
+    border-radius: 9999px;
+}
+
+.u-transition-fast {
+    transition-duration: 0.15s;
+}
+
+.u-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.u-twinkle {
+    animation: twinkle 2s infinite;
+}
+
+/* Checkbox Noel */
 .qxt-checkbox-container {
     display: block;
     position: relative;
@@ -765,57 +878,277 @@ code, pre {
     user-select: none;
     color: var(--color-text-secondary);
 }
-.qxt-checkbox-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
+
 .qxt-checkmark {
     position: absolute;
     top: 0;
     left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #333333;
-    border: 1px solid #555555;
+    height: 22px;
+    width: 22px;
+    background-color: rgba(46, 125, 50, 0.3);
+    border: 2px solid var(--color-gold);
     border-radius: 4px;
 }
+
 .qxt-checkbox-container:hover input ~ .qxt-checkmark {
-    background-color: #444444;
+    background-color: rgba(249, 168, 37, 0.3);
 }
+
 .qxt-checkbox-container input:checked ~ .qxt-checkmark {
-    background-color: var(--color-light-red);
-    border-color: var(--color-light-red);
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
 }
-.qxt-checkmark:after {
-    content: "";
+
+.qxt-checkbox-container .qxt-checkmark:after {
+    content: "✓";
     position: absolute;
     display: none;
+    left: 5px;
+    top: -2px;
+    color: var(--color-snow);
+    font-size: 18px;
 }
+
 .qxt-checkbox-container input:checked ~ .qxt-checkmark:after {
     display: block;
 }
-.qxt-checkbox-container .qxt-checkmark:after {
-    left: 7px;
-    top: 3px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    transform: rotate(45deg);
-}
+
+/* Separator Noel */
 .qxt-separator {
-    height: 1px;
-    background-color: #303030;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent,
+        var(--color-gold),
+        transparent);
     margin: 30px 0;
 }
+
+/* Code block */
 .qxt-code-block {
-    padding: 15px;
-    background: var(--color-bg-deep);
-    border: 1px solid #303030;
+    padding: 20px;
+    background: rgba(13, 31, 12, 0.5);
+    border: 2px solid var(--color-gold);
     border-radius: var(--radius-small);
     overflow-x: auto;
+    font-family: 'Consolas', monospace;
+    color: var(--color-gold);
 }
-/* KẾT THÚC CODE MỞ RỘNG */
+
+/* --- 22. RESPONSIVE DESIGN ----------------------------------------- */
+
+@media (max-width: 1200px) {
+    .adm-layout {
+        grid-template-columns: 250px minmax(0, 1fr);
+        gap: 25px;
+    }
+
+    .adm-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .adm-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .adm-sidebar {
+        order: 2;
+    }
+
+    .adm-main {
+        order: 1;
+    }
+
+    .adm-page {
+        padding: 20px;
+    }
+
+    .adm-topbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .adm-topbar-left,
+    .adm-topbar-right {
+        justify-content: center;
+    }
+
+    .adm-topbar-center {
+        order: 3;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .adm-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .qxt-admin-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .qxt-table-actions {
+        justify-content: center;
+    }
+
+    .qxt-form-actions {
+        justify-content: center;
+    }
+
+    .adm-btn-primary,
+    .adm-btn-outline {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .adm-page-title {
+        font-size: 24px;
+    }
+
+    .adm-card {
+        padding: 20px;
+    }
+
+    .adm-card-value {
+        font-size: 28px;
+    }
+
+    .qxt-admin-main {
+        padding: 16px;
+    }
+}
+
+/* --- 23. HIỆU ỨNG ĐẶC BIỆT GIÁNG SINH ------------------------------ */
+
+/* Hiệu ứng đèn nhấp nháy */
+.christmas-light {
+    position: relative;
+    overflow: hidden;
+}
+
+.christmas-light::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Hiệu ứng quả cầu Noel */
+.christmas-ball {
+    background: radial-gradient(circle at 30% 30%,
+        var(--color-primary),
+        var(--color-accent));
+    border-radius: 50%;
+    box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.3),
+                inset 5px 5px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Nút với hiệu ứng Giáng Sinh */
+.btn-christmas {
+    position: relative;
+    overflow: hidden;
+    background: var(--gradient-noel);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: var(--radius-medium);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-christmas::before {
+    content: "🎄";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.btn-christmas:hover::before {
+    opacity: 1;
+    left: 15px;
+}
+
+.btn-christmas::after {
+    content: "✨";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.btn-christmas:hover::after {
+    opacity: 1;
+    right: 15px;
+}
+
+/* Card với hiệu ứng tuyết */
+.snow-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.snow-card::before {
+    content: "❄❄❄";
+    position: absolute;
+    top: -20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 20px;
+    color: white;
+    opacity: 0.1;
+    animation: snowFall 15s linear infinite;
+}
+
+/* Animation cho các phần tử Noel */
+.noel-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+.noel-twinkle {
+    animation: twinkle 1.5s infinite;
+}
+
+/* Gradient text Noel */
+.text-gradient-noel {
+    background: var(--gradient-noel);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Border gradient Noel */
+.border-gradient-noel {
+    border: 2px solid transparent;
+    background: linear-gradient(var(--color-bg-dark), var(--color-bg-dark)) padding-box,
+                var(--gradient-noel) border-box;
+}
+
+/* ====================================================================
+   KẾT THÚC CSS CHỦ ĐỀ GIÁNG SINH
+   Thiết kế bởi Merry Chismart Team - 2025
+   ==================================================================== */

@@ -13,3 +13,10 @@ public class WebStaticConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:E:/Project3/k23cnt3.QxtMerryChristmas/uploads/");
     }
 }
+// @Configuration
+//public class WebStaticConfig implements WebMvcConfigurer
+//*/@Configuration
+//→ Đánh dấu đây là class cấu hình cho Spring Boot
+//
+//🔹 WebMvcConfigurer
+//→ Cho phép can thiệp cấu hình MVC, cụ thể là cách Spring phục vụ file tĩnh

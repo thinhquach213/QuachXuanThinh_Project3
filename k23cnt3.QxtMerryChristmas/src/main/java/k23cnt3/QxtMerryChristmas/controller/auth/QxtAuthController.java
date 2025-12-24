@@ -10,15 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+//Controller này chịu trách nhiệm xác thực người dùng và quản lý session đăng nhập.
 @Controller
 @RequiredArgsConstructor
 public class QxtAuthController {
 
     private final QxtUserService userService;
-
+    //“Em tách logic xử lý đăng nhập, đăng ký sang service để controller chỉ lo điều hướng.”
     // ========== LOGIN ==========
-
     // Hiển thị form login (GET /login)
     @GetMapping("/login")
     public String showLoginForm(@RequestParam(value = "redirect", required = false) String redirect,
@@ -47,7 +46,7 @@ public class QxtAuthController {
 
         // Save session
         session.setAttribute("currentUser", user);
-
+        //“Em lưu thông tin người dùng vào session để quản lý đăng nhập.”
         // Nếu có redirect → quay lại trang ban đầu
         if (redirect != null && !redirect.isEmpty()) {
             return "redirect:" + redirect;
@@ -56,6 +55,7 @@ public class QxtAuthController {
         // Điều hướng theo role (nếu không có redirect)
         if (user.getRole() == QxtUserRole.ADMIN) {
             return "redirect:/admin/dashboard";
+            //“Sau khi login, hệ thống tự động điều hướng theo vai trò người dùng.”
         } else if (user.getRole() == QxtUserRole.SHIPPER) {
             return "redirect:/ship/orders";
         } else {
@@ -92,6 +92,7 @@ public class QxtAuthController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
+        //Em hủy session để đảm bảo bảo mật khi logout
         return "redirect:/";
     }
 }

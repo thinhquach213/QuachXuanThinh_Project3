@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
+//“Controller này xử lý toàn bộ chức năng quản trị,
+// các URL đều bắt đầu bằng /admin và chỉ cho phép tài khoản có quyền ADMIN truy cập.”
 @RequestMapping("/admin")
 @RequiredArgsConstructor
 public class QxtAdminController {
@@ -29,7 +31,7 @@ public class QxtAdminController {
     private boolean isAdmin(QxtUser user) {
         return user != null && user.getRole() == QxtUserRole.ADMIN;
     }
-
+    //Lấy currentUser từ HttpSession Kiểm tra role có phải ADMIN không Nếu không → redirect về login
     /* ==== LABEL TRẠNG THÁI ĐƠN ==== */
     private Map<String, String> buildStatusLabels() {
         Map<String, String> map = new LinkedHashMap<>();
@@ -40,7 +42,7 @@ public class QxtAdminController {
         map.put(QxtOrderStatus.CANCELLED.name(),   "Đã hủy");
         return map;
     }
-
+//Kiểm tra admin, Lấy tất cả đơn hàng từ DB, Đổ ra view QxtAdminOrders
     /** Redirect về đúng list theo role */
     private String redirectByRole(QxtUserRole role) {
         if (role == QxtUserRole.ADMIN) {
@@ -59,7 +61,8 @@ public class QxtAdminController {
         model.addAttribute("adminName", currentUser.getFullName());
         return "admin/QxtAdminDashboard";
     }
-
+ // trạng thái sửa đơn hàng Admin chọn sửa, load đơn theo id, chọn trạng thái đơn mới,
+    //Admin chỉ được cập nhật trạng thái đơn, không sửa dữ liệu gốc của khách.”
     /* ========== QUẢN LÝ ĐƠN HÀNG ========== */
 
     @GetMapping("/orders")
@@ -118,7 +121,7 @@ public class QxtAdminController {
         if (!isAdmin(currentUser)) {
             return "redirect:/login";
         }
-
+//Chỉ admin → xóa theo ID
         orderRepository.deleteById(id);
         return "redirect:/admin/orders?deleted";
     }
@@ -136,7 +139,7 @@ public class QxtAdminController {
         model.addAttribute("admins", admins);
         return "admin/QxtAdminUserList";
     }
-
+// Lấy user có role ADMIN
     /* ========== QUẢN LÝ KHÁCH HÀNG (ROLE = CUSTOMER) ========== */
 
     @GetMapping("/customers")
@@ -150,7 +153,7 @@ public class QxtAdminController {
         model.addAttribute("customers", customers);
         return "admin/QxtCustomerList";
     }
-
+//Lấy user có role CUSTOMER Em phân biệt admin và khách hàng bằng role trong DB.”
     /* ========== FORM THÊM USER (ADMIN / CUSTOMER) ========== */
 
     @GetMapping("/users/create")
@@ -161,7 +164,7 @@ public class QxtAdminController {
         if (!isAdmin(currentUser)) {
             return "redirect:/login";
         }
-
+//Truyền role từ URL → form dùng chung
         QxtUser user = new QxtUser();
         user.setRole(role);
 
@@ -210,7 +213,7 @@ public class QxtAdminController {
 
         return redirectByRole(role);
     }
-
+//Kiểm tra admin,Check trùng email,Lưu user mới,Redirect theo role
     /* ========== SỬA USER ========== */
 
     @GetMapping("/users/edit/{id}")
@@ -229,7 +232,7 @@ public class QxtAdminController {
         model.addAttribute("formMode", "EDIT");
         return "admin/QxtUserForm";
     }
-
+    //Load user, Check email trùng, Cho phép đổi mật khẩu nếu nhập mới
     @PostMapping("/users/update")
     public String updateUser(@RequestParam Long id,
                              @RequestParam String fullName,
@@ -299,3 +302,4 @@ public class QxtAdminController {
         return redirectByRole(role) + "?deleted";
     }
 }
+//“Em không cho admin tự xóa chính mình để tránh lỗi hệ thống.”

@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class QxtCheckoutClientController {
-
+//“Controller này chịu trách nhiệm xử lý quy trình thanh toán từ giỏ hàng sang đơn hàng.”
     private final QxtCartService cartService;
     private final QxtOrderService orderService;
 
@@ -31,21 +31,22 @@ public class QxtCheckoutClientController {
 
         // ⭐ 1. Kiểm tra đăng nhập
         QxtUser user = (QxtUser) session.getAttribute("currentUser");
+        //Nếu chưa login → redirect login + redirect ngược lại checkout
         if (user == null) {
             return "redirect:/login?redirect=/checkout";
         }
 
         // ⭐ 2. Kiểm tra giỏ hàng
         List<QxtCartItem> items = cartService.getItems(session);
+        //Nếu giỏ trống → quay lại /cart
         if (items == null || items.isEmpty()) {
             return "redirect:/cart";
         }
-
         // ⭐ 3. Khởi tạo form nếu chưa có
         if (!model.containsAttribute("checkoutForm")) {
             model.addAttribute("checkoutForm", new QxtCheckoutForm());
         }
-
+        //  Giữ lại dữ liệu người dùng đã nhập
         model.addAttribute("items", items);
         model.addAttribute("total", cartService.getTotal(session));
 
